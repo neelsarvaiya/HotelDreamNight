@@ -88,6 +88,13 @@
                                 2 Children
                             </span>
                         </div>
+                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;line-height:15px;">
+                            15% Off on Weekends
+                        </span>
+                        <h6 class="mb-2" style="text-decoration: line-through;">₹6000 per night</h6>
+                        <span class="badge rounded text-dark text-wrap mb-2">
+                            <h6> ₹5100 per night</h6>
+                        </span>
                         <a href="booking.php"
                             class="btn w-100 text-white custom-bg shadow-none mb-2"
                             name="book">

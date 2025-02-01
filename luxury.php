@@ -88,7 +88,14 @@
                                 6 Children
                             </span>
                         </div>
-                       <a href="booking.php"
+                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px; line-height:15px;">
+                            20% Off for Long Stays (7+ nights)
+                        </span>
+                        <h6 class="mb-2" style="text-decoration: line-through;">₹8000 per night</h6>
+                        <span class="text-dark text-wrap mb-2">
+                            <h6>₹6400 per night</h6>
+                        </span>
+                        <a href="booking.php"
                             class="btn w-100 text-white custom-bg shadow-none mb-2"
                             name="book">
                             Book now

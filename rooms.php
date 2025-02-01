@@ -140,8 +140,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-                            <h6 class="mb-4">₹3000 per night</h6>
+                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
+                            <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;">
+                                10% Off on Weekdays
+                            </span>
+                            <h6 class="mb-2" style="text-decoration: line-through;">₹3000 per night</h6>
+                            <span class="badge rounded text-dark text-wrap mb-2">
+                                <h6>₹2700 per night</h6>
+                            </span>
                             <a href="#"
                                 onclick="alert('Please Login for Booking...');"
                                 class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
@@ -204,10 +210,18 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-                            <h6 class="mb-4">₹6000 per night</h6>
-                            <a href="booking.php"
-                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
+                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
+                            <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;">
+                                15% Off on Weekends
+                            </span>
+                            <h6 class="mb-2" style="text-decoration: line-through;">₹6000 per night</h6>
+                            <span class="badge rounded text-dark text-wrap mb-2">
+                                <h6>₹5100 per night</h6>
+                            </span>
+                            <a href="#"
+                                onclick="alert('Please Login for Booking...');"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
+                                name="book">
                                 Book now
                             </a>
                             <a href="deluxe.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
@@ -265,10 +279,18 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-                            <h6 class="mb-4">₹8000 per night</h6>
-                            <a href="booking.php"
-                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
+                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
+                            <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;line-height:15px;">
+                                20% Off for Long Stays (7+ nights)
+                            </span>
+                            <h6 class="mb-2" style="text-decoration: line-through;">₹8000 per night</h6>
+                            <span class="badge rounded text-dark text-wrap mb-2">
+                                <h6> ₹6400 per night</h6>
+                            </span>
+                            <a href="#"
+                                onclick="alert('Please Login for Booking...');"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
+                                name="book">
                                 Book now
                             </a>
                             <a href="luxury.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
@@ -332,10 +354,18 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-                            <h6 class="mb-4">₹10000 per night</h6>
-                            <a href="booking.php"
-                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
+                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
+                            <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px; line-height:15px;">
+                                25% Off for Early Bookings (30+ days in advance)
+                            </span>
+                            <h6 class="mb-2" style="text-decoration: line-through;">₹10000 per night</h6>
+                            <span class="text-dark text-wrap mb-2">
+                                <h6>₹7500 per night</h6>
+                            </span>
+                            <a href="#"
+                                onclick="alert('Please Login for Booking...');"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
+                                name="book">
                                 Book now
                             </a>
                             <a href="supreme_deluxe.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>

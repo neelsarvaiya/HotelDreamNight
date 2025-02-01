@@ -106,6 +106,13 @@
                                 <i class="bi bi-star-fill text-warning"></i>
                             </span>
                         </div>
+                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px; line-height:15px;">
+                            25% Off for Early Bookings (30+ days in advance)
+                        </span>
+                        <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹10000 per night</h6>
+                        <span class="text-dark text-wrap mb-2">
+                            <h6 class="text-center mb-3">₹7500 per night</h6>
+                        </span>
                         <div class="d-flex justify-content-evenly mb-2">
                             <a href="#"
                                 onclick="alert('Please login forn Booking...');"
@@ -168,6 +175,13 @@
                                 <i class="bi bi-star text-warning"></i>
                             </span>
                         </div>
+                        <pre>      <span class="badge rounded-pill bg-success text-white text-wrap " style="font-size: 13px; line-height:15px; align-content: center;">
+                            20% Off for Long Stays (7+ nights)
+                        </span></pre>
+                        <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹8000 per night</h6>
+                        <span class="text-dark text-center text-wrap mb-2">
+                            <h6 class="mb-3"> ₹6400 per night</h6>
+                        </span>
                         <div class="d-flex justify-content-evenly mb-2">
                             <a href="booking.php"
                                 class="btn btn-sm text-white custom-bg shadow-none">
@@ -228,6 +242,13 @@
                                 <i class="bi bi-star text-warning"></i>
                             </span>
                         </div>
+                        <pre>            <span class="badge rounded-pill bg-success text-white text-wrap " style="font-size: 13px; line-height:15px; align-content: center;">
+                        15% Off on Weekends
+                        </span></pre>
+                        <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹6000 per night</h6>
+                        <span class="rounded text-dark text-center mb-2">
+                            <h6 class="mb-3"> ₹5100 per night</h6>
+                        </span>
                         <div class="d-flex justify-content-evenly mb-2">
                             <a href="booking.php"
                                 class="btn btn-sm text-white custom-bg shadow-none"

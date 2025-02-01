@@ -13,10 +13,18 @@
             border-top-color: var(--teal);
         }
         .pop {
-            transition: all ease 0.5s;
+            transition: all ease 0.9s;
         }
 
         .pop:hover {
+            border-top-color: var(--teal) !important;
+            transform: scaleX(-1);
+        }
+        .pok {
+            transition: all ease 0.9s;
+        }
+
+        .pok:hover {
             border-top-color: var(--teal) !important;
             transform: scaleX(0.9) scaleY(1.1);
         }
@@ -55,25 +63,25 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-3 col-md-6 px-4 mb-4">
-                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pop">
+                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
                     <img src="img/about/hotel.svg" width="70px">
                     <h4 class="mt-3 h-font">100+ ROOMS</h4>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 px-4 mb-4">
-                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pop">
+                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
                     <img src="img/about/customers.svg" width="70px">
                     <h4 class="mt-3 h-font">200+ CUSTOMERS</h4>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 px-4 mb-4">
-                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pop">
+                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
                     <img src="img/about/rating.svg" width="70px">
                     <h4 class="mt-3 h-font">150+ REVIEWS</h4>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 px-4 mb-4">
-                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pop">
+                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
                     <img src="img/about/staff.svg" width="70px">
                     <h4 class="mt-3 h-font">200+ STAFFS</h4>
                 </div>
@@ -88,19 +96,19 @@
     <div class="container px-4">
         <div class="row">
             <div class="col-lg-3 col-md-6">
-                <img src="img/about/team1.webp" class="w-100 rounded-3 img-fluid">
+                <img src="img/about/team1.webp" class="w-100 rounded-3 img-fluid pop">
                 <h5 class="mt-2 text-center">Ethan Miller</h5>
             </div>
             <div class="col-lg-3 col-md-6">
-                <img src="img/about/team2.webp" class="w-100">
+                <img src="img/about/team2.webp" class="w-100 pop">
                 <h5 class="mt-2 text-center">Daniel Wilson</h5>
             </div>
             <div class="col-lg-3 col-md-6">
-                <img src="img/about/team3.webp" class="w-100">
+                <img src="img/about/team3.webp" class="w-100 pop">
                 <h5 class="mt-2 text-center">Alexander Brown</h5>
             </div>
             <div class="col-lg-3 col-md-6">
-                <img src="img/about/team4.webp" class="w-100">
+                <img src="img/about/team4.webp" class="w-100 pop">
                 <h5 class="mt-2 text-center">Mia Anderson</h5>
             </div>
         </div>
