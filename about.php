@@ -12,7 +12,6 @@
         .box {
             border-top-color: var(--teal);
         }
-        /* Priten Sarvaiya */
     </style>
 </head>
 
