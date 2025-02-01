@@ -52,20 +52,6 @@
     <h2 class="mt-5 pt-4 mb-3 text-center fw-bold h-font ">Our Rooms</h2>
     <div class="h-line bg-dark"></div>
 
-    <?php
-
-    $bookNowUrl = "#";
-    $loginAlert = "";
-
-    if (isset($_SESSION['email'])) {
-
-        $bookNowUrl = "booking.php";
-    } else {
-
-        $loginAlert = "alert('Please login for booking.');";
-    }
-    ?>
-
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6 my-3">
@@ -121,8 +107,8 @@
                             </span>
                         </div>
                         <div class="d-flex justify-content-evenly mb-2">
-                            <a href="<?php echo $bookNowUrl; ?>"
-                                onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
+                            <a href="#"
+                                onclick="alert('Please login forn Booking...');"
                                 class="btn btn-sm text-white custom-bg shadow-none"
                                 name="book">
                                 Book now
@@ -183,10 +169,8 @@
                             </span>
                         </div>
                         <div class="d-flex justify-content-evenly mb-2">
-                            <a href="<?php echo $bookNowUrl; ?>"
-                                onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
-                                class="btn btn-sm text-white custom-bg shadow-none"
-                                name="book">
+                            <a href="booking.php"
+                                class="btn btn-sm text-white custom-bg shadow-none">
                                 Book now
                             </a>
                             <a href="luxury.php" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
@@ -245,8 +229,7 @@
                             </span>
                         </div>
                         <div class="d-flex justify-content-evenly mb-2">
-                            <a href="<?php echo $bookNowUrl; ?>"
-                                onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
+                            <a href="booking.php"
                                 class="btn btn-sm text-white custom-bg shadow-none"
                                 name="book">
                                 Book now

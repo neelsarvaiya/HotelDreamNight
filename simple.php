@@ -42,20 +42,6 @@
                 </div>
             </div>
 
-            <?php
-
-            $bookNowUrl = "#";
-            $loginAlert = "";
-
-            if (isset($_SESSION['email'])) {
-
-                $bookNowUrl = "booking.php";
-            } else {
-
-                $loginAlert = "alert('Please login for booking.');";
-            }
-            ?>
-
             <div class="col-lg-5 col-md-12 px-4">
                 <div class="card mb-4 border-0 shadow rounded-3">
                     <div class="card-body">
@@ -103,8 +89,7 @@
                                 3 Children
                             </span>
                         </div>
-                        <a href="<?php echo $bookNowUrl; ?>"
-                            onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
+                        <a href="booking.php"
                             class="btn w-100 text-white custom-bg shadow-none mb-2"
                             name="book">
                             Book now

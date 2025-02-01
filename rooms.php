@@ -140,24 +140,10 @@
                             </div>
                         </div>
 
-                        <?php
-
-                        $bookNowUrl = "#";
-                        $loginAlert = "";
-
-                        if (isset($_SESSION['email'])) {
-
-                            $bookNowUrl = "booking.php";
-                        } else {
-
-                            $loginAlert = "alert('Please login for booking.');";
-                        }
-                        ?>
-
                         <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                             <h6 class="mb-4">₹3000 per night</h6>
-                            <a href="<?php echo $bookNowUrl; ?>"
-                                onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
+                            <a href="#"
+                                onclick="alert('Please Login for Booking...');"
                                 class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
                                 name="book">
                                 Book now
@@ -220,10 +206,8 @@
                         </div>
                         <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                             <h6 class="mb-4">₹6000 per night</h6>
-                            <a href="<?php echo $bookNowUrl; ?>"
-                                onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
-                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
-                                name="book">
+                            <a href="booking.php"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
                                 Book now
                             </a>
                             <a href="deluxe.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
@@ -283,10 +267,8 @@
                         </div>
                         <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                             <h6 class="mb-4">₹8000 per night</h6>
-                            <a href="<?php echo $bookNowUrl; ?>"
-                                onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
-                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
-                                name="book">
+                            <a href="booking.php"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
                                 Book now
                             </a>
                             <a href="luxury.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
@@ -352,10 +334,8 @@
                         </div>
                         <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                             <h6 class="mb-4">₹10000 per night</h6>
-                            <a href="<?php echo $bookNowUrl; ?>"
-                                onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
-                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
-                                name="book">
+                            <a href="booking.php"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
                                 Book now
                             </a>
                             <a href="supreme_deluxe.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>

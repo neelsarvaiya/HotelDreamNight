@@ -53,27 +53,7 @@
                     }
                 }
             </style>
-            <?php
-
-            session_start();
-
-            if (isset($_POST['email'])) {
-                $_SESSION['email'] = $_POST['email'];
-            }
-
-            if (isset($_SESSION['email']) && $_SESSION['email'] == "kkanjariya630@rku.ac.in") {
-                echo '<div class="dropdown mx-5">
-  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-      <img src="img/profile.jpg" width="30px" height="30px" class="rounded-circle"> Николай 
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="user-profile.php"><i class="bi bi-file-earmark-person"></i> Profile</a></li>
-    <li><a class="dropdown-item" href="review & rating.php"><img src="img/star.png" style="height: 25px; margin-left: -5px;"> Review & Reating</a></li>
-    <li><a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-in-left"></i> logout</a></li>
-  </ul>
-</div>';
-            } else {
-                echo '<div class="d-flex">
+            <div class="d-flex">
             <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal"
             data-bs-target="#loginModal">
               <i class="bi bi-box-arrow-right"></i> Login
@@ -82,9 +62,7 @@
             data-bs-target="#registerModal">
              <i class="bi bi-person-lines-fill fs-5"></i> Register
             </button>
-          </div>';
-            }
-            ?>
+          </div>
         </div>
     </div>
 
@@ -147,6 +125,15 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <button type="submit" class="btn btn-dark shadow-none" name="login">Login</button>
+                        <?php
+                        if(isset($_POST['login'])){
+                            ?>
+                            <script>
+                                window.location.href = "index.php";
+                            </script>
+                            <?php
+                        }
+                        ?>
                         <a href="#" class="text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#forgot" data-bs-dismiss="modal"> Forgot
                             Password?</a>
                     </div>

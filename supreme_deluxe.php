@@ -25,21 +25,6 @@
                     <a href="rooms.php" class="text-secondary text-decoration-none">Rooms</a>
                 </div>
             </div>
-
-            <?php
-
-            $bookNowUrl = "#";
-            $loginAlert = "";
-
-            if (isset($_SESSION['email'])) {
-
-                $bookNowUrl = "booking.php";
-            } else {
-
-                $loginAlert = "alert('Please login for booking.');";
-            }
-            ?>
-
             <div class="col-lg-7 col-md-12 px-4 mb-md-4 mb-sm-4">
                 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -108,8 +93,7 @@
                                 10 Children
                             </span>
                         </div>
-                        <a href="<?php echo $bookNowUrl; ?>"
-                            onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
+                        <a href="booking.php"
                             class="btn w-100 text-white custom-bg shadow-none mb-2"
                             name="book">
                             Book now
