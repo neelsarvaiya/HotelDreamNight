@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamNights Hotel | Simple Room</title>
+    <?php
+    require('inc/link.php');
+    ?>
+</head>
+
+<body class="bg-light">
+
+    <?php
+    require('inc/header.php');
+    ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 my-5 mb-4 px-4">
+                <h2 class="fw-bold">Simple Room</h2>
+                <div style="font-size: 14px;">
+                    <a href="index.php" class="text-secondary text-decoration-none">Home</a>
+                    <span class="text-secondary"> > </span>
+                    <a href="rooms.php" class="text-secondary text-decoration-none">Rooms</a>
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-12 px-4 mb-md-4 mb-sm-4">
+                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="img/rooms/3.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img/rooms/1.jpg" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img/rooms/4.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+
+            $bookNowUrl = "#";
+            $loginAlert = "";
+
+            if (isset($_SESSION['email'])) {
+
+                $bookNowUrl = "booking.php";
+            } else {
+
+                $loginAlert = "alert('Please login for booking.');";
+            }
+            ?>
+
+            <div class="col-lg-5 col-md-12 px-4">
+                <div class="card mb-4 border-0 shadow rounded-3">
+                    <div class="card-body">
+                        <h4>₹3000 per night</h4>
+                        <div class="rating mb-3">
+                            <h6>Rating</h6>
+                            <span class="badge rounded-pill bg-light">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </span>
+                        </div>
+                        <div class="features mb-3">
+                            <h6 class="mb-1">Features : </h6>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                Bed Rooms
+                            </span>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                Balcony
+                            </span>
+                        </div>
+                        <div class="facilities mb-3">
+                            <h6>Facilities : </h6>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                Air Conditioner
+                            </span>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                Television
+                            </span>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                Room Heater
+                            </span>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                Geyser
+                            </span>
+                        </div>
+                        <div class="guests44 mb-3">
+                            <h6>Guests : </h6>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                5 Adults
+                            </span>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                3 Children
+                            </span>
+                        </div>
+                        <a href="<?php echo $bookNowUrl; ?>"
+                            onclick="<?php echo $loginAlert; ?> return <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;"
+                            class="btn w-100 text-white custom-bg shadow-none mb-2"
+                            name="book">
+                            Book now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <h5 class="fw-bold">Description</h5>
+                <p>Step into comfort and sophistication in our spacious Deluxe King Room. Elegantly designed, this room features a plush king-size bed dressed in crisp, premium linens for a restful night’s sleep. Large windows flood the space with natural light, offering stunning views of the city skyline or serene garden landscapes.</p>
+            </div>
+
+            <div class="col-lg-12">
+                <h5 class="fw-bold">Reviews & Ratings</h5>
+                <div class="row">
+                    <div class="profile d-flex align-items-center mb-3 mt-3">
+                        <img src="img/carousel/men2.jpg" width="50px" height="50px" class="rounded-circle">
+                        <h6 class="m-0 ms-2">Joseph Martinez</h6>
+                    </div>
+                    <p>
+                        I recently stayed at [Hotel Name], and I couldn’t be more pleased with my experience. The room was spacious, immaculately clean, and tastefully decorated. The bed was incredibly comfortable with soft, high-quality linens that made it hard to get up in the morning.
+                    </p>
+                    <div class="rating">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                    </div>
+
+                    <div class="profile d-flex align-items-center mb-3 mt-3">
+                        <img src="img/carousel/men1.png" width="50px" height="50px" class="rounded-circle">
+                        <h6 class="m-0 ms-2">Daniel Anderson</h6>
+                    </div>
+                    <p>
+                        The amenities were impressive — the high-speed Wi-Fi worked seamlessly, and the large TV with streaming options was a great touch. I particularly appreciated the small details, like the complimentary coffee and tea station and the thoughtfully curated minibar. </p>
+                    <div class="rating">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star text-warning"></i>
+                    </div>
+
+                    <div class="profile d-flex align-items-center mb-3 mt-3">
+                        <img src="img/carousel/men3.png" width="50px" height="auto" class="rounded-circle">
+                        <h6 class="m-0 ms-2">Amelia Thomas</h6>
+                    </div>
+                    <p>
+                        The bathroom was spotless and well-equipped, featuring a modern walk-in shower with excellent water pressure and luxury toiletries. I also loved the large mirror and great lighting, which made getting ready a breeze.
+                    </p>
+                    <div class="rating">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php
+    require('inc/footer.php');
+    ?>
+
+</body>
+
+</html>
