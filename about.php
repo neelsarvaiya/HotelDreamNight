@@ -12,7 +12,7 @@
         .box {
             border-top-color: var(--teal);
         }
-        /* Abc */
+        /* xyz */
     </style>
 </head>
 
