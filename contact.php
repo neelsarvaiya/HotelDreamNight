@@ -20,7 +20,7 @@
         <h2 class="fw-bold h-font text-center">Contact Us</h2>
         <div class="h-line bg-dark"></div>
         <p class="text-center mt-3">
-            For any questions or assistance, Dream Night Hotel is here to help. You can reach us via phone, email, or through our website’s contact form. Our dedicated team is available 24/7 to assist with reservations, or any concerns you may have. We strive to ensure a seamless experience and are eager to make your stay memorable. We look forward to hearing from you! </p>
+            For any questions or assistance, Dream Night Hotel is here to help. You can reach us via phone, email, or through our website’s contact form. Our dedicated team is available 24/7 to assist with reservations, or any concerns you may have. We strive to ensure a seamless experience and are eager to make your stay memorable. </p>
     </div>
 
     <div class="container">

@@ -167,15 +167,51 @@
                 <form id="manage_team" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <label for="name">Choose Photo :</label>
-                        <input type="file" name="team" id="team" class="mb-3 col-md-12 form-control"> <br>
+                        <input type="file" name="pic" id="team" class="col-md-12 form-control"> <br>
 
                         <label for="name">Name :</label>
-                        <input type="text" name="name" placeholder="Enater Name :" class="mb-3 form-control col-md-12">
+                        <input type="text" name="name" placeholder="Enater Name :" class="form-control col-md-12">
                         <div class="d-flex align-items-end justify-content-between mb-2">
-                            <button type="submit" class="btn btn-dark shadow" name="login">Add</button>
+                            <button type="submit" name="Pic_submit" class="btn btn-dark shadow mt-2" name="login">Add</button>
                         </div>
                     </div>
                 </form>
+                <?php
+                if (isset($_POST['Pic_submit'])) {
+
+                    $ftype = $_FILES['pic']['type'];
+                    $fsize = $_FILES['pic']['size'];
+                    if ($ftype == "image/png" || $ftype == "image/jpg") {
+
+                        if ($fsize <= 1024 * 1024) {
+
+                            if (!is_dir("uploads")) {
+                                mkdir("uploads");
+                            }
+
+                            $fname = uniqid() . $_FILES['pic']['name'];
+                            if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
+                                echo "<script>
+                            alert('File Uploaded Successfull...')
+                        </script>";
+                            }
+                        } else {
+                ?>
+                            <script>
+                                alert('File is larger than 1 KB. Please select a smaller file.')
+                            </script>
+
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <script>
+                            alert('File is not a png or jpg file')
+                        </script>
+                <?php
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -199,7 +235,7 @@
                         required: true,
                         nameValidation: true,
                     },
-                    team: {
+                    pic: {
                         required: true,
                     }
                 },
@@ -208,7 +244,7 @@
                         required: "FullName is required",
                         pattern: "Name can only contain letters and spaces",
                     },
-                    team: {
+                    pic: {
                         required: "File is requried.",
                     },
                 }

@@ -160,16 +160,52 @@
                     <div class="modal-body">
                         <div class="mb-4">
                             <label for="reponse" class="form-label fw-bold">Choose Facilities icon : </label>
-                            <input type="file" name="facilities" id="facilities" class="form-control mb-3"> <br>
+                            <input type="file" name="pic" id="facilities" class="form-control mb-3"> <br>
 
                             <label for="reponse" class="form-label fw-bold">Facilities : </label>
                             <input type="text" name="facilities_name" id="facilities_name" class="form-control mb-3" placeholder="Enter Facilities :">
                         </div>
                         <div class="d-flex align-items-end justify-content-between mb-2">
-                            <button type="submit" class="btn btn-success shadow" name="login">Submit</button>
+                            <button type="submit" name="Pic_submit" class="btn btn-success shadow" name="login">Submit</button>
                         </div>
                     </div>
                 </form>
+                <?php
+                if (isset($_POST['Pic_submit'])) {
+
+                    $ftype = $_FILES['pic']['type'];
+                    $fsize = $_FILES['pic']['size'];
+                    if ($ftype == "image/png" || $ftype == "image/jpg") {
+
+                        if ($fsize <= 1024 * 1024) {
+
+                            if (!is_dir("uploads")) {
+                                mkdir("uploads");
+                            }
+
+                            $fname = uniqid() . $_FILES['pic']['name'];
+                            if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
+                                echo "<script>
+                            alert('File Uploaded Successfull...')
+                        </script>";
+                            }
+                        } else {
+                ?>
+                            <script>
+                                alert('File is larger than 1 KB. Please select a smaller file.')
+                            </script>
+
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <script>
+                            alert('File is not a png or jpg file')
+                        </script>
+                <?php
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -179,7 +215,7 @@
 
             $("#facilities_form").validate({
                 rules: {
-                    facilities: {
+                    pic: {
                         required: true,
                     },
                     facilities_name: {
@@ -189,7 +225,7 @@
                     }
                 },
                 messages: {
-                    facilities: {
+                    pic: {
                         required: "Please upload a photo.",
                     },
                     facilities_name: {

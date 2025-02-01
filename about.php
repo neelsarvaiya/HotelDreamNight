@@ -12,14 +12,17 @@
         .box {
             border-top-color: var(--teal);
         }
+
         .pop {
+
             transition: all ease 0.9s;
         }
 
         .pop:hover {
-            border-top-color: var(--teal) !important;
+            border-top-color: var (--teal) !important;
             transform: scaleX(-1);
         }
+
         .pok {
             transition: all ease 0.9s;
         }
@@ -41,7 +44,7 @@
         <h2 class="fw-bold h-font text-center">ABOUT US</h2>
         <div class="h-line bg-dark"></div>
         <p class="text-center mt-3">
-            Dream Night Hotel, we pride ourselves on offering a seamless blend of luxury, and personalized service. Situated in a prime location, our hotel features elegant rooms, state-of-the-art amenities, and a welcoming atmosphere designed for both business and leisure travelers. With our dedicated team, we strive to provide an exceptional experience, ensuring your every need is met.
+            Dream Night Hotel, we pride ourselves on offering a seamless blend of luxury, and personalized service. Situated in a prime location, our hotel features elegant rooms, state-of-the-art amenities, and a welcoming atmosphere designed for both business and leisure travelers. 
         </p>
     </div>
 

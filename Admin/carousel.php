@@ -71,22 +71,75 @@
                         aria-label="Close">
                     </button>
                 </div>
-                <form id="manage_team" method="post" enctype="multipart/form-data">
+                <form id="carousel_pic" method="post" enctype="multipart/form-data" action="carousel.php">
                     <div class="modal-body">
                         <label for="name">Choose Photo :</label>
-                        <input type="file" name="team" id="team" class="mb-1 col-md-12 form-control">
+                        <input type="file" name="pic" id="team" class="mb-1 col-md-12 form-control">
                     </div>
                     <div class="mb-3 mx-3">
-                        <button type="submit" class="btn btn-success shadow-none">Save</button>
+                        <button type="submit" name="Pic_submit" class="btn btn-success shadow-none">Save</button>
                     </div>
                 </form>
+
+                <?php
+                if (isset($_POST['Pic_submit'])) {
+
+                    $ftype = $_FILES['pic']['type'];
+                    $fsize = $_FILES['pic']['size'];
+                    if ($ftype == "image/png" || $ftype == "image/jpg") {
+
+                        if ($fsize <= 1024 * 1024) {
+
+                            if (!is_dir("uploads")) {
+                                mkdir("uploads");
+                            }
+
+                            $fname = uniqid() . $_FILES['pic']['name'];
+                            if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
+                                echo "<script>
+                            alert('File Uploaded Successfull...')
+                        </script>";
+                            }
+                        } else {
+                ?>
+                            <script>
+                                alert('File is larger than 1 KB. Please select a smaller file.')
+                            </script>
+
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <script>
+                            alert('File is not a png or jpg file')
+                        </script>
+                <?php
+                    }
+                }
+                ?>
+
             </div>
         </div>
     </div>
 
     <h6 class="text-center bg-dark text-white p-3 m-0 h-font">@Designed and Developed by DreamNights Hotel</h6>
 
-
+    <script>
+        $(document).ready(function() {
+            $("#carousel_pic").validate({
+                rules: {
+                    pic: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    pic: {
+                        required: "Please select a profile picture.",
+                    }
+                },
+            });
+        });
+    </script>
 </body>
 
 </html>

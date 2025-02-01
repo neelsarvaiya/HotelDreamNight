@@ -32,13 +32,7 @@
     </div>
 
     <div class="row mt-3 mb-4 mx-5">
-        <h3 class="mb-4 h-font">User, Queries, Reviews Analytics</h3>
-        <div class="col-md-3 mb-4">
-            <div class="card text-center p-3 shadow">
-                <h6 class="text-primary fw-bold fs-5">New Registration</h6>
-                <h1 class="text-primary">2</h1>
-            </div>
-        </div>
+        <h3 class="mb-4 h-font">Queries & Reviews Analytics</h3>
         <div class="col-md-3 mb-4">
             <div class="card text-center p-3 shadow">
                 <h6 class="text-info fw-bold fs-5">Queries</h6>

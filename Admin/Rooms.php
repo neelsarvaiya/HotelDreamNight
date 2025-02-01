@@ -86,10 +86,10 @@
                             aria-label="Close">
                         </button>
                     </div>
-                    <form id="edit_room_form" method="post" enctype="multipart/form-data" novalidate>
+                    <form id="edit_room_form" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                             <label for="team">Choose Photo:</label>
-                            <input type="file" name="team" id="team" class="mb-2 col-md-12 form-control"> <br>
+                            <input type="file" name="pic" id="team" class="mb-2 col-md-12 form-control"> <br>
 
                             <label for="room_name" class="mt-1">Room Name:</label>
                             <input type="text" name="room_name" id="room_name" placeholder="Enter Room Name:" class="form-control col-md-12"> <br>
@@ -111,11 +111,46 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-2">
-                                <button type="submit" class="btn btn-success shadow" name="login">Save</button>
+                                <button type="submit" name="Pic_submit" class="btn btn-success shadow" name="login">Save</button>
                             </div>
                         </div>
                     </form>
+                    <?php
+                    if (isset($_POST['Pic_submit'])) {
 
+                        $ftype = $_FILES['pic']['type'];
+                        $fsize = $_FILES['pic']['size'];
+                        if ($ftype == "image/png" || $ftype == "image/jpg") {
+
+                            if ($fsize <= 1024 * 1024) {
+
+                                if (!is_dir("uploads")) {
+                                    mkdir("uploads");
+                                }
+
+                                $fname = uniqid() . $_FILES['pic']['name'];
+                                if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
+                                    echo "<script>
+                            alert('File Uploaded Successfull...')
+                        </script>";
+                                }
+                            } else {
+                    ?>
+                                <script>
+                                    alert('File is larger than 1 KB. Please select a smaller file.')
+                                </script>
+
+                            <?php
+                            }
+                        } else {
+                            ?>
+                            <script>
+                                alert('File is not a png or jpg file')
+                            </script>
+                    <?php
+                        }
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -303,7 +338,7 @@
     $(document).ready(function() {
         $("#edit_room_form").validate({
             rules: {
-                team: {
+                pic: {
                     required: true,
                 },
                 room_name: {
@@ -331,7 +366,7 @@
                 }
             },
             messages: {
-                team: {
+                pic: {
                     required: "Please upload a photo.",
                 },
                 room_name: {
