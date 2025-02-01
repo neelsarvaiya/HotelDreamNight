@@ -37,28 +37,28 @@
                     </a>
                     <h5 class="mt-4 h-font">Call Us</h5>
                     <a href="tel: +917778889991" class="d-inline-block mb-2 text-decoration-none text-dark"><i
-                            class="bi bi-telephone-fill"></i> +917778889991</a><br>
-                    <a href="tel: +917778889991" class="d-inline-block text-decoration-none text-dark"><i
-                            class="bi bi-telephone-fill"></i> +917778889991</a>
+                            class="bi bi-telephone-fill"></i> +91 7778889991</a><br>
+                    <a href="tel: +918529636985" class="d-inline-block text-decoration-none text-dark"><i
+                            class="bi bi-telephone-fill"></i> +91 8529636985</a>
                     <h5 class="mt-4 h-font">Email : </h5>
-                    <a href="#" class="d-inline-block text-decoration-none text-dark">
+                    <a href="mailto:" class="d-inline-block text-decoration-none text-dark">
                         <i class="bi bi-envelope-fill"></i> kkanjariya630@rku.ac.in
                     </a>
                     <h5 class="mt-4 h-font">Follow Us</h5>
-                    <a href="#" class="d-inline-block text-dark fs-5 me-2">
+                    <a href="https://www.twitter.com/" class="d-inline-block text-dark fs-5 me-2">
                         <i class="bi bi-twitter me-1"></i>
                     </a>
-                    <a href="#" class="d-inline-block text-dark fs-5 me-2">
+                    <a href="https://www.facebook.com/" class="d-inline-block text-dark fs-5 me-2">
                         <i class="bi bi-facebook me-1"></i>
                     </a>
-                    <a href="#" class="d-inline-block text-dark fs-5 me-2">
+                    <a href="https://www.instagram.com/" class="d-inline-block text-dark fs-5 me-2">
                         <i class="bi bi-instagram me-1"></i>
                     </a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 px-4">
                 <div class="bg-white rounded shadow p-4">
-                    <form id="send">
+                    <form id="send" method="post" action="contact.php">
                         <h5 class="h-font">Send a messages :</h5>
                         <div class="mt-3">
                             <label for="name" class="form-label" style="font-weight: 500;">Name : </label>

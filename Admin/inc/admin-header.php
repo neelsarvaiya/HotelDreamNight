@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/common.css">
     <link href="script1/bootstrap.min.css" rel="stylesheet">
     <script src="script1/bootstrap.bundle.min.js"></script>
-    <!-- <link rel="stylesheet" href="script1/bootstrap-icons.min.css"> -->
+    <!-- <script src="script1/bootstrap-icons.min.css"></script> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="script1/jquery-3.7.1.js"></script>
     <script src="script1/jquery.validate.min.js"></script>

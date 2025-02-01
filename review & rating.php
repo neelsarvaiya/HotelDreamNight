@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Review</title>
+    <title>DreamNights | Review & Rating</title>
     <?php
     require('inc/header.php');
     require('inc/link.php');

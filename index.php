@@ -9,17 +9,13 @@
     require('inc/link.php');
     ?>
     <style>
-        .availability-form {
-            margin-top: -50px;
-            z-index: 2;
-            position: relative;
+        .pop {
+            transition: all ease 0.5s;
         }
 
-        @media screen and (max-width: 575px) {
-            .availability-form {
-                margin-top: 25px;
-                padding: 0 35px;
-            }
+        .pop:hover {
+            border-top-color: var(--teal) !important;
+            transform: scaleX(1.1) scaleY(0.9);
         }
     </style>
 </head>
@@ -33,22 +29,22 @@
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="img/carousel/1.png" class="d-block w-100" alt="...">
+                <img src="img/carousel/1.png" class="d-block w-100">
             </div>
             <div class="carousel-item">
-                <img src="img/carousel/2.png" class="d-block w-100" alt="...">
+                <img src="img/carousel/2.png" class="d-block w-100">
             </div>
             <div class="carousel-item">
-                <img src="img/carousel/3.png" class="d-block w-100" alt="...">
+                <img src="img/carousel/3.png" class="d-block w-100">
             </div>
             <div class="carousel-item">
-                <img src="img/carousel/4.png" class="d-block w-100" alt="...">
+                <img src="img/carousel/4.png" class="d-block w-100">
             </div>
             <div class="carousel-item">
-                <img src="img/carousel/5.png" class="d-block w-100" alt="...">
+                <img src="img/carousel/5.png" class="d-block w-100">
             </div>
             <div class="carousel-item">
-                <img src="img/carousel/6.png" class="d-block w-100" alt="...">
+                <img src="img/carousel/6.png" class="d-block w-100">
             </div>
         </div>
     </div>
@@ -74,7 +70,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-6 my-3">
                 <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-                    <img src="img/rooms/2.png" class="card-img-top" alt="">
+                    <img src="img/rooms/2.png" class="card-img-top rounded">
                     <div class="card-body">
                         <h5>Supreme Deluxe Room</h5>
                         <h6 class="mb-4">₹10000 per night</h6>
@@ -139,7 +135,7 @@
 
             <div class="col-lg-4 col-md-6 my-3">
                 <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-                    <img src="img/rooms/4.png" class="card-img-top" alt="">
+                    <img src="img/rooms/4.png" class="card-img-top rounded">
                     <div class="card-body">
                         <h5>Luxury Room</h5>
                         <h6 class="mb-4">₹8000 per night</h6>
@@ -201,7 +197,7 @@
 
             <div class="col-lg-4 col-md-6 my-3">
                 <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-                    <img src="img/rooms/8.png" class="card-img-top" alt="">
+                    <img src="img/rooms/8.png" class="card-img-top rounded">
                     <div class="card-body">
                         <h5>Deluxe Room</h5>
                         <h6 class="mb-4">₹6000 per night</h6>
@@ -270,23 +266,23 @@
     <div class="h-line bg-dark"></div>
     <div class="container">
         <div class="row justify-content-evenly px-lg-0 px-md-0 px-5">
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3">
+            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 pop">
                 <img src="img/facilities/wifi6.svg" width="80ppx">
                 <h5 class="mt-3">Geyser</h5>
             </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3">
+            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 pop">
                 <img src="img/facilities/wifi2.svg" width="80ppx">
                 <h5 class="mt-3">Room Heater</h5>
             </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3">
+            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 pop">
                 <img src="img/facilities/wifi3.svg" width="80ppx">
                 <h5 class="mt-3">Air Conditioner</h5>
             </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3">
+            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 pop">
                 <img src="img/facilities/wifi4.svg" width="80ppx">
                 <h5 class="mt-3">Spa</h5>
             </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3">
+            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 pop">
                 <img src="img/facilities/wifi5.svg" width="80ppx">
                 <h5 class="mt-3">Television</h5>
             </div>
@@ -300,10 +296,11 @@
     <div class="h-line bg-dark"></div>
     <div class="container">
         <div class="row">
+
             <div class="col-lg-4 col-md-6  my-3 bg-white border-3 border-dark m-3">
                 <div class="profile d-flex align-items-center mb-3 mt-3">
                     <img src="img/a1.jpg" width="60px" height="60px" class="rounded-circle">
-                    <h6 class="m-0 ms-2">Sarah W.</h6>
+                    <h6 class="m-0 ms-2">Alessandro Rossi</h6>
                 </div>
                 <p>
                     DreamNights Hotel exceeded all my expectations! The rooms were spotless, The facilities were top-notch, and the staff went above and beyond to make us feel welcome. the staff was incredibly friendly, and the location was perfect. I'll definitely be returning!.
@@ -320,7 +317,7 @@
             <div class="col-lg-3 col-md-6 my-3 border-2 border-dark bg-white m-3">
                 <div class="profile d-flex align-items-center mb-3 mt-3">
                     <img src="img/a2.jpeg" width="60px" height="60px" class="rounded-circle">
-                    <h6 class="m-0 ms-2">James L.</h6>
+                    <h6 class="m-0 ms-2">Sopia Becker</h6>
                 </div>
                 <p>
                     We stayed for a week with our kids and had an amazing time. The facilities were top-notch, and the staff went above and beyond to make us feel welcome. Highlyrecommended!
@@ -337,7 +334,7 @@
             <div class="col-lg-4 col-md-6 my-3 border-2 border-dark bg-white m-3">
                 <div class="profile d-flex align-items-center mb-3 mt-3">
                     <img src="img/a3.jpg" width="60px" height="60px" class="rounded-circle">
-                    <h6 class="m-0 ms-2">Michael R.</h6>
+                    <h6 class="m-0 ms-2">Marco Bianchi</h6>
                 </div>
                 <p>
                     DreamNights Hotel provided me everything I needed during my business trip. The facilities were top-notch. The Wi-Fi was fast, the conference facilities were excellent, and the service was impeccable. the staff was incredibly friendly.
@@ -350,10 +347,9 @@
                     <i class="bi bi-star text-warning"></i>
                 </div>
             </div>
-
-            <div class="col-ld-12 text-center mt-5">
-                <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 shadow-none">Know More >>></a>
-            </div>
+        </div>
+        <div class="col-ld-12 text-center mt-5">
+            <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 shadow-none">Know More >>></a>
         </div>
     </div>
 
@@ -371,7 +367,7 @@
                     <h5 class="h-font">Call Us</h5>
                     <a href="tel: +917778889991" class="d-inline-block mb-2 text-decoration-none text-dark"><i
                             class="bi bi-telephone-fill"></i> +91 7778889991</a><br>
-                    <a href="tel: +917778889991" class="d-inline-block text-decoration-none text-dark"><i
+                    <a href="tel: +91852936985" class="d-inline-block text-decoration-none text-dark"><i
                             class="bi bi-telephone-fill"></i> +91 8529636985</a>
                 </div>
                 <div class="bg-white p-4 ronded mb-4">

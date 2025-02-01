@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamNights Hotel | Supreme Room</title>
+    <title>DreamNights Hotel | Profile</title>
     <?php
     require('inc/link.php');
     ?>

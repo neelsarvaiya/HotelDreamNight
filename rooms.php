@@ -145,7 +145,8 @@
                         $bookNowUrl = "#";
                         $loginAlert = "";
 
-                        if (isset($_COOKIE['user'])) {
+                        if (isset($_SESSION['email'])) {
+
                             $bookNowUrl = "booking.php";
                         } else {
 

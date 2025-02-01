@@ -53,29 +53,25 @@
                     }
                 }
             </style>
-
             <?php
 
+            session_start();
+
             if (isset($_POST['email'])) {
-                $email = $_POST['email'];
-                setcookie("user", $email, time() + 3600, "/");
-            } elseif (isset($_COOKIE['user'])) {
-                $email = $_COOKIE['user'];
-            } else {
-                $email = "";
+                $_SESSION['email'] = $_POST['email'];
             }
 
-            if ($email == "neelsarvaiya11@gmail.com") {
+            if (isset($_SESSION['email']) && $_SESSION['email'] == "kkanjariya630@rku.ac.in") {
                 echo '<div class="dropdown mx-5">
-                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="img/profile.jpg" width="30px" height="30px" class="rounded-circle"> Николай 
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="user-profile.php"><i class="bi bi-file-earmark-person"></i> Profile</a></li>
-                <li><a class="dropdown-item" href="review & rating.php"><img src="img/star.png" style="height: 25px; margin-left: -5px;"> Review & Reating</a></li>
-                <li><a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-in-left"></i> logout</a></li>
-                </ul>            
-                </div>';
+  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      <img src="img/profile.jpg" width="30px" height="30px" class="rounded-circle"> Николай 
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="user-profile.php"><i class="bi bi-file-earmark-person"></i> Profile</a></li>
+    <li><a class="dropdown-item" href="review & rating.php"><img src="img/star.png" style="height: 25px; margin-left: -5px;"> Review & Reating</a></li>
+    <li><a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-in-left"></i> logout</a></li>
+  </ul>
+</div>';
             } else {
                 echo '<div class="d-flex">
             <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal"
@@ -88,7 +84,6 @@
             </button>
           </div>';
             }
-
             ?>
         </div>
     </div>
@@ -126,8 +121,6 @@
         }
     });
 </script>
-
-
 
 <script src="script/jquery-3.7.1.js"></script>
 <script src="script/jquery.validate.min.js"></script>
@@ -338,8 +331,9 @@ if (isset($_POST['Pic_submit'])) {
             $fname = uniqid() . $_FILES['pic']['name'];
             if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
                 echo "<script>
-                            alert('File Uploaded Successfull...')
-                        </script>";
+                            alert('Registration SuccessFully...');
+                            window.location.href = 'index.php';
+                      </script>";
             }
         } else {
 ?>
@@ -462,7 +456,7 @@ if (isset($_POST['Pic_submit'])) {
                 },
                 pin: {
                     required: "Please enter your PINCODE ",
-                    digits: "only",
+                    digits: "only Digit is Allowed",
                     minlength: "Please Enter Minimum 6 Digits",
                     maxlength: "Please Enter Maxiimum 6 Digits"
                 }
