@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php" style="text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);"> <img src="img/logo.png" width="110px">DreamNights</a>
+        <a class="navbar-brand me-5 fw-bold fs-3 h-font loader" href="index.php" style="text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);"> <img src="img/logo.png" width="110px">DreamNights</a>
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -25,6 +25,28 @@
                 </li>
             </ul>
             <style>
+                .loader {
+                    animation: spin 2s linear infinite;
+                }
+
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+
+                    40% {
+                        transform: rotate(1.9deg);
+                    }
+
+                    80% {
+                        transform: rotate(-1.9deg);
+                    }
+
+                    100% {
+                        transform: rotate(0deg);
+                    }
+                }
+
                 @media screen and (max-width: 1073px) {
                     .nav-link {
                         font-size: 15px;
@@ -54,15 +76,15 @@
                 }
             </style>
             <div class="d-flex">
-            <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal"
-            data-bs-target="#loginModal">
-              <i class="bi bi-box-arrow-right"></i> Login
-            </button>
-            <button type="button" class="btn btn-outline-dark shadow-none" data-bs-toggle="modal"
-            data-bs-target="#registerModal">
-             <i class="bi bi-person-lines-fill fs-5"></i> Register
-            </button>
-          </div>
+                <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal"
+                    data-bs-target="#loginModal">
+                    <i class="bi bi-box-arrow-right"></i> Login
+                </button>
+                <button type="button" class="btn btn-outline-dark shadow-none" data-bs-toggle="modal"
+                    data-bs-target="#registerModal">
+                    <i class="bi bi-person-lines-fill fs-5"></i> Register
+                </button>
+            </div>
         </div>
     </div>
 
@@ -126,12 +148,12 @@
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <button type="submit" class="btn btn-dark shadow-none" name="login">Login</button>
                         <?php
-                        if(isset($_POST['login'])){
-                            ?>
+                        if (isset($_POST['login'])) {
+                        ?>
                             <script>
                                 window.location.href = "index.php";
                             </script>
-                            <?php
+                        <?php
                         }
                         ?>
                         <a href="#" class="text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#forgot" data-bs-dismiss="modal"> Forgot
