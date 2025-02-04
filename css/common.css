@@ -12,10 +12,10 @@
     font-family: 'Merienda', cursive;
 }
 
-.custom-bg {
+/* .custom-bg {
     background-color: var(--teal);
     border: 1px solid var(--teal);
-}
+} */
 
 .custom-bg:hover {
     background-color: var(--teal_hover);
@@ -33,22 +33,22 @@
 }
 
 
-.ft a i {
+/* .ft a i {
     transition: all .6s ease;
 }
 
 .ft a i:hover {
     transform: translateX(18px);
-}
+} */
 
-div.user{
+/* div.user {
     background-color: black;
     padding: 5px 15px;
     border-radius: 5px;
     font-weight: 500;
 }
 
-.user a{
+.user a {
     color: white;
     text-decoration: none;
-}
+} */
