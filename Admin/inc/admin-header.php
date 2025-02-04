@@ -14,7 +14,7 @@
     <script src="script1/jquery.validate.min.js"></script>
 </head>
 
-<body>
+<body class="bg-light">
 
     <div class="offcanvas offcanvas-start text-bg-dark" id="demo" style="width: 300px;">
         <div class="offcanvas-header">
@@ -68,7 +68,3 @@
             <i class="bi bi-list fs-3"></i>
         </button>
     </div>
-
-</body>
-
-</html>

@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="wi dth=device-width, initial-scale=1.0">
-    <title>Admin | Dashboard</title>
-</head>
-
-<body class="bg-light">
-
-    <?php
-    require('inc/admin-header.php');
+<?php
+    include_once('inc/admin-header.php');
     ?>
 
     <div class="row mt-5 mb-4 mx-5">
@@ -74,9 +63,6 @@
             </div>
         </div>
     </div>
-
-
-    <h6 class="text-center bg-dark text-white p-3 m-0 h-font">@Designed and Developed by DreamNights Hotel</h6>
-</body>
-
-</html>
+<?php
+include_once('inc/admin-footer.php');
+?>

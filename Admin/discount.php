@@ -158,12 +158,12 @@
                             <input type="number" name="dis" id="dis" class="form-control">
                         </div>
                         <div class="mb-2">
-                            <label for="price">Price : </label>
-                            <input type="text" name="price" id="price" value="₹10000" class="form-control" readonly>
+                            <label for="price" class="form-lable">Price : </label>
+                            <input type="text" name="price" id="price" placeholder="₹10000" class="form-control" readonly>
                         </div>
                         <div class="mb-2">
                             <label for="dis_price">Discounted Price : </label>
-                            <input type="text" name="dis_price" id="dis_price" class="form-control">
+                            <input type="number" name="dis_price" id="dis_price" class="form-control">
                         </div>
                         <div class="d-flex align-items-end justify-content-between mb-2">
                             <button type="submit" class="btn btn-dark shadow" name="login">Submit</button>
@@ -173,12 +173,6 @@
             </div>
         </div>
     </div>
-
-    <h6 class="text-center bg-dark text-white p-3 m-0 h-font">@Designed and Developed by DreamNights Hotel</h6>
-</body>
-
-</html>
-
 <script>
     $(document).ready(function() {
 
@@ -218,3 +212,6 @@
         })
     });
 </script>
+<?php
+include_once('inc/admin-footer.php');
+?>

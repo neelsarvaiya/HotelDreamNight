@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamNights Hotel | Supreme Room</title>
-    <?php
-    require('inc/link.php');
-    ?>
-</head>
-
-<body class="bg-light">
-
-    <?php
-    require('inc/header.php');
+<?php
+    include_once('inc/header.php');
     ?>
     <div class="container">
         <div class="row">
@@ -29,7 +16,7 @@
                 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="img/rooms/3.png" class="d-block w-100 rounded" alt="...">
+                            <img src="img/rooms/2.png" class="d-block w-100 rounded" alt="...">
                         </div>
                         <div class="carousel-item">
                             <img src="img/rooms/1.jpg" class="d-block w-100 rounded" alt="...">
@@ -167,9 +154,5 @@
     </div>
 
     <?php
-    require('inc/footer.php');
+    include_once('inc/footer.php');
     ?>
-
-</body>
-
-</html>

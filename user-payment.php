@@ -1,77 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Page</title>
-</head>
-
 <?php
-require('inc/header.php');
-require('inc/link.php');
+include_once('inc/header.php');
 ?>
 
-<body class="bg-light">
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header text-center bg-dark text-white">
-                        <h4>Payment Details</h4>
-                    </div>
-                    <div class="card-body">
-                        <form action="" method="post" id="payment">
-                            <div class="mb-3">
-                                <label for="cardName" class="form-label">Cardholder Name</label>
-                                <input type="text" id="cardName" name="cardName" class="form-control" placeholder="Enter cardholder name">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center bg-dark text-white">
+                    <h4>Payment Details</h4>
+                </div>
+                <div class="card-body">
+                    <form action="discount.php" method="post" id="payment">
+                        <div class="mb-3">
+                            <label for="cardName" class="form-label">Cardholder Name</label>
+                            <input type="text" id="cardName" name="cardName" class="form-control" placeholder="Enter cardholder name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Card Number</label>
+                            <input type="number" id="cardNumber" name="cardNumber" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="expiryDate" class="form-label">Expiry Date</label>
+                                <input type="month" id="expiryDate" name="expiryDate" class="form-control">
                             </div>
-                            <div class="mb-3">
-                                <label for="cardNumber" class="form-label">Card Number</label>
-                                <input type="number" id="cardNumber" name="cardNumber" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX">
+                            <div class="col-md-6">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="number" id="cvv" name="cvv" class="form-control" placeholder="XXX" maxlength="3">
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="expiryDate" class="form-label">Expiry Date</label>
-                                    <input type="month" id="expiryDate" name="expiryDate" class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="cvv" class="form-label">CVV</label>
-                                    <input type="number" id="cvv" name="cvv" class="form-control" placeholder="XXX" maxlength="3">
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount" class="form-label">Amount</label>
-                                <input type="text" id="amount" name="amount" class="form-control" placeholder="₹300" readonly>
-                            </div>
-                            <button type="submit" class="btn btn-success custom-bg w-100" name="payment">Pay Now</button>
-                        </form>
-                        <?php
-                            if (isset($_POST['payment'])) {
-                                echo "<script>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="text" id="amount" name="amount" class="form-control" placeholder="₹300" readonly>
+                        </div>
+                        <button type="submit" class="btn btn-success custom-bg w-100" name="payment">Pay Now</button>
+                    </form>
+                    <?php
+                    if (isset($_POST['payment'])) {
+                        echo "<script>
                                        alert('Pyment Successfull');
                                        window.location.href = 'index.php';
                                      </script>";
-                            }
-                        ?>
-                    </div>
+                    }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    <?php
-    if(isset($_POST['pay']))
-    {
-        echo 'neel';
-    }
-    require('inc/footer.php');
-    ?>
-
-</body>
-
-</html>
+<?php
+include_once('inc/footer.php');
+?>
 <script>
     $(document).ready(function() {
 
@@ -127,7 +108,6 @@ require('inc/link.php');
                 }
             },
             errorPlacement: function(error, element) {
-                // Custom placement for error messages
                 error.addClass("text-danger");
                 error.insertAfter(element);
             },
