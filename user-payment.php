@@ -2,6 +2,13 @@
 include_once('inc/header.php');
 ?>
 
+<style>
+    .custom-bg {
+        background-color: var(--teal);
+        border: 1px solid var(--teal);
+    }
+</style>
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -31,7 +38,7 @@ include_once('inc/header.php');
                         </div>
                         <div class="mb-3">
                             <label for="amount" class="form-label">Amount</label>
-                            <input type="text" id="amount" name="amount" class="form-control" placeholder="₹300" readonly>
+                            <input type="text" id="amount" name="amount" class="form-control" placeholder="₹2700" readonly>
                         </div>
                         <button type="submit" class="btn btn-success custom-bg w-100" name="payment">Pay Now</button>
                     </form>
@@ -49,10 +56,6 @@ include_once('inc/header.php');
     </div>
 </div>
 
-
-<?php
-include_once('inc/footer.php');
-?>
 <script>
     $(document).ready(function() {
 
@@ -120,3 +123,7 @@ include_once('inc/footer.php');
         });
     });
 </script>
+
+<?php
+include_once('inc/footer.php');
+?>

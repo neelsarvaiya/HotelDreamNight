@@ -1,6 +1,15 @@
 <?php
 include_once('inc/header.php');
 ?>
+
+<style>
+    .custom-bg {
+        background-color: var(--teal);
+        border: 1px solid var(--teal);
+    }
+</style>
+
+
 <div class="container">
     <div class="row">
         <div class="col-12 my-5 mb-4 px-4">

@@ -9,7 +9,7 @@ include_once('inc/header.php');
                 <img src="img/rooms/3.png" alt="Simple Room" class="card-img-top rounded p-3">
                 <div class="card-body text-center">
                     <h5 class="card-title">Simple Room</h5>
-                    <p class="card-text">₹300 per night</p>
+                    <p class="card-text">₹2700 per night</p>
                 </div>
             </div>
         </div>
