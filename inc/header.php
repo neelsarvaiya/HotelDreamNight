@@ -289,7 +289,7 @@
                         Note : Your details must match with your ID (Aadhaar card, Passport, Driving license, ect.)
                         That will be required during check-in.
                     </span>
-                    <form id="registerform" action="index.php" method="post" enctype="multipart/form-data">
+                    <form id="registerform" action="Backend/registration.php" method="post" enctype="multipart/form-data">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6 ps-0 mb-3">
@@ -334,7 +334,7 @@
                             </div>
                         </div>
                         <div class="text-center my-1">
-                            <button type="submit" name="Pic_submit" class="btn btn-dark shadow-none">Register</button>
+                            <button type="submit" name="register" class="btn btn-dark shadow-none">Register</button>
                         </div>
                 </div>
                 </form>
@@ -342,7 +342,7 @@
         </div>
     </div>
     <?php
-    if (isset($_POST['Pic_submit'])) {
+    if (isset($_POST['Pic'])) {
 
         $ftype = $_FILES['pic']['type'];
         $fsize = $_FILES['pic']['size'];
