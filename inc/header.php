@@ -341,43 +341,7 @@
             </div>
         </div>
     </div>
-    <?php
-    if (isset($_POST['Pic'])) {
-
-        $ftype = $_FILES['pic']['type'];
-        $fsize = $_FILES['pic']['size'];
-        if ($ftype == "image/png" || $ftype == "image/jpg") {
-
-            if ($fsize <= 1024 * 1024) {
-
-                if (!is_dir("uploads")) {
-                    mkdir("uploads");
-                }
-
-                $fname = uniqid() . $_FILES['pic']['name'];
-                if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
-                    echo "<script>
-                            alert('Registration SuccessFully...');
-                            window.location.href = 'index.php';
-                      </script>";
-                }
-            } else {
-    ?>
-                <script>
-                    alert('File is larger than 1 KB. Please select a smaller file.')
-                </script>
-
-            <?php
-            }
-        } else {
-            ?>
-            <script>
-                alert('File is not a png or jpg file')
-            </script>
-    <?php
-        }
-    }
-    ?>
+    
 
     <script>
         $(document).ready(function() {
