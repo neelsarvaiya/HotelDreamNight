@@ -45,7 +45,7 @@ include_once('inc/admin-header.php');
 <div class="card container mt-5 p-4 border-2 mb-4">
     <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> Team Management
         <button type="button" class="btn btn-dark shadow-none" data-bs-toggle="modal" data-bs-target="#m_team">
-            Edit
+            Add
         </button>
     </div>
     <div class="card-body bg-dark">
@@ -205,7 +205,9 @@ include_once('inc/admin-header.php');
         </div>
     </div>
 </div>
-
+</div>
+</div>
+</div>
 <script>
     $(document).ready(function() {
 
@@ -318,7 +320,3 @@ include_once('inc/admin-header.php');
         })
     });
 </script>
-
-<?php
-include_once('inc/admin-footer.php');
-?>

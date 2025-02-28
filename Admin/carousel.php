@@ -9,42 +9,39 @@ include_once('inc/admin-header.php');
             Add
         </button>
     </div>
+
+    <?php
+    require_once('connection.php');
+
+    $sql = "SELECT * FROM `carousel`";
+    $res = mysqli_query($conn, $sql);
+    ?>
+
     <div class="card-body">
         <div class="row  d-flex align-items-center justify-content-between">
-            <div class="col-lg-6 col-md-12">
-                <div class=" text-center overflow-hidden mb-sm-3 mb-md-2">
-                    <img src="img/carousel/1.png" class="w-100 rounded" style="height: 200px;">
-                    <div class="d-flex align-items-center justify-content-between mx-3 m-xs-0 non">
-                        <button class="btn btn-danger btn-md mt-2 mb-2">Delete</button>
+
+            <?php
+            while ($data = mysqli_fetch_assoc($res)) {
+                $status = $data['status'];
+            ?>
+                <div class="col-lg-6 col-md-12">
+                    <div class=" text-center overflow-hidden mb-sm-3 mb-md-2">
+                        <img src="../img/carousel/<?= $data['image'] ?>" class="w-100 rounded" style="height: 200px;">
+                        <div class="d-flex align-items-center m-xs-0">
+                            <button class="btn btn-danger btn-md mt-2 mb-2 me-3">Delete</button>
+                            <button class="btn btn-danger btn-md mt-2 mb-2 me-3">Inactive</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="text-center overflow-hidden mb-sm-3 mb-md-2">
-                    <img src="img/carousel/2.png" class="w-100 rounded" style="height: 200px;">
-                    <div class="d-flex align-items-center justify-content-between mx-3 m-xs-0 non">
-                        <button class="btn btn-danger btn-md mt-2 mb-2">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="text-center overflow-hidden mb-sm-3 mb-md-2">
-                    <img src="img/carousel/3.png" class="w-100 rounded" style="height: 200px;">
-                    <div class="d-flex align-items-center justify-content-between mx-3 m-xs-0 non">
-                        <button class="btn btn-danger btn-md mt-2 mb-2">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="overflow-hidden mb-sm-3 mb-md-2">
-                    <img src="img/carousel/4.png" class="w-100 rounded" style="height: 200px;">
-                    <div class="d-flex align-items-center justify-content-between mx-3 m-xs-0 non">
-                        <button class="btn btn-danger btn-md mt-2 mb-2">Delete</button>
-                    </div>
-                </div>
-            </div>
+            <?php
+            }
+            ?>
+
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -62,72 +59,78 @@ include_once('inc/admin-header.php');
             </div>
             <form id="carousel_pic" method="post" enctype="multipart/form-data" action="carousel.php">
                 <div class="modal-body">
-                    <label for="name">Choose Photo :</label>
-                    <input type="file" name="pic" id="team" class="mb-1 col-md-12 form-control">
+                    <input type="file" name="image" class="mb-1 col-md-12 form-control">
                 </div>
                 <div class="mb-3 mx-3">
-                    <button type="submit" name="Pic_submit" class="btn btn-success shadow-none">Save</button>
+                    <button type="submit" name="Pic_submit" class="btn btn-success shadow-none">Add</button>
                 </div>
             </form>
 
-            <?php
-            if (isset($_POST['Pic_submit'])) {
 
-                $ftype = $_FILES['pic']['type'];
-                $fsize = $_FILES['pic']['size'];
+            <script>
+                $(document).ready(function() {
+                    $("#carousel_pic").validate({
+                        rules: {
+                            image: {
+                                required: true,
+                            }
+                        },
+                        messages: {
+                            image: {
+                                required: "Please select a Image.",
+                            }
+                        },
+                    });
+                });
+            </script>
+
+            <?php
+            function upload_image($img)
+            {
+                $tmpLocation = $img['tmp_name'];
+                $ftype = $img['type'];
+                $file = $img['name'];
+
+                define("UPLOAD_SRC", $_SERVER['DOCUMENT_ROOT'] . "/HotelDreamNight/img/carousel/");
+
+                $fileLocation = UPLOAD_SRC . $file;
+
                 if ($ftype == "image/png" || $ftype == "image/jpg") {
 
-                    if ($fsize <= 1024 * 1024) {
-
-                        if (!is_dir("uploads")) {
-                            mkdir("uploads");
-                        }
-
-                        $fname = uniqid() . $_FILES['pic']['name'];
-                        if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
-                            echo "<script>
-                            alert('File Uploaded Successfull...')
-                        </script>";
-                        }
+                    if (!move_uploaded_file($tmpLocation, $fileLocation)) {
+                        echo "
+                               <script>alert('File uploading failed');</script>
+                            ";
+                        exit();
                     } else {
-            ?>
-                        <script>
-                            alert('File is larger than 1 KB. Please select a smaller file.')
-                        </script>
-
-                    <?php
+                        return $file;
                     }
-                } else {
-                    ?>
-                    <script>
-                        alert('File is not a png or jpg file')
-                    </script>
-            <?php
                 }
             }
             ?>
 
+            <?php
+            if (isset($_POST['Pic_submit'])) {
+
+                $filename = upload_image($_FILES['image']);
+
+                $insert = "INSERT INTO `carousel`(`image`) VALUES ('$filename')";
+
+                $result = mysqli_query($conn, $insert);
+
+                if ($result) {
+                    echo "
+                    <script>
+                      alert('Image uploaded successfully!');
+                      window.location.href = 'carousel.php';
+                    </script>
+                ";
+                exit();
+                } else {
+                    echo "inserting failed" . mysqli_error($conn);
+                }
+            }
+            ?>
         </div>
     </div>
 </div>
-
-
-<script>
-    $(document).ready(function() {
-        $("#carousel_pic").validate({
-            rules: {
-                pic: {
-                    required: true,
-                }
-            },
-            messages: {
-                pic: {
-                    required: "Please select a profile picture.",
-                }
-            },
-        });
-    });
-</script>
-<?php
-include_once('inc/admin-footer.php');
-?>

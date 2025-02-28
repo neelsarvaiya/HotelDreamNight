@@ -7,7 +7,7 @@ include_once('inc/admin-header.php');
         <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
     </div>
 
-    <div class="table-responsive table-responsive-md table-responsive-sm">
+    <div class="table-responsive table-responsive-md table-responsive-sm" style="z-index: 1;">
         <div class="container mt-3">
             <table class="table table-striped table-bordered text-center" style="min-width: 1400px;">
                 <thead class="sticky-top">
@@ -18,7 +18,7 @@ include_once('inc/admin-header.php');
                         <th scope="col" class="bg-dark text-white">Phone no.</th>
                         <th scope="col" class="bg-dark text-white">Address</th>
                         <th scope="col" class="bg-dark text-white">DOB</th>
-                        <th scope="col" class="bg-dark text-white">varified</th>
+                        <th scope="col" class="bg-dark text-white">Status</th>
                         <th scope="col" class="bg-dark text-white">Date</th>
                         <th scope="col" class="bg-dark text-white">Action</th>
                     </tr>
@@ -34,7 +34,10 @@ include_once('inc/admin-header.php');
                         <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
                         <td>11-5-2025</td>
                         <td>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -47,7 +50,10 @@ include_once('inc/admin-header.php');
                         <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
                         <td>11-10-2024</td>
                         <td>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +66,10 @@ include_once('inc/admin-header.php');
                         <td><span class="badge bg-danger"><i class="bi bi-x-lg"></i></span></td>
                         <td>9-6-2024</td>
                         <td>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -73,7 +82,10 @@ include_once('inc/admin-header.php');
                         <td><span class="badge bg-danger"><i class="bi bi-x-lg"></i></span></td>
                         <td>3-6-2023</td>
                         <td>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -82,6 +94,6 @@ include_once('inc/admin-header.php');
     </div>
 </div>
 </div>
-<?php
-include_once('inc/admin-footer.php');
-?>
+</div>
+</div>
+</div>

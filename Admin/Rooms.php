@@ -317,6 +317,9 @@ include_once("inc/admin-header.php");
         </div>
     </div>
 </div>
+</div>
+</div>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -390,6 +393,3 @@ include_once("inc/admin-header.php");
         });
     });
 </script>
-<?php
-include_once('inc/admin-footer.php');
-?>

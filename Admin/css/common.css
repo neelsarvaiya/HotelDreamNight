@@ -12,12 +12,6 @@
     font-family: 'Merienda', cursive;
 }
 
-/* input::-webkit-outer-spin-button,
-input::-webkit-outer-inner-button {
-    -webkit-appearance: none;
-    margin: 0;
-} */
-
 .custom-bg {
     background-color: var(--teal);
     border: 1px solid var(--teal);
@@ -34,14 +28,6 @@ input::-webkit-outer-inner-button {
     height: 1.7px;
 }
 
-.offcanvas-body ul li a {
-    transition: all .6s ease;
-}
-
-.offcanvas-body ul li a:hover {
-    transform: translateX(18px);
-}
-
 .error {
     color: red;
 }
@@ -51,9 +37,22 @@ input::-webkit-outer-inner-button {
     .swiper-slide {
         margin-bottom: 15px;
     }
+}
 
-    .non h5,
-    button {
-        font-size: 18px;
+#dashbord-menu{
+    position: fixed; 
+    height: 100%;
+}
+
+@media screen and (max-width: 992px) {
+    #dashbord-menu{
+        width: 100%;
+        height: auto;
+        z-index: 1000;
+    }
+    #main-content{
+        margin-top: 60px;
     }
 }
+
+

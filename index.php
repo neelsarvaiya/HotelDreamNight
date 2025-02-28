@@ -39,26 +39,28 @@ include_once('inc/header.php');
     }
 </style>
 
-<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+<?php require_once('Admin/connection.php');
+
+$sql = "SELECT * FROM `carousel`";
+$res = mysqli_query($conn, $sql);
+
+?>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="img/carousel/1.png" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-            <img src="img/carousel/2.png" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-            <img src="img/carousel/3.png" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-            <img src="img/carousel/4.png" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-            <img src="img/carousel/5.png" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-            <img src="img/carousel/6.png" class="d-block w-100">
-        </div>
+        <?php
+        $firstimg = true;
+        while ($data = mysqli_fetch_assoc($res)) {
+            $status = $data['status'];
+            if ($status == 'Active') {
+        ?>
+                <div class="carousel-item <?= $firstimg ? 'active' : '' ?>">
+                    <img src="img/carousel/<?= $data['image'] ?>" class="d-block w-100">
+                </div>
+        <?php
+                $firstimg = false;
+            }
+        }
+        ?>
     </div>
 </div>
 

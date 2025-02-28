@@ -7,7 +7,7 @@ include_once('inc/admin-header.php');
         <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
     </div>
 
-    <div class="table-responsive-md table-responsive-sm">
+    <div class="table-responsive-md table-responsive-sm" style="z-index: 1;">
         <div class="container mt-3">
             <table class="table table-striped table-bordered text-center">
                 <thead class="sticky-top">
@@ -28,10 +28,10 @@ include_once('inc/admin-header.php');
                         <td>Query</td>
                         <td>about users query from admin</td>
                         <td>
-                            <button type="button" class="btn btn-info shadow-none" data-bs-toggle="modal" data-bs-target="#response">
-                                Response
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
+                                <i class="fa-solid fa-reply-all"></i>
                             </button>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -41,10 +41,10 @@ include_once('inc/admin-header.php');
                         <td>Query</td>
                         <td>about users query from admin</td>
                         <td>
-                            <button type="button" class="btn btn-info shadow-none" data-bs-toggle="modal" data-bs-target="#response">
-                                Response
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
+                                <i class="fa-solid fa-reply-all"></i>
                             </button>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -54,10 +54,10 @@ include_once('inc/admin-header.php');
                         <td>Query</td>
                         <td>about users query from admin</td>
                         <td>
-                            <button type="button" class="btn btn-info shadow-none" data-bs-toggle="modal" data-bs-target="#response">
-                                Response
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
+                                <i class="fa-solid fa-reply-all"></i>
                             </button>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -67,36 +67,10 @@ include_once('inc/admin-header.php');
                         <td>Query</td>
                         <td>about users query from admin</td>
                         <td>
-                            <button type="button" class="btn btn-info shadow-none" data-bs-toggle="modal" data-bs-target="#response">
-                                Response
+                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
+                                <i class="fa-solid fa-reply-all"></i>
                             </button>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>meet</td>
-                        <td>meet@example.com</td>
-                        <td>Query</td>
-                        <td>about users query from admin</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none" data-bs-toggle="modal" data-bs-target="#response">
-                                Response
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>meet</td>
-                        <td>meet@example.com</td>
-                        <td>Query</td>
-                        <td>about users query from admin</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none" data-bs-toggle="modal" data-bs-target="#response">
-                                Response
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button>
+                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -104,7 +78,9 @@ include_once('inc/admin-header.php');
         </div>
     </div>
 </div>
-
+</div>
+</div>
+</div>
 <div class="modal fade" id="response" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -152,7 +128,3 @@ include_once('inc/admin-header.php');
         })
     });
 </script>
-
-<?php
-include_once('inc/admin-footer.php');
-?>

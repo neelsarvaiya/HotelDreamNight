@@ -11,7 +11,7 @@ include_once('inc/admin-header.php');
         </div>
     </div>
 
-    <div class="table-responsive-md table-responsive-sm" style="overflow-y: scroll; height: 205px;">
+    <div class="table-responsive-md table-responsive-sm" style="overflow-y: scroll; z-index: 1; height: 205px;">
         <div class="container mt-3">
             <table class="table table-striped table-bordered">
                 <thead class="sticky-top">
@@ -199,6 +199,9 @@ include_once('inc/admin-header.php');
         </div>
     </div>
 </div>
+</div>
+</div>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -265,6 +268,3 @@ include_once('inc/admin-header.php');
         });
     });
 </script>
-<?php
-include_once('inc/admin-footer.php');
-?>

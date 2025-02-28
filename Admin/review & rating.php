@@ -7,7 +7,7 @@ include_once('inc/admin-header.php');
         <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
     </div>
 
-    <div class="table-responsive-md table-responsive-sm">
+    <div class="table-responsive-md table-responsive-sm" style="z-index: 1;">
         <div class="container mt-3">
             <table class="table table-striped table-bordered text-center">
                 <thead class="sticky-top">
@@ -93,6 +93,9 @@ include_once('inc/admin-header.php');
         </div>
     </div>
 </div>
+</div>
+</div>
+</div>
 <script>
     $(document).ready(function() {
 
@@ -114,6 +117,3 @@ include_once('inc/admin-header.php');
         })
     });
 </script>
-<?php
-include_once('inc/admin-footer.php');
-?>
