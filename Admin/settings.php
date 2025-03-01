@@ -48,44 +48,42 @@ include_once('inc/admin-header.php');
             Add
         </button>
     </div>
-    <div class="card-body bg-dark">
-        <div class="row  d-flex align-items-center justify-content-between">
-            <div class="col-lg-3 col-md-12">
-                <div class="swiper-slide bg-white text-center overflow-hidden rounded mb-sm-3 mb-md-2">
-                    <img src="img/about/team1.webp" class="w-100 ">
-                    <div class="d-flex align-items-center justify-content-between m-2 mx-3 m-xs-0 non">
-                        <h5 class="mt-2 fw-bold">Ethan Miller</h5>
-                        <button class="btn btn-danger btn-md">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-12">
-                <div class="swiper-slide bg-white text-center overflow-hidden rounded mb-sm-3 mb-md-2">
-                    <img src="img/about/team2.webp" class="w-100">
-                    <div class="d-flex align-items-center justify-content-between m-2 mx-3 m-xs-0 non">
-                        <h5 class="mt-2 fw-bold">Daniel Wilson</h5>
-                        <button class="btn btn-danger btn-md">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-12">
-                <div class="swiper-slide bg-white text-center overflow-hidden rounded mb-sm-3 mb-md-2">
-                    <img src="img/about/team3.webp" class="w-100">
-                    <div class="d-flex align-items-center justify-content-between m-2 mx-3 m-xs-0 non">
-                        <h5 class="mt-2 fw-bold">Alexander Brown</h5>
-                        <button class="btn btn-danger btn-md">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-12">
-                <div class="swiper-slide bg-white text-center overflow-hidden rounded mb-sm-3 mb-md-2">
-                    <img src="img/about/team4.webp" class="w-100">
-                    <div class="d-flex align-items-center justify-content-between m-2 mx-3 m-xs-0 non">
-                        <h5 class="mt-2 fw-bold">Mia Anderson</h5>
-                        <button class="btn btn-danger btn-md">Delete</button>
-                    </div>
-                </div>
-            </div>
+    <div class="table-responsive-lg table-responsive-lg" style="z-index: 1;">
+        <div class="container mt-3">
+            <table class="table table-striped table-bordered">
+                <thead class="sticky-top">
+
+                    <tr>
+                        <th scope="col" class="bg-dark text-white">Sr no.</th>
+                        <th scope="col" class="bg-dark text-white">Image</th>
+                        <th scope="col" class="bg-dark text-white">Name</th>
+                        <th scope="col" class="bg-dark text-white">Status</th>
+                        <th scope="col" class="bg-dark text-white">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $select = "SELECT * FROM `team`";
+                    $res = mysqli_query($conn, $select);
+                    while ($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><img src="img/about/<?= $row['image'] ?>" height="400px" width="300px"></td>
+                            <td><?= $row['name'] ?></td>
+                            <td><button class="btn btn-<?php
+                                                        if ($row['status'] == "active")
+                                                            echo "info";
+                                                        else
+                                                            echo "danger";
+                                                        ?> btn-md mx-1"><?= $row['status'] ?></button></td>
+                            <td><button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -156,167 +154,20 @@ include_once('inc/admin-header.php');
             </div>
             <form id="manage_team" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <label for="name">Choose Photo :</label>
-                    <input type="file" name="pic" id="team" class="col-md-12 form-control"> <br>
-
-                    <label for="name">Name :</label>
-                    <input type="text" name="name" placeholder="Enater Name :" class="form-control col-md-12">
+                    <label for="team_management">Choose Photo :</label>
+                    <input type="file" name="team_management" id="team_management" data-validation="required file" class="col-md-12 form-control"> <br>
+                    <div class="error" id="team_managementError"></div>
+                    <label for="name4">Name :</label>
+                    <input type="text" name="name4" id="name4" data-validation="required alpha min max" data-min="2" data-max="50" placeholder="Enater Name :" class="form-control col-md-12">
+                    <div class="error" id="name4Error"></div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
                         <button type="submit" name="Pic_submit" class="btn btn-dark shadow mt-2" name="login">Add</button>
                     </div>
                 </div>
             </form>
-            <?php
-            if (isset($_POST['Pic_submit'])) {
-
-                $ftype = $_FILES['pic']['type'];
-                $fsize = $_FILES['pic']['size'];
-                if ($ftype == "image/png" || $ftype == "image/jpg") {
-
-                    if ($fsize <= 1024 * 1024) {
-
-                        if (!is_dir("uploads")) {
-                            mkdir("uploads");
-                        }
-
-                        $fname = uniqid() . $_FILES['pic']['name'];
-                        if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
-                            echo "<script>
-                            alert('File Uploaded Successfull...')
-                        </script>";
-                        }
-                    } else {
-            ?>
-                        <script>
-                            alert('File is larger than 1 KB. Please select a smaller file.')
-                        </script>
-
-                    <?php
-                    }
-                } else {
-                    ?>
-                    <script>
-                        alert('File is not a png or jpg file')
-                    </script>
-            <?php
-                }
-            }
-            ?>
         </div>
     </div>
 </div>
 </div>
 </div>
 </div>
-<script>
-    $(document).ready(function() {
-
-        $.validator.addMethod("nameValidation", function(value, element) {
-            return this.optional(element) || /^[A-Za-z\s]+$/.test(value);
-        }, "Name can only contain letters and spaces.");
-
-        $.validator.addMethod("fileRequired", function(value, element) {
-            return element.files.length > 0;
-        }, "Please select a file.");
-
-        $("#manage_team").validate({
-            rules: {
-                name: {
-                    required: true,
-                    nameValidation: true,
-                },
-                pic: {
-                    required: true,
-                }
-            },
-            messages: {
-                name: {
-                    required: "FullName is required",
-                    pattern: "Name can only contain letters and spaces",
-                },
-                pic: {
-                    required: "File is requried.",
-                },
-            }
-        })
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-
-        $.validator.addMethod("emailValidation", function(value, element) {
-            return this.optional(element) || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
-        }, "Please Enter a valid email address.");
-
-        $.validator.addMethod("phoneValidation", function(value, element) {
-            const phonepattern = /^(?:\d{10})$/;
-            return this.optional(element) || phonepattern.test(value);
-        }, "Please Enter a valid Indian phone number.");
-
-        $.validator.addMethod("fileRequired", function(value, element) {
-            return element.files.length > 0;
-        }, "Please select a file.");
-
-        $("#setting").validate({
-            rules: {
-                email: {
-                    required: true,
-                    emailValidation: true,
-                },
-                phone1: {
-                    required: true,
-                    phoneValidation: true
-                },
-                phone2: {
-                    required: true,
-                    phoneValidation: true
-                },
-                address: {
-                    required: true,
-                    maxlength: 40
-                },
-                icon: {
-                    required: true,
-                },
-                map: {
-                    required: true,
-                    minlength: 10,
-                    maxlength: 50
-                },
-
-            },
-            messages: {
-                name: {
-                    required: "FullName is required",
-                    pattern: "Name can only contain letters and spaces",
-                    minlength: "Please atlest 2 Character"
-                },
-                email: {
-                    required: "Email is required",
-                    email: "Please enter a valid email address"
-                },
-                phone1: {
-                    required: "Phone number is required",
-                    pattern: "Please enter a valid Indian phone number",
-                },
-                phone2: {
-                    required: "Phone number is required",
-                    pattern: "Please enter a valid Indian phone number",
-                },
-                address: {
-                    required: "Address is required",
-                    maxlength: "Maximum lenth of Address is 40 Characters "
-                },
-                icon: {
-                    required: "Icon name is required.",
-                },
-                map: {
-                    required: "Map link is required",
-                    minlength: "Minimum length is 10.",
-                    maxlength: "Maximum length is 50."
-                }
-            }
-        })
-    });
-</script>

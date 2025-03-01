@@ -1,45 +1,55 @@
 <?php
 include_once('inc/admin-header.php');
 ?>
-
-
 <div class="card container mt-5 p-4 border-2 mb-4">
-    <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> Carousel Image
-        <button type="button" class="btn btn-dark shadow-none" data-bs-toggle="modal" data-bs-target="#c-img">
-            Add
-        </button>
+    <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> Carousel
+        <div>
+            <button type="button" class="btn btn-dark shadow-none" data-bs-toggle="modal" data-bs-target="#c-img">
+                Add
+            </button>
+            <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
+        </div>
     </div>
+    <div class="table-responsive-lg table-responsive-lg" style="z-index: 1;">
+        <div class="container mt-3">
+            <table class="table table-striped table-bordered">
+                <thead class="sticky-top">
+                    <?php
+                    $sql = "SELECT * FROM carousel";
+                    $res = mysqli_query($conn, $sql);
 
-    <?php
-    require_once('connection.php');
-
-    $sql = "SELECT * FROM `carousel`";
-    $res = mysqli_query($conn, $sql);
-    ?>
-
-    <div class="card-body">
-        <div class="row  d-flex align-items-center justify-content-between">
-
-            <?php
-            while ($data = mysqli_fetch_assoc($res)) {
-                $status = $data['status'];
-            ?>
-                <div class="col-lg-6 col-md-12">
-                    <div class=" text-center overflow-hidden mb-sm-3 mb-md-2">
-                        <img src="../img/carousel/<?= $data['image'] ?>" class="w-100 rounded" style="height: 200px;">
-                        <div class="d-flex align-items-center m-xs-0">
-                            <button class="btn btn-danger btn-md mt-2 mb-2 me-3">Delete</button>
-                            <button class="btn btn-danger btn-md mt-2 mb-2 me-3">Inactive</button>
-                        </div>
-                    </div>
-                </div>
-            <?php
-            }
-            ?>
-
+                    ?>
+                    <tr>
+                        <th scope="col" class="bg-dark text-white">Sr no.</th>
+                        <th scope="col" class="bg-dark text-white">Image</th>
+                        <th scope="col" class="bg-dark text-white">Status</th>
+                        <th scope="col" class="bg-dark text-white">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($data = mysqli_fetch_assoc($res)) {
+                    ?>
+                        <tr>
+                            <td><?= $data['id'] ?></td>
+                            <td><img src="../img/carousel/<?= $data['image'] ?>" height="200px" width="500px" alt="" srcset=""></td>
+                            <td><button class="btn btn-<?php 
+                            if($data['status'] == "active")
+                             echo "info";
+                            else 
+                             echo "danger";
+                            ?> btn-md mx-1"><?= $data['status'] ?></button></td>
+                            <td><button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
 </div>
 </div>
 </div>
@@ -59,7 +69,8 @@ include_once('inc/admin-header.php');
             </div>
             <form id="carousel_pic" method="post" enctype="multipart/form-data" action="carousel.php">
                 <div class="modal-body">
-                    <input type="file" name="image" class="mb-1 col-md-12 form-control">
+                    <input type="file" name="image" class="mb-1 col-md-12 form-control" data-validation="required file">
+                    <div class="error" id="imageError"></div>
                 </div>
                 <div class="mb-3 mx-3">
                     <button type="submit" name="Pic_submit" class="btn btn-success shadow-none">Add</button>
@@ -67,22 +78,6 @@ include_once('inc/admin-header.php');
             </form>
 
 
-            <script>
-                $(document).ready(function() {
-                    $("#carousel_pic").validate({
-                        rules: {
-                            image: {
-                                required: true,
-                            }
-                        },
-                        messages: {
-                            image: {
-                                required: "Please select a Image.",
-                            }
-                        },
-                    });
-                });
-            </script>
 
             <?php
             function upload_image($img)
@@ -125,7 +120,7 @@ include_once('inc/admin-header.php');
                       window.location.href = 'carousel.php';
                     </script>
                 ";
-                exit();
+                    exit();
                 } else {
                     echo "inserting failed" . mysqli_error($conn);
                 }

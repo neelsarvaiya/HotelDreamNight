@@ -72,24 +72,53 @@ include_once('inc/header.php');
                 <form id="send" method="post" action="contact.php">
                     <h5 class="h-font">Send a messages :</h5>
                     <div class="mt-3">
-                        <label for="name" class="form-label" style="font-weight: 500;">Name : </label>
-                        <input type="text" name="name" id="name" class="form-control shadow-none" shadow-none placeholder="Enter Your Name :">
+                        <label for="name2" class="form-label" style="font-weight: 500;">Name : </label>
+                        <input type="text" name="name2" id="name2" class="form-control shadow-none" data-validation="required alpha min" data-min="2"="Enter Your Name :">
+                        <div class="error" id="name2Error"></div>
                     </div>
                     <div class="mt-3">
-                        <label for="email" class="form-label">Email : </label>
-                        <input type="email" name="email" id="email" class="form-control shadow-none" shadow-none placeholder="Enter Your Email :">
+                        <label for="email2" class="form-label">Email : </label>
+                        <input type="email" name="email2" id="email2" class="form-control shadow-none" data-validation="required email" placeholder="Enter Your Email :">
+                        <div class="error" id="email2Error"></div>
                     </div>
                     <div class="mt-3">
                         <label for="subject" class="form-label">Subject : </label>
-                        <input type="text" name="subject" id="subject" class="form-control shadow-none" shadow-none placeholder="Enter Your Subject :">
+                        <input type="text" name="subject" id="subject" class="form-control shadow-none" data-validation="required min max" data-min="10" data-max="50" placeholder="Enter Your Subject :">
+                        <div class="error" id="subjectError"></div>
                     </div>
                     <div class="mt-3">
                         <label for="messages" class="form-label">Messages : </label>
-                        <textarea class="form-control shadow-none" id="messages" name="messages" rows="7"
-                            style="resize: none" placeholder="Enter Your Messages :"></textarea>
+                        <textarea class="form-control shadow-none" id="messages" name="messages" rows="7" style="resize: none" data-validation="required min max" data-max="50" data-min="15" placeholder="Enter Your Messages :"></textarea>
+                        <div class="error" id="messagesError"></div>
                     </div>
-                    <button type="submit" class="btn text-white custom-bg mt-3 ">SEND</button>
+                    <button type="submit" class="btn text-white custom-bg mt-3" name="send_Query">SEND</button>
                 </form>
+
+                <?php
+                if (isset($_POST['send_Query'])) {
+                    $name = $_POST['name2'];
+                    $email = $_POST['email2'];
+                    $subject = $_POST['subject'];
+                    $messages = $_POST['messages'];
+
+                    $insert = "INSERT INTO `user_query`(`name`, `email`, `subject`, `message`) VALUES ('$name','$email','$subject','$messages')";
+                    if ($conn->query($insert) == "true") {
+                ?>
+                        <script>
+                            alert('Data is inserted Successfully.');
+                        </script>
+
+                    <?php
+                    } else {
+                    ?>
+                        <script>
+                            alert('Error to insert data.');
+                        </script>
+                <?php
+                    }
+                }
+                ?>
+
             </div>
         </div>
     </div>
@@ -98,66 +127,3 @@ include_once('inc/header.php');
 <?php
 include_once('inc/footer.php');
 ?>
-
-<script src="script/jquery-3.7.1.js"></script>
-<script src="script/jquery.validate.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $.validator.addMethod("emailValidation", function(value, element) {
-            return this.optional(element) || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
-        }, "Please enter a valid email address.");
-
-        $.validator.addMethod("nameValidation", function(value, element) {
-            return this.optional(element) || /^[A-Za-z\s]+$/.test(value);
-        }, "Name can only contain letters and spaces.");
-
-
-        $("#send").validate({
-            rules: {
-                email: {
-                    required: true,
-                    emailValidation: true,
-                },
-                name: {
-                    required: true,
-                    nameValidation: true,
-                    maxlength: 15,
-                    minlength: 2
-                },
-                subject: {
-                    required: true,
-                    maxlength: 20,
-                    minlength: 8
-                },
-                messages: {
-                    required: true,
-                    minlength: 10,
-                    maxlength: 50
-                }
-
-            },
-            messages: {
-                email: {
-                    required: "Email is required",
-                    email: "Please enter a valid email address"
-                },
-                name: {
-                    required: "Name is required",
-                    pattern: "Name can only contain letters and spaces",
-                    minlength: "Please atlest 2 Characters"
-                },
-                subject: {
-                    required: "Subject is required ",
-                    maxlength: "Maximum you can enter 20 characters",
-                    minlength: "Minimum length is 8 characters"
-                },
-                messages: {
-                    required: "Message is required",
-                    minlength: "Minimum length is 10 characters",
-                    maxlength: "Maximum length is 50 characters"
-                }
-
-            }
-        })
-    });
-</script>

@@ -103,7 +103,6 @@ include_once('inc/admin-header.php');
                     <div class="mb-2">
                         <label for="room" class="form-label fw-bold">Choose room : </label>
                         <select name="room" id="room" class="form-control">
-                            <option value="">Select Room : </option>
                             <option value="simple">Simple Room</option>
                             <option value="deluxe">Deluxe Room</option>
                             <option value="luxury">Luxury Room</option>
@@ -111,20 +110,23 @@ include_once('inc/admin-header.php');
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label for="dis_name">Offer Name : </label>
-                        <input type="text" name="dis_name" id="dis_name" class="form-control">
+                        <label for="offer_name">Offer Name : </label>
+                        <input type="text" name="offer_name" id="offer_name" data-validation="required" class="form-control">
+                        <div class="error" id="offer_nameError"></div>
                     </div>
                     <div class="mb-2">
-                        <label for="dis">Discount (in % ) : </label>
-                        <input type="number" name="dis" id="dis" class="form-control">
+                        <label for="discount">Discount (in % ) : </label>
+                        <input type="number" name="discount" id="discount" data-validation="required numeric min max" data-min="1" data-max="3" class="form-control">
+                        <div class="error" id="discountError"></div>
                     </div>
                     <div class="mb-2">
                         <label for="price" class="form-lable">Price : </label>
                         <input type="text" name="price" id="price" placeholder="₹10000" class="form-control" readonly>
                     </div>
                     <div class="mb-2">
-                        <label for="dis_price">Discounted Price : </label>
-                        <input type="number" name="dis_price" id="dis_price" class="form-control">
+                        <label for="discount_price">Discounted Price : </label>
+                        <input type="number" name="discount_price" id="discount_price" data-validation="required" class="form-control">
+                        <div class="error" id="discount_priceError"></div>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
                         <button type="submit" class="btn btn-dark shadow" name="login">Submit</button>

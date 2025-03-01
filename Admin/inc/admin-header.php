@@ -10,7 +10,11 @@
         <script src="script1/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <script src="script1/jquery-3.7.1.js"></script>
-        <script src="script1/jquery.validate.min.js"></script>
+        <script src="script1/validate.js"></script>
+
+        <?php
+        include_once('connection.php');
+        ?>
     </head>
 
     <!-- icon link -->
@@ -26,7 +30,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
             </ul>
         </div>
     </div>

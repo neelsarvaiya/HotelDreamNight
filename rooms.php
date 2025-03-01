@@ -42,50 +42,56 @@ include_once('inc/header.php');
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse flex-column align-items-stretch mt-2" id="filterDrowpdown">
-                        <form id="bookingForm" action="rooms.php" method="POST">
+                        <form action="rooms.php" id="bookingForm" method="post">
                             <div class="border bg-light p-3 rounded mb-3">
-                                <label for="checkin" class="form-label">Check-in: </label>
-                                <input type="date" id="checkin" name="checkin" class="form-control shadow-none mb-3">
-                                <label for="checkout" class="form-label">Check-Out: </label>
-                                <input type="date" id="checkout" name="checkout" class="form-control shadow-none">
+                                <label for="checkin1" class="form-label">Check-in: </label>
+                                <input type="date" id="checkin1" name="checkin1" class="form-control shadow-none mb-3" data-validation="required">
+                                <div class="error" id="checkin1Error"></div>
+
+                                <label for="checkout1" class="form-label">Check-Out: </label>
+                                <input type="date" id="checkout1" name="checkout1" class="form-control shadow-none" data-validation="required">
+                                <div class="error" id="checkout1Error"></div>
                             </div>
                             <div class="border bg-light p-3 rounded mb-3">
                                 <h5 class="mb-3 h-font" style="font-size: 18px;">FACILITIES: </h5>
                                 <div class="mb-2">
-                                    <input type="checkbox" id="f1" name="facilities[]" value="Facility 1" class="form-check-input shadow-none me-1">
+                                    <input type="checkbox" id="f1" name="facilities[]" data-validation="required terms" value="Facility 1" class="form-check-input shadow-none me-1">
                                     <label for="f1" class="form-check-label">Wifi</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" id="f2" name="facilities[]" value="Facility 2" class="form-check-input shadow-none me-1">
+                                    <input type="checkbox" id="" name="facilities[]" value="Facility 2" class="form-check-input shadow-none me-1">
                                     <label for="f2" class="form-check-label">Room Heater</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" id="f3" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
+                                    <input type="checkbox" id="" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
                                     <label for="f3" class="form-check-label">Air Conditioner</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" id="f3" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
+                                    <input type="checkbox" id="" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
                                     <label for="f3" class="form-check-label">Spa</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" id="f3" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
+                                    <input type="checkbox" id="" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
                                     <label for="f3" class="form-check-label">Television</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" id="f3" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
+                                    <input type="checkbox" id="" name="facilities[]" value="Facility 3" class="form-check-input shadow-none me-1">
                                     <label for="f3" class="form-check-label">Geyser</label>
                                 </div>
+                                <div class="error" id="facilities[]Error"></div>
                             </div>
                             <div class="border bg-light p-3 rounded mb-3">
                                 <h5 class="mb-3 h-font" style="font-size: 18px;">GUESTS: </h5>
                                 <div class="d-flex">
                                     <div class="me-3">
                                         <label for="adults" class="form-label">Adults</label>
-                                        <input type="number" id="adults" name="adults" class="form-control shadow-none" maxlength="2">
+                                        <input type="number" id="adults" name="adults" class="form-control shadow-none" data-validation="required numeric">
+                                        <div class="error" id="adultsError"></div>
                                     </div>
                                     <div>
                                         <label for="children" class="form-label">Children</label>
-                                        <input type="number" id="children" name="children" class="form-control shadow-none" maxlength="2">
+                                        <input type="number" id="children" name="children" class="form-control shadow-none" data-validation="required">
+                                        <div class="error" id="childrenError"></div>
                                     </div>
                                 </div>
                             </div>
@@ -378,72 +384,6 @@ include_once('inc/header.php');
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-
-        $.validator.addMethod("atLeastOneCheckbox", function(value, element) {
-            return $("input[name='facilities[]']:checked").length > 0;
-        }, "Please select at least one facility.");
-
-        $("#bookingForm").validate({
-            rules: {
-                checkin: {
-                    required: true,
-                    date: true
-                },
-                checkout: {
-                    required: true,
-                    date: true
-                },
-                adults: {
-                    required: true,
-                    min: 1
-                },
-                children: {
-                    required: true,
-                    min: 0
-                },
-                "facilities[]": {
-                    atLeastOneCheckbox: true
-                },
-            },
-            messages: {
-                checkin: {
-                    required: "Please select a check-in date.",
-                    date: "Please enter a valid date."
-                },
-                checkout: {
-                    required: "Please select a check-out date.",
-                    date: "Please enter a valid date."
-                },
-                adults: {
-                    required: "Please specify the number of adults.",
-                    min: "There must be at least one adult."
-                },
-                children: {
-                    required: "Please specify the number of children.",
-                    min: "The number of children cannot be negative."
-                }
-            },
-            errorPlacement: function(error, element) {
-                if (element.attr("name") == "facilities[]") {
-                    error.addClass("text-danger").appendTo(element.closest(".border"));
-                } else {
-                    error.addClass("text-danger");
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function(element) {
-                $(element).addClass("is-invalid");
-            },
-            unhighlight: function(element) {
-                $(element).removeClass("is-invalid");
-            }
-        });
-    });
-</script>
-
 
 <?php
 include_once('inc/footer.php');

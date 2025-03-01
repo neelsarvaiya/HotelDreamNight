@@ -21,12 +21,18 @@ include_once('inc/admin-header.php');
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                      $select = "SELECT * FROM `user_query`";
+                      $res = mysqli_query($conn, $select);
+
+                    while ($data = mysqli_fetch_assoc($res)) {
+                    ?>
                     <tr>
-                        <td>1</td>
-                        <td>neel</td>
-                        <td>neel@example.com</td>
-                        <td>Query</td>
-                        <td>about users query from admin</td>
+                        <td><?= $data['id'] ?></td>
+                        <td><?= $data['name'] ?></td>
+                        <td><?= $data['email'] ?></td>
+                        <td><?= $data['subject'] ?></td>
+                        <td><?= $data['message'] ?></td>
                         <td>
                             <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
                                 <i class="fa-solid fa-reply-all"></i>
@@ -34,45 +40,9 @@ include_once('inc/admin-header.php');
                             <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>kirit</td>
-                        <td>kirit@example.com</td>
-                        <td>Query</td>
-                        <td>about users query from admin</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
-                                <i class="fa-solid fa-reply-all"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>meet</td>
-                        <td>meet@example.com</td>
-                        <td>Query</td>
-                        <td>about users query from admin</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
-                                <i class="fa-solid fa-reply-all"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>meet</td>
-                        <td>meet@example.com</td>
-                        <td>Query</td>
-                        <td>about users query from admin</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
-                                <i class="fa-solid fa-reply-all"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -95,8 +65,9 @@ include_once('inc/admin-header.php');
                 <div class="modal-body">
                     <div class="mb-4">
                         <label for="reponse" class="form-label fw-bold">Response : </label>
-                        <textarea class="form-control shadow-none" id="messages" name="msg" rows="5"
+                        <textarea class="form-control shadow-none" id="messages" name="msg" data-validation="required min max" data-min="10" data-max="50"  rows="5"
                             style="resize: none" placeholder="Enter Your Text :"></textarea>
+                            <div class="error" id="msgError"></div>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
                         <button type="submit" class="btn btn-dark shadow" name="login">Submit</button>
@@ -106,25 +77,3 @@ include_once('inc/admin-header.php');
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-
-        $("#user_query").validate({
-            rules: {
-                msg: {
-                    required: true,
-                    minlength: 10,
-                    maxlength: 50,
-                },
-            },
-            messages: {
-                msg: {
-                    required: "Message is required.",
-                    minlength: "Minimum length is 10.",
-                    maxlength: "Maximum length is 50.",
-                }
-            }
-        })
-    });
-</script>

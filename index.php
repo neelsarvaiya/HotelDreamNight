@@ -39,10 +39,10 @@ include_once('inc/header.php');
     }
 </style>
 
-<?php require_once('Admin/connection.php');
+<?php 
 
-$sql = "SELECT * FROM `carousel`";
-$res = mysqli_query($conn, $sql);
+$insert = "SELECT * FROM `carousel` where status='active';";
+$res = mysqli_query($conn, $insert);
 
 ?>
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -50,8 +50,6 @@ $res = mysqli_query($conn, $sql);
         <?php
         $firstimg = true;
         while ($data = mysqli_fetch_assoc($res)) {
-            $status = $data['status'];
-            if ($status == 'Active') {
         ?>
                 <div class="carousel-item <?= $firstimg ? 'active' : '' ?>">
                     <img src="img/carousel/<?= $data['image'] ?>" class="d-block w-100">
@@ -59,7 +57,6 @@ $res = mysqli_query($conn, $sql);
         <?php
                 $firstimg = false;
             }
-        }
         ?>
     </div>
 </div>

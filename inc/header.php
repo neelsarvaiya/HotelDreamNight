@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="css/common.css">
     <link href="script/bootstrap.min.css" rel="stylesheet">
     <link href="script/font.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="script/bootstrap-icons.min.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="script/bootstrap.bundle.min.js"></script>
+    <script src="script/jquery-3.7.1.js"></script>
+    <script src="script/validate.js"></script>
 </head>
+
+<?php
+include_once('Admin/connection.php');
+?>
 
 <body class="bg-light">
 
@@ -139,9 +144,6 @@
         });
     </script>
 
-    <script src="script/jquery-3.7.1.js"></script>
-    <script src="script/jquery.validate.min.js"></script>
-
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -156,11 +158,13 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" name="email" id="email" class="form-control shadow-none" shadow-none placeholder="Enter Your Email :">
+                            <input type="email" name="email" id="email" class="form-control shadow-none" shadow-none placeholder="Enter Your Email :" data-validation="required email">
+                            <div class="error" id="emailError"></div>
                         </div>
                         <div class="mb-4">
                             <label for="password1" class="form-label">Password</label>
-                            <input type="password" id="password1" name="password1" class="form-control shadow-none" shadow-none placeholder="Enter Your Password :">
+                            <input type="password" id="password" name="password" class="form-control shadow-none" shadow-none placeholder="Enter Your Password :" data-validation="required strongPassword">
+                            <div class="error" id="passwordError"></div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <button type="submit" class="btn btn-dark shadow-none" name="login">Login</button>
@@ -198,7 +202,8 @@
                         </div>
                         <div class="mb-4">
                             <label for="reponse" class="form-label">Enter Email : </label>
-                            <input type="email" name="email" id="email" class="form-control">
+                            <input type="forgot_email" name="forgot_email" id="forgot_email" class="form-control" data-validation="required email">
+                            <div class="error" id="forgot_emailError"></div>
                         </div>
 
                         <div class="d-flex align-items-end justify-content-between mb-2">
@@ -211,67 +216,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-
-            $("#forgot_form").validate({
-                rules: {
-                    email: {
-                        required: true,
-                        emailValidation: true,
-                    },
-                },
-                messages: {
-                    email: {
-                        required: "Email is required.",
-                        emailValidation: "Please enter a valid email address.",
-                    }
-                }
-            })
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $.validator.addMethod("emailValidation", function(value, element) {
-                return this.optional(element) || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
-            }, "Please enter a valid email address.");
-
-            $.validator.addMethod("password", function(value, element) {
-                const passwordPattern = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8}$/;
-                return this.optional(element) || passwordPattern.test(value);
-            }, "Password must be 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
-
-
-            $("#loginform").validate({
-                rules: {
-                    email: {
-                        required: true,
-                        emailValidation: true,
-                    },
-                    password1: {
-                        required: true,
-                        password: true
-                    }
-                },
-                messages: {
-                    email: {
-                        required: "Email is required",
-                        email: "Please enter a valid email address"
-                    },
-                    password1: {
-                        required: "Please provide a password"
-                    }
-                }
-            })
-        });
-    </script>
-
-    <?php
-    if (isset($_POST['login'])) {
-    }
-    ?>
 
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -294,163 +238,65 @@
                             <div class="row">
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label" for="name">Full Name : </label>
-                                    <input type="text" class="form-control shadow-none" id="name" name="name" shadow-none placeholder="Enter Full Name :">
+                                    <input type="text" class="form-control shadow-none" id="name" name="name" shadow-none placeholder="Enter Full Name :" data-validation="required alpha min" data-min="2">
+                                    <div class="error" id="nameError"></div>
                                 </div>
                                 <div class="col-md-6 p-0 mb-3">
-                                    <label for="email" class="form-label">Email : </label>
-                                    <input type="email" id="email1" class="form-control shadow-none" name="email" shadow-none placeholder="Enter Your Email :">
+                                    <label for="email1" class="form-label">Email : </label>
+                                    <input type="email" id="email1" class="form-control shadow-none" name="email1" shadow-none placeholder="Enter Your Email :" data-validation="required email">
+                                    <div class="error" id="email1Error"></div>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label" for="phone">Phone number : </label>
-                                    <input type="tel" name="phone" id="phone" class="form-control shadow-none" shadow-none placeholder="Enter Your Phone number :">
+                                    <input type="tel" name="phone" id="phone" class="form-control shadow-none" shadow-none placeholder="Enter Your Phone number :" data-validation="required numeric min max" data-max="10" data-min="10">
+                                    <div class="error" id="phoneError"></div>
                                 </div>
                                 <div class="col-md-6 p-0 mb-3">
                                     <label for="pic" class="form-label">Picture : </label>
-                                    <input type="file" id="pic" name="pic" class="form-control shadow-none" shadow-none>
+                                    <input type="file" id="pic" name="pic" class="form-control shadow-none" data-validation="required file file1">
+                                    <div class="error" id="picError"></div>
                                 </div>
                                 <div class="col-md-12 p-0 mb-3">
                                     <label for="address" class="form-label">Address : </label>
                                     <textarea class="form-control shadow-none" id="address" name="address"
-                                        rows="1" placeholder="Enter Your Address :"></textarea>
+                                        rows="1" placeholder="Enter Your Address :" data-validation="required min max" data-min="10" data-max="50"></textarea>
+                                    <div class="error" id="addressError"></div>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
-                                    <label for="pin" class="form-label">Pincode number : </label>
-                                    <input type="number" id="pin" name="pin" class="form-control shadow-none" placeholder="Enter Your PINCODE :">
+                                    <label for="state" class="form-label">Select State : </label>
+                                    <select name="state" id="state" class="form-control" data-validation="required ">
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Telangana">Telangana</option>
+                                    </select>
+                                    <div class="error" id="stateError"></div>
                                 </div>
                                 <div class="col-md-6 p-0 mb-3">
                                     <label for="dob" class="form-label">Date of Birth : </label>
-                                    <input type="date" id="dob" name="dob" class="form-control shadow-none">
+                                    <input type="date" id="dob" name="dob" class="form-control shadow-none" data-validation="required">
+                                    <div class="error" id="dobError"></div>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
-                                    <label for="password2" class="form-label">Password : </label>
-                                    <input type="password" id="password2" name="password2"
-                                        class="form-control shadow-none" placeholder="Enter Your Password :">
+                                    <label for="password1" class="form-label">Password : </label>
+                                    <input type="password" id="password1" name="password1"
+                                        class="form-control shadow-none" placeholder="Enter Your Password :" data-validation="required strongPassword">
+                                    <div class="error" id="password1Error"></div>
                                 </div>
                                 <div class="col-md-6 p-0 mb-3">
-                                    <label for="password3" class="form-label">Confirm Password : </label>
-                                    <input type="password" id="password3" name="password3"
-                                        class="form-control shadow-none" placeholder="Enter Your Confirm Password :">
+                                    <label for="C_password" class="form-label">Confirm Password : </label>
+                                    <input type="password" id="C_password" name="C_password"
+                                        class="form-control shadow-none" placeholder="Enter Your Confirm Password :" data-validation="required confirmPassword" data-password-id="password1">
+                                    <div class="error" id="C_passwordError"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center my-1">
                             <button type="submit" name="register" class="btn btn-dark shadow-none">Register</button>
                         </div>
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
     </div>
-    
-
-    <script>
-        $(document).ready(function() {
-
-            $.validator.addMethod("nameValidation", function(value, element) {
-                return this.optional(element) || /^[A-Za-z\s]+$/.test(value);
-            }, "Name can only contain letters and spaces.");
-
-            $.validator.addMethod("emailValidation", function(value, element) {
-                return this.optional(element) || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
-            }, "Please Enter a valid email address.");
-
-            $.validator.addMethod("phoneValidation", function(value, element) {
-                const phonepattern = /^(?:\d{10})$/;
-                return this.optional(element) || phonepattern.test(value);
-            }, "Please Enter a valid Indian phone number.");
-
-            $.validator.addMethod("fileRequired", function(value, element) {
-                return element.files.length > 0;
-            }, "Please select a file.");
-
-            $.validator.addMethod("password", function(value, element) {
-                const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&#])[A-Za-z\d@$!%?&#]{8}$/;
-                return this.optional(element) || passwordPattern.test(value);
-            }, "Password must be 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
-
-            $("#registerform").validate({
-                rules: {
-                    name: {
-                        required: true,
-                        nameValidation: true,
-                        maxlength: 15,
-                        minlength: 2
-                    },
-                    email: {
-                        required: true,
-                        emailValidation: true,
-                    },
-                    phone: {
-                        required: true,
-                        phoneValidation: true
-                    },
-                    address: {
-                        required: true,
-                        maxlength: 40
-                    },
-                    password2: {
-                        required: true,
-                        minlength: 8
-                    },
-                    password3: {
-                        required: true,
-                        equalTo: "#password2"
-                    },
-                    pic: {
-                        required: true,
-                        fileRequired: true
-                    },
-                    dob: {
-                        required: true,
-                        date: true
-                    },
-                    pin: {
-                        required: true,
-                        digits: true,
-                        minlength: 6,
-                        maxlength: 6
-                    }
-                },
-                messages: {
-                    name: {
-                        required: "FullName is required",
-                        pattern: "Name can only contain letters and spaces",
-                        minlength: "Please atlest 2 Character"
-                    },
-                    email: {
-                        required: "Email is required",
-                        email: "Please enter a valid email address"
-                    },
-                    phone: {
-                        required: "Phone number is required",
-                        pattern: "Please enter a valid Indian phone number",
-                    },
-                    address: {
-                        required: "Address is required",
-                        maxlength: "Maximum lenth of Address is 40 Characters "
-                    },
-                    password2: {
-                        required: "Please Enter Your Password",
-                        minlength: "Password must be at least 8 characters long."
-                    },
-                    password3: {
-                        required: "Please confirm your password.",
-                        equalTo: "Passwords do not match."
-                    },
-                    pic: {
-                        required: "Please select a file."
-                    },
-                    dob: {
-                        required: "Please enter your Date Of Birth ",
-                        date: "Please enter valid date"
-                    },
-                    pin: {
-                        required: "Please enter your PINCODE ",
-                        digits: "only Digit is Allowed",
-                        minlength: "Please Enter Minimum 6 Digits",
-                        maxlength: "Please Enter Maxiimum 6 Digits"
-                    }
-                }
-            })
-        });
-    </script>

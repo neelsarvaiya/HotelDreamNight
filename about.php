@@ -120,22 +120,18 @@ include_once('inc/header.php');
 
 <div class="container px-4">
     <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <img src="img/about/team1.webp" class="w-100 rounded-3 img-fluid pop">
-            <h5 class="mt-2 text-center">Ethan Miller</h5>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <img src="img/about/team2.webp" class="w-100 pop">
-            <h5 class="mt-2 text-center">Daniel Wilson</h5>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <img src="img/about/team3.webp" class="w-100 pop">
-            <h5 class="mt-2 text-center">Alexander Brown</h5>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <img src="img/about/team4.webp" class="w-100 pop">
-            <h5 class="mt-2 text-center">Mia Anderson</h5>
-        </div>
+        <?php
+        $select = "SELECT * FROM `team` WHERE status='active'";
+        $res = mysqli_query($conn, $select);
+        while ($row = mysqli_fetch_assoc($res)) {
+        ?>
+            <div class="col-lg-3 col-md-6">
+                <img src="img/about/<?= $row['image'] ?>" class="w-100 pop">
+                <h5 class="mt-2 text-center"><?= $row['name'] ?></h5>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 

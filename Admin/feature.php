@@ -62,7 +62,8 @@ include_once('inc/admin-header.php');
                 <div class="modal-body">
                     <div class="mb-4">
                         <label for="reponse" class="form-label fw-bold">Feature : </label>
-                        <input type="text" name="feature" id="feature" class="form-control" placeholder="Enter Feature :">
+                        <input type="text" name="feature" id="feature" data-validation="required alpha" class="form-control" placeholder="Enter Feature :">
+                        <div class="error" id="featureError"></div>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
                         <button type="submit" class="btn btn-success shadow" name="login">Submit</button>
@@ -149,122 +150,22 @@ include_once('inc/admin-header.php');
             <form id="facilities_form" method="post">
                 <div class="modal-body">
                     <div class="mb-4">
-                        <label for="reponse" class="form-label fw-bold">Choose Facilities icon : </label>
-                        <input type="file" name="pic" id="facilities" class="form-control mb-3"> <br>
+                        <label for="facilities_image" class="form-label fw-bold">Choose Facilities icon : </label>
+                        <input type="file" name="facilities_image" id="facilities_image" data-validation="required file" class="form-control mb-3">
+                        <div class="error" id="facilities_imageError"></div>
 
                         <label for="reponse" class="form-label fw-bold">Facilities : </label>
-                        <input type="text" name="facilities_name" id="facilities_name" class="form-control mb-3" placeholder="Enter Facilities :">
+                        <input type="text" name="facilities_name" data-validation="required alpha" id="facilities_name" class="form-control mb-3" placeholder="Enter Facilities :">
+                        <div class="error" id="facilities_nameError"></div>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
                         <button type="submit" name="Pic_submit" class="btn btn-success shadow" name="login">Submit</button>
                     </div>
                 </div>
             </form>
-            <?php
-            if (isset($_POST['Pic_submit'])) {
-
-                $ftype = $_FILES['pic']['type'];
-                $fsize = $_FILES['pic']['size'];
-                if ($ftype == "image/png" || $ftype == "image/jpg") {
-
-                    if ($fsize <= 1024 * 1024) {
-
-                        if (!is_dir("uploads")) {
-                            mkdir("uploads");
-                        }
-
-                        $fname = uniqid() . $_FILES['pic']['name'];
-                        if (move_uploaded_file($_FILES['pic']['tmp_name'], "uploads/" . $fname)) {
-                            echo "<script>
-                            alert('File Uploaded Successfull...')
-                        </script>";
-                        }
-                    } else {
-            ?>
-                        <script>
-                            alert('File is larger than 1 KB. Please select a smaller file.')
-                        </script>
-
-                    <?php
-                    }
-                } else {
-                    ?>
-                    <script>
-                        alert('File is not a png or jpg file')
-                    </script>
-            <?php
-                }
-            }
-            ?>
         </div>
     </div>
 </div>
 </div>
 </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-
-        $("#facilities_form").validate({
-            rules: {
-                pic: {
-                    required: true,
-                },
-                facilities_name: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 50
-                }
-            },
-            messages: {
-                pic: {
-                    required: "Please upload a photo.",
-                },
-                facilities_name: {
-                    required: "Please enter the name.",
-                    minlength: "Name must be at least 3 characters long.",
-                    maxlength: "Name cannot exceed 50 characters."
-                }
-            },
-            errorPlacement: function(error, element) {
-                error.addClass("text-danger");
-                error.insertAfter(element);
-            },
-            highlight: function(element) {
-                $(element).addClass("is-invalid");
-            },
-            unhighlight: function(element) {
-                $(element).removeClass("is-invalid");
-            },
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-
-        $("#feature_form").validate({
-            rules: {
-                feature: {
-                    required: true,
-                },
-            },
-            messages: {
-                feature: {
-                    required: "Please Enter Feature name.",
-                },
-            },
-            errorPlacement: function(error, element) {
-                error.addClass("text-danger");
-                error.insertAfter(element);
-            },
-            highlight: function(element) {
-                $(element).addClass("is-invalid");
-            },
-            unhighlight: function(element) {
-                $(element).removeClass("is-invalid");
-            },
-        });
-    });
-</script>
