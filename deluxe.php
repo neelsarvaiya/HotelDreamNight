@@ -108,7 +108,7 @@ include_once('inc/header.php');
             <h5 class="fw-bold">Reviews & Ratings</h5>
             <div class="row">
                 <div class="profile d-flex align-items-center mb-3 mt-3">
-                    <img src="img/carousel/men4.png" width="50px" height="auto" class="rounded-circle">
+                    <img src="img/men4.png" width="50px" height="auto" class="rounded-circle">
                     <h6 class="m-0 ms-2">Amelia Thomas</h6>
                 </div>
                 <p>

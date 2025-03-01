@@ -28,7 +28,6 @@ include_once('inc/header.php');
 
         transition: all ease 0.9s;
     }
-    
 
     .pop:hover {
         border-top-color: var (--teal) !important;

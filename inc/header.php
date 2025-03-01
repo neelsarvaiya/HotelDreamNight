@@ -98,40 +98,25 @@ include_once('Admin/connection.php');
                     }
                 </style>
                 <div class="d-flex">
-                    <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal"
+                    <button type="button" class="btn border-1 hobl border-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal"
                         data-bs-target="#loginModal">
-                        <i class="bi bi-box-arrow-right"></i> Login
+                        <i class="bi bi-box-arrow-right"></i> Log in
                     </button>
-                    <button type="button" class="btn btn-outline-dark shadow-none" data-bs-toggle="modal"
+                    <style>
+                        .hobl:hover{
+                            background-color: rgb(65, 65, 65);
+                            color: white;
+                        }
+                    </style>
+                    <button type="button" class="btn bg-dark text-white shadow-none" data-bs-toggle="modal"
                         data-bs-target="#registerModal">
-                        <i class="bi bi-person-lines-fill fs-5"></i> Register
+                        <i class="bi bi-person-lines-fill fs-5"></i> Sign up
                     </button>
                 </div>
             </div>
         </div>
 
     </nav>
-
-    <style>
-        .user {
-            padding: 5px 15px;
-            border-radius: 5px;
-            border: 1px solid;
-        }
-
-        .user a {
-            color: black;
-            text-decoration: none;
-        }
-
-        .user:hover {
-            background-color: black;
-        }
-
-        a:hover {
-            color: white;
-        }
-    </style>
 
     <script>
         const navLink = document.querySelectorAll('.nav-link');

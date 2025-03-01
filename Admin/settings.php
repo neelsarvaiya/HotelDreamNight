@@ -69,7 +69,7 @@ include_once('inc/admin-header.php');
                     ?>
                         <tr>
                             <td><?= $row['id'] ?></td>
-                            <td><img src="img/about/<?= $row['image'] ?>" height="400px" width="300px"></td>
+                            <td><img src="img/about/<?= $row['image'] ?>" height="350px" width="300px"></td>
                             <td><?= $row['name'] ?></td>
                             <td><button class="btn btn-<?php
                                                         if ($row['status'] == "active")

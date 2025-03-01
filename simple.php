@@ -110,7 +110,7 @@ include_once('inc/header.php');
             <h5 class="fw-bold">Reviews & Ratings</h5>
             <div class="row">
                 <div class="profile d-flex align-items-center mb-3 mt-3">
-                    <img src="img/carousel/men2.jpg" width="50px" height="50px" class="rounded-circle">
+                    <img src="img/men1.png" width="50px" height="50px" class="rounded-circle">
                     <h6 class="m-0 ms-2">Joseph Martinez</h6>
                 </div>
                 <p>
@@ -125,7 +125,7 @@ include_once('inc/header.php');
                 </div>
 
                 <div class="profile d-flex align-items-center mb-3 mt-3">
-                    <img src="img/carousel/men1.png" width="50px" height="50px" class="rounded-circle">
+                    <img src="img/men2.jpg" width="50px" height="50px" class="rounded-circle">
                     <h6 class="m-0 ms-2">Daniel Anderson</h6>
                 </div>
                 <p>
@@ -139,7 +139,7 @@ include_once('inc/header.php');
                 </div>
 
                 <div class="profile d-flex align-items-center mb-3 mt-3">
-                    <img src="img/carousel/men3.png" width="50px" height="auto" class="rounded-circle">
+                    <img src="img/men3.png" width="50px" height="auto" class="rounded-circle">
                     <h6 class="m-0 ms-2">Amelia Thomas</h6>
                 </div>
                 <p>
