@@ -23,7 +23,7 @@ $(document).ready(function () {
         // Strong password
         else if (fieldType.includes("strongPassword") && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).{8,}$/.test(value)) {
             errorMessage = "Password must be at least 8 character, including uppercase and lowercase letters, and a special character.";
-        }   
+        }
 
         // Confirm Password 
 
@@ -37,38 +37,42 @@ $(document).ready(function () {
         }
 
         // Alpha Validation
-        else if(fieldType.includes("alpha") && !/^[A-Za-z\s]+$/.test(value)) {
+        else if (fieldType.includes("alpha") && !/^[A-Za-z\s]+$/.test(value)) {
             errorMessage = "Please enter only letters. ";
         }
 
         // Numeric Validation
         else if (fieldType.includes("numeric") && !/^\d+$/.test(value)) {
-                errorMessage = "only numbers allowed";
-            }
+            errorMessage = "only numbers allowed";
+        }
 
-            // Terms and Condition Validation
-            else if (fieldType.includes("terms") && !field.is(":checked")) {
-                errorMessage = "Terms and condition must be checked.";
-            }
+        // Terms and Condition Validation
+        else if (fieldType.includes("terms") && !field.is(":checked")) {
+            errorMessage = "Terms and condition must be checked.";
+        }
 
-            // Minimum length Validation 
+        // Minimum length Validation 
 
-            else if (fieldType.includes("min") && value.length < minlength) {
-                errorMessage = `Must be at least ${minlength} characters.`;
-            }
+        else if (fieldType.includes("min") && value.length < minlength) {
+            errorMessage = `Must be at least ${minlength} characters.`;
+        }
 
-            // maximum length Validation 
-            else if (fieldType.includes("max") && value.length > maxlength) {
-                errorMessage = `Maximum ${maxlength} character are allowed.`
-            }
+        // maximum length Validation 
+        else if (fieldType.includes("max") && value.length > maxlength) {
+            errorMessage = `Maximum ${maxlength} character are allowed.`
+        }
 
-            // File upload validation 
+        // File upload validation 
 
-            else if (fieldType.includes("file") && !/\.(jpg|jpeg|png)$/i.test(value)) {
-                errorMessage = "Only JPG, JPEG, or PNG Files are allowed.";
-            }
-            else if (fieldType.includes("file1") && field.size > 200000) {
-                errorMessage = "File size must be less than 200KB.";
+        else if (fieldType.includes("file") && field[0].files.length > 0) {
+            let file = field[0].files[0];
+            let fileName = file.name;
+            let fileSizeKB = file.size / 1024;
+
+            if (!/\.(jpg|jpeg|png)$/i.test(fileName)) {
+                errorMessage = "Only JPG, JPEG, or PNG files are allowed.";
+            } else if (fieldType.includes("filesize") && fileSizeKB > filesize) {
+                errorMessage = `File size must be less than ${filesize} KB.`;
             }
 
 

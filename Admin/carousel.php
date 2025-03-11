@@ -4,8 +4,8 @@ include_once('inc/admin-header.php');
 <div class="card container mt-5 p-4 border-2 mb-4">
     <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> Carousel
         <div>
-            <button type="button" class="btn btn-dark shadow-none" data-bs-toggle="modal" data-bs-target="#c-img">
-                Add
+            <button type="button" class="btn btn-success shadow-none" data-bs-toggle="modal" data-bs-target="#c-img">
+                <i class="bi bi-plus-lg"></i> Add
             </button>
             <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
         </div>
@@ -19,29 +19,26 @@ include_once('inc/admin-header.php');
                     $res = mysqli_query($conn, $sql);
 
                     ?>
-                    <tr>
-                        <th scope="col" class="bg-dark text-white">Sr no.</th>
-                        <th scope="col" class="bg-dark text-white">Image</th>
-                        <th scope="col" class="bg-dark text-white">Status</th>
-                        <th scope="col" class="bg-dark text-white">Action</th>
+                    <tr class="text-center">
+                        <th scope="col" width="5%" class="bg-dark text-white">Sr no.</th>
+                        <th scope="col" width="10%" class="bg-dark text-white">Image</th>
+                        <th scope="col" width="5%" class="bg-dark text-white">Status</th>
+                        <th scope="col" width="5%" class="bg-dark text-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
+                    $no = 1;
                     while ($data = mysqli_fetch_assoc($res)) {
                     ?>
-                        <tr>
-                            <td><?= $data['id'] ?></td>
-                            <td><img src="../img/carousel/<?= $data['image'] ?>" height="200px" width="500px" alt="" srcset=""></td>
-                            <td><button class="btn btn-<?php 
-                            if($data['status'] == "active")
-                             echo "info";
-                            else 
-                             echo "danger";
-                            ?> btn-md mx-1"><?= $data['status'] ?></button></td>
-                            <td><button class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i> Delete</button></td>
+                        <tr class="align-middle text-center">
+                            <td><?= $no ?></td>
+                            <td><img src="../img/carousel/<?= $data['image'] ?>" height="150px" width="500px"></td>
+                            <td><button class="btn btn-<?= ($data['status'] == 'active') ? 'success' : 'danger' ?> btn-md mx-1"><?= $data['status'] ?></button></td>
+                            <td><button onclick="delete_img(<?= $data['id'] ?>);" class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i></button></td>
                         </tr>
                     <?php
+                        $no++;
                     }
                     ?>
                 </tbody>
@@ -67,65 +64,23 @@ include_once('inc/admin-header.php');
                     aria-label="Close">
                 </button>
             </div>
-            <form id="carousel_pic" method="post" enctype="multipart/form-data" action="carousel.php">
+            <form id="carousel_pic" action="carouselCRUD.php" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="file" name="image" class="mb-1 col-md-12 form-control" data-validation="required file">
                     <div class="error" id="imageError"></div>
                 </div>
                 <div class="mb-3 mx-3">
-                    <button type="submit" name="Pic_submit" class="btn btn-success shadow-none">Add</button>
+                    <button type="submit" name="add" class="btn btn-success shadow-none">Add</button>
                 </div>
             </form>
-
-
-
-            <?php
-            function upload_image($img)
-            {
-                $tmpLocation = $img['tmp_name'];
-                $ftype = $img['type'];
-                $file = $img['name'];
-
-                define("UPLOAD_SRC", $_SERVER['DOCUMENT_ROOT'] . "/HotelDreamNight/img/carousel/");
-
-                $fileLocation = UPLOAD_SRC . $file;
-
-                if ($ftype == "image/png" || $ftype == "image/jpg") {
-
-                    if (!move_uploaded_file($tmpLocation, $fileLocation)) {
-                        echo "
-                               <script>alert('File uploading failed');</script>
-                            ";
-                        exit();
-                    } else {
-                        return $file;
-                    }
-                }
-            }
-            ?>
-
-            <?php
-            if (isset($_POST['Pic_submit'])) {
-
-                $filename = upload_image($_FILES['image']);
-
-                $insert = "INSERT INTO `carousel`(`image`) VALUES ('$filename')";
-
-                $result = mysqli_query($conn, $insert);
-
-                if ($result) {
-                    echo "
-                    <script>
-                      alert('Image uploaded successfully!');
-                      window.location.href = 'carousel.php';
-                    </script>
-                ";
-                    exit();
-                } else {
-                    echo "inserting failed" . mysqli_error($conn);
-                }
-            }
-            ?>
         </div>
     </div>
 </div>
+
+<script>
+    function delete_img(id) {
+        if (confirm("Sure want to delete.")) {
+            window.location.href = `carouselCRUD.php?id=${id}`;
+        }
+    }
+</script>

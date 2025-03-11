@@ -80,7 +80,7 @@ include_once('inc/admin-header.php');
             <button type="button" class="btn btn-dark shadow-none" data-bs-toggle="modal" data-bs-target="#facilities">
                 Add
             </button>
-            <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
+            <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> all</a>
         </div>
     </div>
     <div class="table-responsive-md table-responsive-sm" style="overflow-y: scroll; height: 228px;">

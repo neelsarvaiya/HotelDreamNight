@@ -1,6 +1,7 @@
 <?php
 include_once('inc/header.php');
 ?>
+
 <style>
     .custom-bg {
         background-color: var(--teal);
@@ -39,9 +40,9 @@ include_once('inc/header.php');
     }
 </style>
 
-<?php 
+<?php
 
-$insert = "SELECT * FROM `carousel` where status='active';";
+$insert = "SELECT * FROM `carousel` where `status`='active';";
 $res = mysqli_query($conn, $insert);
 
 ?>
@@ -51,12 +52,12 @@ $res = mysqli_query($conn, $insert);
         $firstimg = true;
         while ($data = mysqli_fetch_assoc($res)) {
         ?>
-                <div class="carousel-item <?= $firstimg ? 'active' : '' ?>">
-                    <img src="img/carousel/<?= $data['image'] ?>" class="d-block w-100">
-                </div>
+            <div class="carousel-item <?= $firstimg ? 'active' : '' ?>">
+                <img src="img/carousel/<?= $data['image'] ?>" class="d-block w-100">
+            </div>
         <?php
-                $firstimg = false;
-            }
+            $firstimg = false;
+        }
         ?>
     </div>
 </div>

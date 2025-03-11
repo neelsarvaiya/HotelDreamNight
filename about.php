@@ -121,13 +121,16 @@ include_once('inc/header.php');
 <div class="container px-4">
     <div class="row">
         <?php
-        $select = "SELECT * FROM `team` WHERE status='active'";
+        $select = "SELECT * FROM `team` WHERE `status` = 'inactive'";
         $res = mysqli_query($conn, $select);
         while ($row = mysqli_fetch_assoc($res)) {
         ?>
             <div class="col-lg-3 col-md-6">
                 <img src="img/about/<?= $row['image'] ?>" class="w-100 pop">
-                <h5 class="mt-2 text-center"><?= $row['name'] ?></h5>
+                <div class="d-flex align-items-center justify-content-around">
+                    <h5 class="mt-2 text-center"><?= $row['name'] ?></h5>                    
+                    <h5 class="mt-2 text-center"><?= $row['name'] ?></h5>                 
+                </div>
             </div>
         <?php
         }
