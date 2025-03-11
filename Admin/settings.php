@@ -83,7 +83,7 @@ include_once('inc/admin-header.php');
 
 <script>
     function stafDelete(id){
-        if(confirm("Sure want to delete.")){
+        if(confirm("Sure want to delete?")){
             window.location.href = `settingsCRUD.php?id=${id}`;
         }
     }

@@ -79,7 +79,7 @@ include_once('inc/admin-header.php');
 
 <script>
     function delete_img(id) {
-        if (confirm("Sure want to delete.")) {
+        if (confirm("Sure want to delete?")) {
             window.location.href = `carouselCRUD.php?id=${id}`;
         }
     }
