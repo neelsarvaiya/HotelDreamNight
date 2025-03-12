@@ -9,6 +9,7 @@ $(document).ready(function () {
         let maxlength = field.data("max") || 9999;
 
         let errorMessage = "";
+        
 
         // Required Validation 
         if (fieldType.includes("required") && value === "") {
