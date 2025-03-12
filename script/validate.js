@@ -75,41 +75,41 @@ $(document).ready(function () {
                 errorMessage = `File size must be less than ${filesize} KB.`;
             }
 
-
-
-            // Show or clear error message
-            if (errorMessage) {
-                errorSpan.text(errorMessage).show();
-                field.addClass("is-invalid");
-                field.removeClass("is-valid");
-            }
-            else {
-                errorSpan.text("").hide();
-                field.removeClass("is-invalid");
-                field.addClass("is-valid");
-            }
         }
 
-        //Attach validation event to all inputs with `oninput`
+        // Show or clear error message
+        if (errorMessage) {
+            errorSpan.text(errorMessage).show();
+            field.addClass("is-invalid");
+            field.removeClass("is-valid");
+        }
+        else {
+            errorSpan.text("").hide();
+            field.removeClass("is-invalid");
+            field.addClass("is-valid");
+        }
+    }
 
-        $("input, textarea").on("input", function () {
-            ValidationField(this);
-        });
+    //Attach validation event to all inputs with `oninput`
 
-
-        // validate form on sumbit
-        $("form").on("submit", function (e) {
-            let isValid = true;
-
-            $(this).find("input, textarea").each(function () {
-                ValidationField(this);
-                if ($(this).next(".error").text() !== "") {
-                    isValid = false;
-                }
-            });
-            if (!isValid) {
-                e.preventDefault();
-            }
-
-        });
+    $("input, textarea").on("input", function () {
+        ValidationField(this);
     });
+
+
+    // validate form on sumbit
+    $("form").on("submit", function (e) {
+        let isValid = true;
+
+        $(this).find("input, textarea").each(function () {
+            ValidationField(this);
+            if ($(this).next(".error").text() !== "") {
+                isValid = false;
+            }
+        });
+        if (!isValid) {
+            e.preventDefault();
+        }
+
+    });
+});

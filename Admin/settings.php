@@ -4,7 +4,7 @@ include_once('inc/admin-header.php');
 
 
 <div class="card container mt-5 p-4 border-2 mb-4">
-    <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> Staf Management
+    <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> Staff Management
         <button type="button" class="btn btn-success shadow-none" data-bs-toggle="modal" data-bs-target="#m_team">
         <i class="bi bi-plus-lg"></i> Add
         </button>
@@ -53,7 +53,7 @@ include_once('inc/admin-header.php');
 
             <div class="modal-header">
                 <h5 class="modal-title d-flex align-items-center h-font">
-                    <i class="bi bi-person-circle fs-3 me-2"></i> Staf
+                    <i class="bi bi-person-circle fs-3 me-2"></i> Staff
                 </h5>
                 <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal"
                     aria-label="Close">

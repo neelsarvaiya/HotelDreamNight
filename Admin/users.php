@@ -30,10 +30,10 @@ include_once('inc/admin-header.php');
                 <thead class="sticky-top">
                     <tr>
                         <th scope="col" class="bg-dark text-white">#</th>
-                        <th scope="col"  class="bg-dark text-white">Name</th>
+                        <th scope="col" class="bg-dark text-white">Name</th>
                         <th scope="col" class="bg-dark text-white">Email</th>
-                        <th scope="col"  class="bg-dark text-white">Phone no.</th>
-                        <th scope="col"  class="bg-dark text-white">Address</th>
+                        <th scope="col" class="bg-dark text-white">Phone no.</th>
+                        <th scope="col" class="bg-dark text-white">Address</th>
                         <th scope="col" class="bg-dark text-white">DOB</th>
                         <th scope="col" class="bg-dark text-white">Role</th>
                         <th scope="col" class="bg-dark text-white">Status</th>
@@ -42,261 +42,33 @@ include_once('inc/admin-header.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="align-middle">
-                        <td>1</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya89@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>2</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya89@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td>3</td>
-                        <td><img src="img/about/p6.jpg" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 5px; object-fit: cover;"> Neel Sarvaiya</td>
-                        <td>kritkanjariya79@example.com</td>
-                        <td>9067874546</td>
-                        <td>Raiya road</td>
-                        <td>10-3-2007</td>
-                        <td>User</td>
-                        <td><span class="badge bg-success"><i class="bi bi-check-lg"></i></span></td>
-                        <td>11-5-2025</td>
-                        <td>
-                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
+                    <?php
+                    $select = "SELECT * FROM `register`";
+                    $result = mysqli_query($conn, $select);
+                    $i = 1;
+                    while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
+                        <tr class="align-middle">
+                            <td><?= $i ?></td>
+                            <td><?= $row['Full_Name'] ?></td>
+                            <td><?= $row['Email'] ?></td>
+                            <td><?= $row['Phone_number'] ?></td>
+                            <td><?= $row['Address'] ?></td>
+                            <td><?= $row['DOB'] ?></td>
+                            <td><?= $row['role'] ?></td>
+                            <td class="align-middle"><button class="btn btn-<?= ($row['status'] === "active") ? 'success' : 'danger' ?> btn-md mx-1"><?= $row['status'] ?></button></td>
+                            <td><?= $row['created_at'] ?></td>
+                            <td>
+                                <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -312,8 +84,8 @@ include_once('inc/admin-header.php');
         $('#myTable').DataTable({
             "paging": true, // Enable pagination
             "searching": true, // Enable search
-            "ordering": true,      // Enable sorting
-            "info": true           // Show table info
+            "ordering": true, // Enable sorting
+            "info": true // Show table info
         });
     });
 </script>

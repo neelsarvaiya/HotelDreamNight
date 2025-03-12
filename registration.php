@@ -19,6 +19,7 @@ if (isset($_POST['register'])) {
     $address = $_POST['address'];
     $state = $_POST['state'];
     $dob = $_POST['dob'];
+    $date = date('d-m-Y');
     $fname = uniqid() . $_FILES['pic']['name'];
     $password = password_hash($_POST['registerPassword'], PASSWORD_DEFAULT);
     $token = uniqid() . time();
@@ -39,7 +40,7 @@ if (isset($_POST['register'])) {
 
     try {
 
-        $insert = "INSERT INTO `register`(`Full_Name`, `Email`, `Phone_number`, `Profile_pic`, `Address`, `state`, `DOB`, `Password`,`token`) VALUES ('$name','$email','$phone','$fname ','$address','$state','$dob','$password','$token')";
+        $insert = "INSERT INTO `register`(`Full_Name`, `Email`, `Phone_number`, `Profile_pic`, `Address`, `state`, `created_at`, `DOB`, `Password`,`token`) VALUES ('$name','$email','$phone','$fname ','$address','$state','$date','$dob','$password','$token')";
 
         if (mysqli_query($conn, $insert)) {
             if (!is_dir("img/userProfile")) {

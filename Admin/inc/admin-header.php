@@ -100,6 +100,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="settings.php"><i class="fa-solid fa-gears text-success"></i> Settings</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="about_us.php"><i class="bi bi-info-circle text-info"></i> About Us</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
