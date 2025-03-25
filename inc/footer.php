@@ -1,12 +1,13 @@
 <div class="container-fluid bg-white mt-5 p-3">
     <div class="row">
         <div class="col-lg-4">
-            <h3 class="h-font fw-bold fs-3 mb-2">DreamNights Hotel</h3>
-            <p>
-                Welcome to DreamNights Hotel, where luxury and comfort come together. Located in the heart of the city,
-                we offer elegant rooms, world-class dining, and exceptional service to make your stay unforgettable.
-                Enjoy our modern facilities, including a fitness center, all designed to help you relax and recharge.
-            </p>
+            <?php
+            $select = "SELECT * FROM settings";
+            $res = mysqli_query($conn, $select);
+            $row = mysqli_fetch_assoc($res);
+            ?>
+            <h3 class="h-font fw-bold fs-3 mb-2"><?= $row['site_title'] ?></h3>
+            <p><?= $row['site_about'] ?></p>
         </div>
         <div class="col-lg-4">
             <h5 class="mb-3 h-font hov">Links </h5>

@@ -42,7 +42,7 @@ include_once('inc/header.php');
 <div class="container">
     <div class="row">
         <?php
-        $select = "SELECT * FROM facilities WHERE status = 'active'";
+        $select = "SELECT * FROM room_facilities WHERE status = 'active'";
         $query = mysqli_query($conn, $select);
 
         while ($row = mysqli_fetch_assoc($query)) {

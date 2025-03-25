@@ -1,119 +1,279 @@
 <?php
 include_once('inc/admin-header.php');
+
+$sql = "SELECT 
+            r.Full_Name, 
+            r.Profile_pic, 
+            rr.rating, 
+            rr.review_text, 
+            rr.id 
+        FROM review_and_rating rr
+        JOIN register r ON r.id = rr.user_id";
+
+$res = mysqli_query($conn, $sql);
+
 ?>
 
-<div class="card container mt-5 p-4 border-2 mb-4">
-    <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between">Reviews & Ratings
-        <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
-    </div>
 
-    <div class="table-responsive-md table-responsive-sm" style="z-index: 1;">
-        <div class="container mt-3">
-            <table class="table table-striped table-bordered text-center">
-                <thead class="sticky-top">
-                    <tr>
-                        <th scope="col" class="bg-dark text-white">#</th>
-                        <th scope="col" class="bg-dark text-white">Room Name</th>
-                        <th scope="col" class="bg-dark text-white">User Name</th>
-                        <th scope="col" class="bg-dark text-white">Rating</th>
-                        <th scope="col" width="40%" class="bg-dark text-white">Review</th>
-                        <th scope="col" class="bg-dark text-white">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Simple Room</td>
-                        <td>neel</td>
-                        <td>2</td>
-                        <td>The room was clean, spacious, and well-equipped with all amenities. The staff was friendly, and the view from the balcony was amazing!</td>
-                        <td>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Luxury Room</td>
-                        <td>Kirit</td>
-                        <td>3</td>
-                        <td>The room was clean, spacious, and well-equipped with all amenities. The staff was friendly, and the view from the balcony was amazing!</td>
-                        <td>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Supreme-deluxe Room</td>
-                        <td>Meet</td>
-                        <td>4</td>
-                        <td>The room was clean, spacious, and well-equipped with all amenities. The staff was friendly, and the view from the balcony was amazing!</td>
-                        <td>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
+<div class="container mt-5">
+    <h2 class="text-center mb-4 h-font">Room Reviews & Ratings</h2>
 
-                    <tr>
-                        <td>4</td>
-                        <td>Deluxe Room</td>
-                        <td>Rohit</td>
-                        <td>5</td>
-                        <td>The room was clean, spacious, and well-equipped with all amenities. The staff was friendly, and the view from the balcony was amazing!</td>
-                        <td>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="response" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title d-flex align-items-center h-font">
-                    <i class="bi bi-person-circle fs-3 me-2"></i> User Response
-                </h5>
-                <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+    <!-- Simple Room -->
+    <div class="card mb-5">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <span>Simple Room (⭐ 3.5 from 50 reviews)</span>
+            <div>
+                <form action="review & rating.php" method="post">
+                    <input type="hidden" name="room_type" value="">
+                    <button class="btn btn-danger btn-sm delete-all" name="all"><i class="bi bi-trash"></i> All</button>
+                    <button class="btn btn-primary btn-sm toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#simpleRoom">
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                </form>
             </div>
-            <form id="user_query" method="post">
-                <div class="modal-body">
-                    <div class="mb-4">
-                        <label for="reponse" class="form-label fw-bold">Response : </label>
-                        <textarea class="form-control shadow-none" id="messages" name="msg" rows="5"
-                            style="resize: none" placeholder="Enter Your Text :"></textarea>
-                    </div>
-                    <div class="d-flex align-items-end justify-content-between mb-2">
-                        <button type="submit" class="btn btn-dark shadow" name="login">Submit</button>
-                    </div>
-                </div>
-            </form>
+        </div>
+
+        <div id="simpleRoom" class="collapse">
+            <div class="card-body">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr class="text-center">
+                            <th scop="col" class="bg-secondary">#</th>
+                            <th scop="col" class="bg-secondary">Image</th>
+                            <th scop="col" class="bg-secondary">User Name</th>
+                            <th scop="col" class="bg-secondary">Rating</th>
+                            <th scop="col" width="50%" class="bg-secondary">Review</th>
+                            <th scop="col" class="bg-secondary">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $i = 1;
+                    while ($data = mysqli_fetch_assoc($res)) {
+                    ?>
+                        <tr class="align-middle text-center">
+                            <td><?= $i ?></td>
+                            <td><img src="../img/userProfile/<?= $data['Profile_pic'] ?>" width="35px" height="35px" class="rounded-circle"></td>
+                            <td><?= $data['Full_Name'] ?></td>
+                            <td><?= $data['rating'] ?> ⭐</td>
+                            <td><?= $data['review_text'] ?></td>
+                            <td>
+                                <a href="?id=<?= $data['id'] ?>">
+                                    <button onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>  
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
-<script>
-    $(document).ready(function() {
 
-        $("#user_query").validate({
-            rules: {
-                msg: {
-                    required: true,
-                    minlength: 10,
-                    maxlength: 50,
-                },
-            },
-            messages: {
-                msg: {
-                    required: "Message is required.",
-                    minlength: "Minimum length is 10.",
-                    maxlength: "Maximum length is 50.",
-                }
-            }
-        })
-    });
-</script>
+    <!-- Luxury Room -->
+    <div class="card mb-5">
+        <div class="card-header bg-dark text-white d-flex justify-content-between">
+            <span>Luxury Room (⭐ 4.2 from 80 reviews)</span>
+            <div>
+                <button class="btn btn-danger btn-sm delete-all"><i class="bi bi-trash"></i> All</button>
+                <button class="btn btn-primary btn-sm toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#luxuryRoom">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+        <div id="luxuryRoom" class="collapse">
+            <div class="card-body">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr class="text-center">
+                            <th scop="col" class="bg-secondary">#</th>
+                            <th scop="col" class="bg-secondary">Image</th>
+                            <th scop="col" class="bg-secondary">User Name</th>
+                            <th scop="col" class="bg-secondary">Rating</th>
+                            <th scop="col" width="50%" class="bg-secondary">Review</th>
+                            <th scop="col" class="bg-secondary">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql = "SELECT * FROM `review_&_rating`";
+                        $res = mysqli_query($conn, $sql);
+                        $i = 1;
+                        while ($data = mysqli_fetch_assoc($res)) {
+                        ?>
+                            <tr class="align-middle text-center">
+                                <td><?= $i ?></td>
+                                <td><img src="../img/about/<?= $data['image'] ?>" width="35px" height="35px" class="rounded-circle"></td>
+                                <td><?= $data['user_name'] ?></td>
+                                <td><?= $data['rating'] ?></td>
+                                <td><?= $data['review'] ?></td>
+                                <td>
+                                    <a href="?id=<?= $data['id'] ?>"><button onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button></a>
+                                </td>
+                            </tr>
+                        <?php
+                            $i++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supreme Deluxe Room -->
+    <div class="card mb-5">
+        <div class="card-header bg-dark text-white d-flex justify-content-between">
+            <span>Supreme Deluxe Room (⭐ 4.5 from 120 reviews)</span>
+            <div>
+                <button class="btn btn-danger btn-sm delete-all"><i class="bi bi-trash"></i> All</button>
+                <button class="btn btn-primary btn-sm toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#supremeDeluxeRoom">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+        <div id="supremeDeluxeRoom" class="collapse">
+            <div class="card-body">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr class="text-center">
+                            <th scop="col" class="bg-secondary">#</th>
+                            <th scop="col" class="bg-secondary">Image</th>
+                            <th scop="col" class="bg-secondary">User Name</th>
+                            <th scop="col" class="bg-secondary">Rating</th>
+                            <th scop="col" width="50%" class="bg-secondary">Review</th>
+                            <th scop="col" class="bg-secondary">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql = "SELECT * FROM `review_&_rating`";
+                        $res = mysqli_query($conn, $sql);
+                        $i = 1;
+                        while ($data = mysqli_fetch_assoc($res)) {
+                        ?>
+                            <tr class="align-middle text-center">
+                                <td><?= $i ?></td>
+                                <td><img src="../img/about/<?= $data['image'] ?>" width="35px" height="35px" class="rounded-circle"></td>
+                                <td><?= $data['user_name'] ?></td>
+                                <td><?= $data['rating'] ?></td>
+                                <td><?= $data['review'] ?></td>
+                                <td>
+                                    <a href="?id=<?= $data['id'] ?>"><button onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button></a>
+                                </td>
+                            </tr>
+                        <?php
+                            $i++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deluxe Room -->
+    <div class="card mb-5">
+        <div class="card-header bg-dark text-white d-flex justify-content-between">
+            <span>Deluxe Room (⭐ 4.7 from 200 reviews)</span>
+            <div>
+                <button class="btn btn-danger btn-sm delete-all"><i class="bi bi-trash"></i> All</button>
+                <button class="btn btn-primary btn-sm toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#deluxeRoom">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+        <div id="deluxeRoom" class="collapse">
+            <div class="card-body">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr class="text-center">
+                            <th scop="col" class="bg-secondary">#</th>
+                            <th scop="col" class="bg-secondary">Image</th>
+                            <th scop="col" class="bg-secondary">User Name</th>
+                            <th scop="col" class="bg-secondary">Rating</th>
+                            <th scop="col" width="50%" class="bg-secondary">Review</th>
+                            <th scop="col" class="bg-secondary">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql = "SELECT * FROM `review_&_rating`";
+                        $res = mysqli_query($conn, $sql);
+                        $i = 1;
+                        while ($data = mysqli_fetch_assoc($res)) {
+                        ?>
+                            <tr class="align-middle text-center">
+                                <td><?= $i ?></td>
+                                <td><img src="../img/about/<?= $data['image'] ?>" width="35px" height="35px" class="rounded-circle"></td>
+                                <td><?= $data['user_name'] ?></td>
+                                <td><?= $data['rating'] ?></td>
+                                <td><?= $data['review'] ?></td>
+                                <td>
+                                    <a href="?id=<?= $data['id'] ?>"><button onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button></a>
+                                </td>
+                            </tr>
+                        <?php
+                            $i++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<?php
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    $deleteQuery = "DELETE FROM `review_&_rating` WHERE `id`= '$id'";
+
+    if (mysqli_query($conn, $deleteQuery)) {
+        setcookie("success", "Deleted Successfull.", time() + 3, "/");
+    } else {
+        setcookie("error", "Not Deleted Successfull.", time() + 3, "/");
+    }
+?>
+    <script>
+        window.location.href = 'review & rating.php';
+    </script>
+<?php
+
+if (isset($_POST['all'])) {
+    $room_type = $_POST['room_type']; 
+    $delete_sql = "DELETE FROM `review_&_rating` WHERE `room_type` = '$room_type'"; 
+
+    if (mysqli_query($conn, $delete_sql)) {
+        echo "<script>alert('All reviews for $room_type deleted successfully!'); window.location.href='yourpage.php';</script>";
+    } else {
+        echo "<script>alert('Error deleting reviews');</script>";
+    }
+}
+
+}
+?>
+
+<?php
+// $sql = "SELECT COUNT(review) as total_reviews
+//         FROM `review_&_rating` WHERE `room_type` =  'simple'";
+
+//        $data =  mysqli_fetch_assoc(mysqli_query($conn,$sql));
+//        echo $data['total_reviews'];
+
+//         
+?>
+
+// <?php

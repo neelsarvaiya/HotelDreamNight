@@ -102,285 +102,89 @@ include_once('inc/header.php');
             </nav>
         </div>
 
+        
         <div class="col-lg-9 col-md-12 px-4">
-            <div class="card mb-4 border-0 shadow">
-                <div class="row g-0 p-3 align-items-center">
-                    <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-                        <img src="img/rooms/3.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-5 px-lg-3 px-md-3 px-0">
-                        <h5 class="mb-3">Simple Room</h5>
-                        <div class="features mb-3">
-                            <h6 class="mb-1">Features : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Bed Rooms
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Balcony
-                            </span>
-                        </div>
-                        <div class="facilities mb-3">
-                            <h6>Facilities : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Air Conditioner
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Television
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Room Heater
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Geyser
-                            </span>
-                        </div>
-                        <div class="guests44 mb-3">
-                            <h6>Guests : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                5 Adults
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                3 Children
-                            </span>
-                        </div>
-                        <div class="rating mb-3">
-                            <h6>Rating</h6>
-                            <span class="badge rounded-pill bg-light">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                            </span>
-                        </div>
-                    </div>
+            <?php
+            $sql = "SELECT * FROM `room_categories` WHERE status='active'";
+            $res = mysqli_query($conn, $sql);
+            while ($data = mysqli_fetch_assoc($res)) {
+                $room_id = $data['id'];
 
-                    <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
-                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;">
-                            10% Off on Weekdays
-                        </span>
-                        <h6 class="mb-2" style="text-decoration: line-through;">₹3000 per night</h6>
-                        <span class="badge rounded text-dark text-wrap mb-2">
-                            <h6>₹2700 per night</h6>
-                        </span>
-                        <a href="#"
-                            onclick="alert('Please Login for Booking...');"
-                            class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
-                            name="book">
-                            Book now
-                        </a>
-                        <a href="simple.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
-                    </div>
-
-                </div>
-            </div>
-            <div class="card mb-4 border-0 shadow">
-                <div class="row g-0 p-3 align-items-center">
-                    <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-                        <img src="img/rooms/8.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-5 px-lg-3 px-md-3 px-0">
-                        <h5 class="mb-3">Deluxe Room </h5>
-                        <div class="features mb-3">
-                            <h6 class="mb-1">Features : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Bed Rooms
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Balcony
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Kitchen
-                            </span>
+            ?>
+                <div class="card mb-4 border-0 shadow">
+                    <div class="row g-0 p-3 align-items-center">
+                        <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
+                            <img src="img/rooms/<?= $data['image'] ?>" class="img-fluid rounded-start" alt="...">
                         </div>
-                        <div class="facilities mb-3">
-                            <h6>Facilities : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Air Conditioner
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Room Heater
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Geyser
-                            </span>
+                        <div class="col-md-5 px-lg-3 px-md-3 px-0">
+                            <h5 class="mb-3"><?= $data['name'] ?></h5>
+                            <div class="features mb-3">
+                                <h6 class="mb-1">Features : </h6>
+                                <?php
+                                $sql = "SELECT rf.name FROM `room_features` rf JOIN `room_features_mapping` rfm ON rfm.room_feature_id = rf.id WHERE rfm.room_id = $room_id AND rf.status = 'active'";
+                                $features = mysqli_query($conn, $sql);
+                                while ($feature = mysqli_fetch_assoc($features)) {
+                                ?> 
+                                    <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                        <?= $feature['name'] ?>
+                                    </span>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="facilities mb-3">
+                                <h6>Facilities : </h6>
+                                <?php
+                                $sql = "SELECT rf.name FROM `room_facilities` rf JOIN `room_facilities_mapping` rfm ON rfm.room_facility_id = rf.id WHERE rfm.room_id = $room_id AND rf.status = 'active'";
+                                $facilities = mysqli_query($conn, $sql);
+                                while ($facility = mysqli_fetch_assoc($facilities)) {
+                                ?>
+                                    <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                    <?= $facility['name'] ?> 
+                                    </span>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="guests44 mb-3">
+                                <h6>Guests : </h6>
+                                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                    <?= $data['adult(max)'] ?> Adults
+                                </span>
+                                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                    <?= $data['child(max)'] ?> Children
+                                </span>
+                            </div>
+                            <div class="rating mb-4">
+                                <h6>Rating</h6>
+                                <span class="badge rounded-pill bg-light">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                </span>
+                            </div>
                         </div>
-                        <div class="guests44 mb-3">
-                            <h6>Guests : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                3 Adults
+                        <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
+                            <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;">
+                                15% Off on Weekends
                             </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                2 Children
+                            <h6 class="mb-2" style="text-decoration: line-through;">₹<?= $data['actual_price'] ?> per night</h6>
+                            <span class="badge rounded text-dark text-wrap mb-2">
+                                <h6>₹<?= $data['final_price'] ?> per night</h6>
                             </span>
+                            <a href="booking.php"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
+                                Book now
+                            </a>
+                            <a href="more_details.php?id=<?= $data['id'] ?>" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
                         </div>
-                        <div class="rating mb-4">
-                            <h6>Rating</h6>
-                            <span class="badge rounded-pill bg-light">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
-                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;">
-                            15% Off on Weekends
-                        </span>
-                        <h6 class="mb-2" style="text-decoration: line-through;">₹6000 per night</h6>
-                        <span class="badge rounded text-dark text-wrap mb-2">
-                            <h6>₹5100 per night</h6>
-                        </span>
-                        <a href="booking.php"
-                            class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
-                            Book now
-                        </a>
-                        <a href="deluxe.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
                     </div>
                 </div>
-            </div>
-            <div class="card mb-4 border-0 shadow">
-                <div class="row g-0 p-3 align-items-center">
-                    <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-                        <img src="img/rooms/4.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-5 px-lg-3 px-md-3 px-0">
-                        <h5 class="mb-3">Luxury Room</h5>
-                        <div class="features mb-3">
-                            <h6 class="mb-1">Features : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Bed Rooms
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Balcony
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Kitchen
-                            </span>
-                        </div>
-                        <div class="facilities mb-3">
-                            <h6>Facilities : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Wi-Fi
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Air Conditioner
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Room Heater
-                            </span>
-                        </div>
-                        <div class="guests44 mb-3">
-                            <h6>Guests : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                8 Adults
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                6 Children
-                            </span>
-                        </div>
-                        <div class="rating mb-4">
-                            <h6>Rating</h6>
-                            <span class="badge rounded-pill bg-light">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
-                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;line-height:15px;">
-                            20% Off for Long Stays (7+ nights)
-                        </span>
-                        <h6 class="mb-2" style="text-decoration: line-through;">₹8000 per night</h6>
-                        <span class="badge rounded text-dark text-wrap mb-2">
-                            <h6> ₹6400 per night</h6>
-                        </span>
-                        <a href="booking.php"
-                            class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
-                            Book now
-                        </a>
-                        <a href="luxury.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4 border-0 shadow">
-                <div class="row g-0 p-3 align-items-center">
-                    <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-                        <img src="img/rooms/2.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-5 px-lg-3 px-md-3 px-0">
-                        <h5 class="mb-3">Supreme Deluxe Room</h5>
-                        <div class="features mb-3">
-                            <h6 class="mb-1">Features : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Bed Rooms
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Balcony
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Kitchen
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                BathRooms
-                            </span>
-                        </div>
-                        <div class="facilities mb-3">
-                            <h6>Facilities : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Wi-Fi
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Air Conditioner
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Room Heater
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                Geyser
-                            </span>
-                        </div>
-                        <div class="guests44 mb-3">
-                            <h6>Guests : </h6>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                9 Adults
-                            </span>
-                            <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                10 Children
-                            </span>
-                        </div>
-                        <div class="rating mb-4">
-                            <h6>Rating</h6>
-                            <span class="badge rounded-pill bg-light">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2">
-                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px; line-height:15px;">
-                            25% Off for Early Bookings (30+ days in advance)
-                        </span>
-                        <h6 class="mb-2" style="text-decoration: line-through;">₹10000 per night</h6>
-                        <span class="text-dark text-wrap mb-2">
-                            <h6>₹7500 per night</h6>
-                        </span>
-                        <a href="booking.php"
-                            class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
-                            Book now
-                        </a>
-                        <a href="supreme_deluxe.php" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>

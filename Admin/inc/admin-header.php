@@ -1,3 +1,67 @@
+<?php
+include_once('connection.php');
+
+if (isset($_COOKIE['success'])) {
+?>
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Success!</strong> <?php echo $_COOKIE['success']; ?>.
+    </div>
+<?php
+}
+?>
+
+<?php
+if (isset($_COOKIE['error'])) {
+?>
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Error!</strong> <?php echo $_COOKIE['error']; ?>.
+    </div>
+<?php
+}
+?>
+
+<?php
+session_start();
+
+if (isset($_SESSION['admin'])) {
+    $email = $_SESSION['admin'];
+    $select = "SELECT * FROM register WHERE Email='$email'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $select));
+} else {
+    header('Location: ../index.php');
+}
+?>
+
+<?php
+if (isset($_POST['pass_btn'])) {
+    $enterd_pass = $_POST['oldpass'];
+    $email = $_SESSION['admin'];
+    $select = "select * from register where `Email` = '$email'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $select));
+    if (password_verify($enterd_pass, $result['Password'])) {
+
+        $newpass = password_hash($_POST['newpass'], PASSWORD_DEFAULT);
+
+        $update = "UPDATE `register` SET `Password`='$newpass'";
+        if (mysqli_query($conn, $update)) {
+            setcookie('success', 'Password Changed Successfully.', time() + 5, '/');
+        } else {
+            setcookie('error', 'Password is not Changed.', time() + 5, '/');
+        }
+    } else {
+        setcookie('error', 'Old Password is Wrong.', time() + 5, '/');
+    }
+
+?>
+    <script>
+        window.location.href = "profile.php";
+    </script>
+<?php
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,11 +74,9 @@
     <script src="script1/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="script1/jquery-3.7.1.js"></script>
-    <script src="script1/validate.js"></script>
+    <script src="../script/validate.js"></script>
 
-    <?php
-    include_once('connection.php');
-    ?>
+
 </head>
 
 <!-- icon link -->
@@ -22,33 +84,12 @@
 
 <body class="bg-light">
 
-    <?php
-    if (isset($_COOKIE['success'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>Success!</strong> <?php echo $_COOKIE['success']; ?>.
-        </div>
-    <?php
-    }
-    ?>
-    
-    <?php
-    if (isset($_COOKIE['error'])) {
-    ?>
-        <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>Error!</strong> <?php echo $_COOKIE['error']; ?>.
-        </div>
-    <?php
-    }
-    ?>
 
     <div class="container-fluid bg-dark d-flex align-items-center justify-content-between sticky-top" style="z-index: 1000;">
         <a class="navbar-brand fw-bold fs-3 h-font text-light " href="dashbord.php" style="text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);"> <img src="../img/logo.png" width="110px">DreamNights</a>
         <div class="dropdown">
             <button type="button" class="btn dropdown-toggle text-light me-3 p-3" data-bs-toggle="dropdown">
-                <img src="img/user.jpg" class="img-fluid rounded-circle" style="height: 30px; width: 40%" alt=""> NEEL
+                <img src="../img/userProfile/<?= $result['Profile_pic'] ?>" class="img-fluid rounded-circle" style="height: 30px; width: 35%" alt=""> NEEL
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
@@ -82,11 +123,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="discount.php"><i class="fa-solid fa-tag text-warning""></i> Discounts</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="carousel.php"><i class="fa-solid fa-sliders-h text-danger"></i> Carousel</a>
+                            <li class=" nav-item">
+                                        <a class="nav-link text-white" href="carousel.php"><i class="fa-solid fa-sliders-h text-danger"></i> Carousel</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="users.php"><i class="fa-solid fa-user-group text-info"></i> Users</a>
+                                <a class="nav-link text-white" href="users.php"><i class="fa-solid fa-user-group text-success"></i> Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="about.php"><i class="bi bi-info-circle text-info"></i> About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="feature.php"><i class="fa-solid fa-spa text-warning"></i> Feature & Facilities</a>
@@ -98,10 +142,7 @@
                                 <a class="nav-link text-white" href="review & rating.php"><i class="bi bi-hand-thumbs-up text-warning"></i> Reviews & Ratings</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="settings.php"><i class="fa-solid fa-gears text-success"></i> Settings</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="about_us.php"><i class="bi bi-info-circle text-info"></i> About Us</a>
+                                <a class="nav-link text-white" href="settings.php"><i class="fa-solid fa-gears text-primary"></i> Settings</a>
                             </li>
                         </ul>
                     </div>
@@ -113,6 +154,7 @@
     <div class="container-fluid" id="main-content">
         <div class="row">
             <div class="col-lg-10 ms-auto">
+
 </body>
 
 </html>

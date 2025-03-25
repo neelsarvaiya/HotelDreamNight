@@ -21,20 +21,9 @@ include_once('inc/header.php');
         </div>
 
         <div class="col-lg-7 col-md-12 px-4 mb-md-4 mb-sm-4">
-            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="img/rooms/8.png" class="d-block w-100 rounded" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/rooms/1.jpg" class="d-block w-100 rounded" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/rooms/4.png" class="d-block w-100 rounded" alt="...">
-                    </div>
-                </div>
-            </div>
+            <img src="img/rooms/<?= $data['image'] ?>" class="img-fluid rounded-start" alt="...">
         </div>
+
         <div class="col-lg-5 col-md-12 px-4">
             <div class="card mb-4 border-0 shadow rounded-3">
                 <div class="card-body">
@@ -98,6 +87,7 @@ include_once('inc/header.php');
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-lg-12 mb-4">
             <h5 class="fw-bold">Description</h5>
@@ -153,6 +143,7 @@ include_once('inc/header.php');
             </div>
         </div>
     </div>
+    
 </div>
 
 <?php

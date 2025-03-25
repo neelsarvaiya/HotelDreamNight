@@ -1,4 +1,37 @@
 <?php
+include 'connection.php';
+
+if (isset($_POST['add_discount'])) {
+    $room_id = $_POST['room'];
+    $offer_name = $_POST['offer_name'];
+    $discount = $_POST['discount'];
+    $offer_start = $_POST['start'];
+    $offer_end = $_POST['end'];
+
+    $sql = "INSERT INTO `discount`(offer, discount_percentage, start_date, end_date) 
+                VALUES ('$offer_name', '$discount', '$offer_start', '$offer_end')";
+
+    if (mysqli_query($conn, $sql)) {
+
+        $discount_id = mysqli_insert_id($conn);
+        $insert = "INSERT INTO `room_wise_discount`(`room_id`, `discount_id`) VALUES ('$room_id','$discount_id')";
+        mysqli_query($conn, $insert);
+        setcookie("success", "Add Successfull.", time() + 3, "/");
+
+    } else {
+        setcookie("error", "Not add successfull.", time() + 3, "/");
+    }
+?>
+    <script>
+        window.location.href = 'discount.php';
+    </script>
+<?php
+    exit;
+}
+?>
+
+
+<?php
 include_once('inc/admin-header.php');
 ?>
 <div class="card container mt-5 p-4 border-2 mb-4">
@@ -26,62 +59,31 @@ include_once('inc/admin-header.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Simple Room</td>
-                        <td> on Weekdays</td>
-                        <td>10%</td>
-                        <td>₹3000</td>
-                        <td>₹2700</td>
+
+                <?php
+
+                $select = "SELECT * FROM `discount`";
+                $result = mysqli_query($conn, $select);
+
+                while($data = mysqli_fetch_assoc($result)){
+                    ?>
+                    <tr class="align-middle">
+                        <td><?= $data['id'] ?></td>
+                        <td><?= $data['id'] ?></td>
+                        <td><?= $data['id'] ?></td>
+                        <td><?= $data['id'] ?></td>
+                        <td><?= $data['id'] ?></td>
+                        <td><?= $data['id'] ?></td>
                         <td>
-                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
+                            <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                             <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Deluxe Room</td>
-                        <td>on Diwali Offer</td>
-                        <td>15%</td>
-                        <td>₹6000</td>
-                        <td>₹5100</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Luxury Room</td>
-                        <td>for Long Stays (7+ nights)</td>
-                        <td>20%</td>
-                        <td>₹8000</td>
-                        <td>₹6400</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Supreme Deluxe Room</td>
-                        <td>for Early Bookings (30+ days in advance)</td>
-                        <td>25%</td>
-                        <td>₹10000</td>
-                        <td>₹7500</td>
-                        <td>
-                            <button type="button" class="btn btn-info shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
+                    <?php
+                }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -98,15 +100,20 @@ include_once('inc/admin-header.php');
                 <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <form id="discount_form" method="post">
+            <form action="discount.php" id="" method="post">
                 <div class="modal-body">
                     <div class="mb-2">
                         <label for="room" class="form-label fw-bold">Choose room : </label>
                         <select name="room" id="room" class="form-control">
-                            <option value="simple">Simple Room</option>
-                            <option value="deluxe">Deluxe Room</option>
-                            <option value="luxury">Luxury Room</option>
-                            <option value="supreme">Supreme Deluxe Room</option>
+                            <?php
+                            $select = "SELECT * FROM `room_categories` WHERE status='active'";
+                            $result = mysqli_query($conn, $select);
+                            while ($data =  $result->fetch_assoc()) {
+                            ?>
+                                <option value="<?= $data['id'] ?>"><?= $data['name'] ?></option>
+                            <?php
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="mb-2">
@@ -120,61 +127,72 @@ include_once('inc/admin-header.php');
                         <div class="error" id="discountError"></div>
                     </div>
                     <div class="mb-2">
-                        <label for="price" class="form-lable">Price : </label>
-                        <input type="text" name="price" id="price" placeholder="₹10000" class="form-control" readonly>
+                        <label for="discount">Offer Start : </label>
+                        <input type="date" name="start" id="discount" data-validation="required" class="form-control">
+                        <div class="error" id="startError"></div>
                     </div>
                     <div class="mb-2">
-                        <label for="discount_price">Discounted Price : </label>
-                        <input type="number" name="discount_price" id="discount_price" data-validation="required" class="form-control">
-                        <div class="error" id="discount_priceError"></div>
+                        <label for="discount">Offer End : </label>
+                        <input type="date" name="end" id="discount" data-validation="required" class="form-control">
+                        <div class="error" id="endError"></div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="price" class="form-lable">Price : </label>
+                        <input type="text" name="price" id="price" value="" class="form-control" readonly>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
-                        <button type="submit" class="btn btn-dark shadow" name="login">Submit</button>
+                        <button type="submit" class="btn btn-dark shadow" name="add_discount">Submit</button>
                     </div>
                 </div>
             </form>
+
         </div>
     </div>
+
+</div>
+
 </div>
 </div>
 </div>
-</div>
+
+<?php
+if (isset($_POST['edt_discount'])) {
+    $room = $_POST['room'];
+    $offer_name = $_POST['offer_name'];
+    $offer_name = $_POST['discount'];
+    $offer_start = $_POST['start'];
+    $offer_end = $_POST['end'];
+
+
+    $insert = "";
+}
+?>
+
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        $('#room').change(function() {
+            var roomId = $(this).val();
 
-        $("#discount_form").validate({
-            rules: {
-                dis_name: {
-                    required: true,
-                    maxlength: 50,
+            $.ajax({
+                url: 'get_room_price.php',
+                type: 'POST',
+                data: {
+                    room_id: roomId
                 },
-                dis_price: {
-                    required: true,
-                    maxlength: 10,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.price) {   
+                        $('#price').val(response.price);
+                    } else {
+                        $('#price').val('');
+                    }
                 },
-                room: {
-                    required: true,
-                },
-                dis: {
-                    required: true,
-                },
-            },
-            messages: {
-                dis_name: {
-                    required: "Offer name is required.",
-                    maxlength: "Maximum length is 50.",
-                },
-                dis_price: {
-                    required: "Offer Price is required.",
-                    maxlength: "Maximum length is 10.",
-                },
-                room: {
-                    required: "Choose One Room",
-                },
-                dis: {
-                    required: "Enter Discount (in %).",
-                },
-            }
-        })
+                error: function() {
+                    alert('Error fetching room price.');
+                }
+            });
+        });
     });
-</script>
+</script> -->

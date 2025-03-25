@@ -1,6 +1,7 @@
 <?php
 include_once('inc/header.php');
 ?>
+
 <style>
     .slide-top {
         opacity: 0;
@@ -62,58 +63,51 @@ include_once('inc/header.php');
     }
 </style>
 
+<?php
+$select = "SELECT * FROM `about_details`";
+$data = mysqli_fetch_assoc(mysqli_query($conn, $select));
+?>
+
 <div class="my-5 px-4">
     <h2 class="fw-bold h-font text-center slide-top">ABOUT US</h2>
     <div class="h-line bg-dark"></div>
     <p class="text-center mt-3">
-        Dream Night Hotel, we pride ourselves on offering a seamless blend of luxury, and personalized service. Situated in a prime location, our hotel features elegant rooms, state-of-the-art amenities, and a welcoming atmosphere designed for both business and leisure travelers.
+        <?= $data['about_text'] ?>
     </p>
 </div>
 
 <div class="container">
     <div class="row justify-content-between align-items-center">
         <div class="col-lg-6 col-md-6 mb-4 me-md-5 order-lg-1 order-md-1 order-sm-2">
-            <h3 class="mb-3 h-font">James Turner</h3>
+            <h3 class="mb-3 h-font"><?= $data['name'] ?></h3>
             <p class="typewriter">
-                James Turner is a highly dedicated and accomplished hospitality professional with over two decades of experience in the industry. As the General Manager of DreamNights Hotel, he oversees daily operations with a commitment to delivering excellence in guest services. Known for his attention to detail and visionary leadership, James ensures every visitor enjoys a seamless and luxurious stay.
-                His expertise lies in building strong teams, improving operational efficiencies, and creating a guest-centric environment. James has a proven track record of exceeding customer expectations and fostering long-term relationships with clients and partners.
+                <?= $data['owner_detail'] ?>
             </p>
         </div>
         <div class="col-lg-5 col-md-5 mb-4 order-lg-2 order-md-2 order-sm-1">
-            <img src="img/about/about.jpg" class="w-100">
+            <img src="img/about/<?= $data['image'] ?>" class="w-100">
         </div>
     </div>
 </div>
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-lg-3 col-md-6 px-4 mb-4">
-            <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
-                <img src="img/about/hotel.svg" width="70px">
-                <h4 class="mt-3 h-font">100+ ROOMS</h4>
+        <?php
+        $select = "SELECT * FROM detail_of_hotel WHERE status= 'active'";
+        $result = mysqli_query($conn, $select);
+        while ($data = mysqli_fetch_assoc($result)) {
+        ?>
+            <div class="col-lg-3 col-md-6 px-4 mb-4">
+                <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
+                    <img src="img/about/<?= $data['image'] ?>" width="70px">
+                    <h4 class="mt-3 h-font"><?= $data['detail'] ?></h4>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 px-4 mb-4">
-            <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
-                <img src="img/about/customers.svg" width="70px">
-                <h4 class="mt-3 h-font">200+ CUSTOMERS</h4>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 px-4 mb-4">
-            <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
-                <img src="img/about/rating.svg" width="70px">
-                <h4 class="mt-3 h-font">150+ REVIEWS</h4>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 px-4 mb-4">
-            <div class="bg-white rounded shadow p-4 border-top border-4 text-center box pok">
-                <img src="img/about/staff.svg" width="70px">
-                <h4 class="mt-3 h-font">200+ STAFFS</h4>
-            </div>
-        </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
-
 <h3 class="my-5 fw-bold h-font text-center">MANAGEMENT TEAM
     <div class="h-line bg-dark mt-2"></div>
 </h3>
@@ -121,15 +115,14 @@ include_once('inc/header.php');
 <div class="container px-4">
     <div class="row">
         <?php
-        $select = "SELECT * FROM `team` WHERE `status` = 'inactive'";
+        $select = "SELECT * FROM `staff` WHERE `status` = 'active'";
         $res = mysqli_query($conn, $select);
         while ($row = mysqli_fetch_assoc($res)) {
         ?>
             <div class="col-lg-3 col-md-6">
                 <img src="img/about/<?= $row['image'] ?>" class="w-100 pop">
                 <div class="d-flex align-items-center justify-content-around">
-                    <h5 class="mt-2 text-center"><?= $row['name'] ?></h5>                    
-                    <h5 class="mt-2 text-center"><?= $row['name'] ?></h5>                 
+                    <h5 class="p-1 text-center shadow w-100"><?= $row['name'] ?></h5>
                 </div>
             </div>
         <?php

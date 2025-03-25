@@ -1,4 +1,15 @@
 <?php
+
+function book()
+{
+    if (!isset($_SESSION['user'])) {
+        setcookie("error", "You must log in to book a room!", time() + 5, "/");
+        header("Location: index.php");
+    } else {
+        $book = "booking.php";
+    }
+}
+
 include_once('inc/header.php');
 ?>
 
@@ -67,211 +78,90 @@ $res = mysqli_query($conn, $insert);
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-                <img src="img/rooms/2.png" class="card-img-top rounded">
-                <div class="card-body">
-                    <h5>Supreme Deluxe Room</h5>
-                    <h6 class="mb-4">₹10000 per night</h6>
-                    <div class="features mb-4">
-                        <h6 class="mb-1">Features : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Bed Rooms
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Balcony
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Kitchen
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6>Facilities : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Geyser
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Air Conditioner
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Wi-Fi
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Room Heater
-                        </span>
-                    </div>
-                    <div class="guests mb-4">
-                        <h6>Guests : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            9 Adults
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            10 Children
-                        </span>
-                    </div>
-                    <div class="rating mb-4">
-                        <h6>Rating</h6>
-                        <span class="badge rounded-pill bg-light">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </span>
-                    </div>
-                    <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px; line-height:15px;">
-                        25% Off for Early Bookings (30+ days in advance)
-                    </span>
-                    <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹10000 per night</h6>
-                    <span class="text-dark text-wrap mb-2">
-                        <h6 class="text-center mb-3">₹7500 per night</h6>
-                    </span>
-                    <div class="d-flex justify-content-evenly mb-2">
-                        <a href="#"
-                            onclick="alert('Please login forn Booking...');"
-                            class="btn btn-sm text-white custom-bg shadow-none"
-                            name="book">
-                            Book now
-                        </a>
-                        <a href="supreme_deluxe.php" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $sql = "SELECT * FROM `room_categories` WHERE id = 16 OR id = 21 OR id = 22 And status='active'";
+        $res = mysqli_query($conn, $sql);
+        while ($data = mysqli_fetch_assoc($res)) {
+            $room_id = $data['id'];
 
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-                <img src="img/rooms/4.png" class="card-img-top rounded">
-                <div class="card-body">
-                    <h5>Luxury Room</h5>
-                    <h6 class="mb-4">₹8000 per night</h6>
-                    <div class="features mb-4">
-                        <h6 class="mb-1">Features : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Bed Rooms
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Balcony
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Kitchen
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6>Facilities : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Room Heater
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Air Conditioner
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Wi-Fi
-                        </span>
-                    </div>
-                    <div class="guests mb-4">
-                        <h6>Guests : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            8 Adults
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            6 Children
-                        </span>
-                    </div>
-                    <div class="rating mb-4">
-                        <h6>Rating</h6>
-                        <span class="badge rounded-pill bg-light">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star text-warning"></i>
-                        </span>
-                    </div>
-                    <pre>      <span class="badge rounded-pill bg-success text-white text-wrap " style="font-size: 13px; line-height:15px; align-content: center;">
-                            20% Off for Long Stays (7+ nights)
-                        </span></pre>
-                    <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹8000 per night</h6>
-                    <span class="text-dark text-center text-wrap mb-2">
-                        <h6 class="mb-3"> ₹6400 per night</h6>
-                    </span>
-                    <div class="d-flex justify-content-evenly mb-2">
-                        <a href="booking.php"
-                            class="btn btn-sm text-white custom-bg shadow-none">
-                            Book now
-                        </a>
-                        <a href="luxury.php" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        ?>
 
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-                <img src="img/rooms/8.png" class="card-img-top rounded">
-                <div class="card-body">
-                    <h5>Deluxe Room</h5>
-                    <h6 class="mb-4">₹6000 per night</h6>
-                    <div class="features mb-4">
-                        <h6 class="mb-1">Features : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Bed Room
+            <div class="col-lg-4 col-md-6 my-3">
+                <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
+                    <img src="img/rooms/<?= $data['image'] ?>" class="card-img-top rounded">
+                    <div class="card-body">
+                        <h5><?= $data['name'] ?></h5>
+                        <h6 class="mb-4">₹<?= $data['actual_price'] ?> per night</h6>
+                        <div class="features mb-4">
+                            <h6 class="mb-1">Features : </h6>
+                            <?php
+                            $sql = "SELECT rf.name FROM `room_features` rf JOIN `room_features_mapping` rfm ON rfm.room_feature_id = rf.id WHERE rfm.room_id = $room_id AND rf.status = 'active'";
+                            $features = mysqli_query($conn, $sql);
+                            while ($feature = mysqli_fetch_assoc($features)) {
+                            ?>
+                                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                    <?= $feature['name'] ?>
+                                </span>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="facilities mb-4">
+                            <h6>Facilities : </h6>
+                            <?php
+                            $sql = "SELECT rf.name FROM `room_facilities` rf JOIN `room_facilities_mapping` rfm ON rfm.room_facility_id = rf.id WHERE rfm.room_id = $room_id AND rf.status = 'active'";
+                            $facilities = mysqli_query($conn, $sql);
+                            while ($facility = mysqli_fetch_assoc($facilities)) {
+                            ?>
+                                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                    <?= $facility['name'] ?>
+                                </span>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="guests mb-4">
+                            <h6>Guests : </h6>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                <?= $data['adult(max)'] ?> Adults
+                            </span>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap">
+                                <?= $data['child(max)'] ?> Children
+                            </span>
+                        </div>
+                        <div class="rating mb-4">
+                            <h6>Rating</h6>
+                            <span class="badge rounded-pill bg-light">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </span>
+                        </div>
+                        <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px; line-height:15px;">
+                            25% Off for Early Bookings (30+ days in advance)
                         </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Balcony
+                        <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹<?= $data['actual_price'] ?> per night</h6>
+                        <span class="text-dark text-wrap mb-2">
+                            <h6 class="text-center mb-3">₹<?= $data['final_price'] ?> per night</h6>
                         </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Kitchen
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6>Facilities : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Geyser
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Room Heater
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Air Conditioner
-                        </span>
-                    </div>
-                    <div class="guests mb-4">
-                        <h6>Guests : </h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            3 Adults
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            2 Children
-                        </span>
-                    </div>
-                    <div class="rating mb-4">
-                        <h6>Rating</h6>
-                        <span class="badge rounded-pill bg-light">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star text-warning"></i>
-                            <i class="bi bi-star text-warning"></i>
-                        </span>
-                    </div>
-                    <pre>            <span class="badge rounded-pill bg-success text-white text-wrap " style="font-size: 13px; line-height:15px; align-content: center;">
-                        15% Off on Weekends
-                        </span></pre>
-                    <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹6000 per night</h6>
-                    <span class="rounded text-dark text-center mb-2">
-                        <h6 class="mb-3"> ₹5100 per night</h6>
-                    </span>
-                    <div class="d-flex justify-content-evenly mb-2">
-                        <a href="booking.php"
-                            class="btn btn-sm text-white custom-bg shadow-none"
-                            name="book">
-                            Book now
-                        </a> <a href="deluxe.php" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
+                        <div class="d-flex justify-content-evenly mb-2">
+                            <a href="<?= $book ?>"
+                                onclick="book();"
+                                class="btn btn-sm text-white custom-bg shadow-none"
+                                name="book">
+                                Book now
+                            </a>
+                            <a href="more_details.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        <?php
+        }
+        ?>
 
         <div class="col-ld-12 text-center mt-5">
             <a href="rooms.php" class="btn btn-sm btn-outline-dark rounded-0 shadow-none">More Rooms >>></a>
@@ -283,29 +173,19 @@ $res = mysqli_query($conn, $insert);
 <div class="h-line bg-dark"></div>
 <div class="container">
     <div class="row justify-content-evenly px-lg-0 px-md-0 px-5">
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 bounce">
-            <img src="img/facilities/wifi6.svg" width="80ppx">
-            <h5 class="mt-3">Geyser</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 bounce">
-            <img src="img/facilities/wifi2.svg" width="80ppx">
-            <h5 class="mt-3">Room Heater</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 bounce">
-            <img src="img/facilities/wifi3.svg" width="80ppx">
-            <h5 class="mt-3">Air Conditioner</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 bounce">
-            <img src="img/facilities/wifi4.svg" width="80ppx">
-            <h5 class="mt-3">Spa</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow  py-4 my-3 bounce">
-            <img src="img/facilities/wifi5.svg" width="80ppx">
-            <h5 class="mt-3">Television</h5>
-        </div>
-        <div class="col-lg-12 text-center mt-5">
-            <a href="facilities.php" class="btn btn-sm btn-outline-dark rounded-0 shadow-none">More Facilities >>></a>
-        </div>
+        <?php
+        $select = "SELECT * FROM room_facilities WHERE status = 'active'";
+        $query = mysqli_query($conn, $select);
+
+        while ($row = mysqli_fetch_assoc($query)) {
+        ?>
+            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3 bounce">
+                <img class="me-3" src="img/facilities/<?= $row['image'] ?>" width="80ppx">
+                <h5 class="mt-3"><?= $row['name'] ?></h5>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 
@@ -370,45 +250,6 @@ $res = mysqli_query($conn, $insert);
     </div>
 </div>
 
-<h2 class="mt-5 pt-4 mb-3 text-center fw-bold h-font ">Reach Us</h2>
-<div class="h-line bg-dark"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-8 p-4 mb-3 bg-white rounded">
-            <iframe class="w-100 rounded" height="320px"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118147.82106509873!2d70.73889453087791!3d22.273466166686283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c98ac71cdf0f%3A0x76dd15cfbe93ad3b!2sRajkot%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1734684297133!5m2!1sen!2sin"
-                loading="lazy"></iframe>
-        </div>
-        <div class="col-lg-4 col-md-4">
-            <div class="bg-white p-4 ronded mb-4">
-                <h5 class="h-font">Call Us</h5>
-                <a href="tel: +917778889991" class="d-inline-block mb-2 text-decoration-none text-dark"><i
-                        class="bi bi-telephone-fill"></i> +91 7778889991</a><br>
-                <a href="tel: +91852936985" class="d-inline-block text-decoration-none text-dark"><i
-                        class="bi bi-telephone-fill"></i> +91 8529636985</a>
-            </div>
-            <div class="bg-white p-4 ronded mb-4">
-                <h5 class="h-font">Follow Us</h5>
-                <a href="https://www.twitter.com/" class="d-inline-block mb-3">
-                    <span class="badge bg-light text-dark fs-6 p-2">
-                        <i class="bi bi-twitter me-1"></i> Twitter
-                    </span>
-                </a><br>
-                <a href="https://www.facebook.com/" class="d-inline-block mb-3">
-                    <span class="badge bg-light text-dark fs-6 p-2">
-                        <i class="bi bi-facebook me-1"></i> FaceBook
-                    </span>
-                </a><br>
-                <a href="https://www.instagram.com/" class="d-inline-block">
-                    <span class="badge bg-light text-dark fs-6 p-2">
-                        <i class="bi bi-instagram me-1"></i> Instagram
-                    </span>
-                </a>
-                <br>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php
 include_once('inc/footer.php');

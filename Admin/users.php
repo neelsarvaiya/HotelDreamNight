@@ -63,7 +63,7 @@ include_once('inc/admin-header.php');
                                 <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
-                                <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
+                                <a href="usersCRUD.php?id=<?= $row['id']; ?>"><button onclick="return confirm('Are you sure you want to delete this user?');" class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button></a>
                             </td>
                         </tr>
                     <?php

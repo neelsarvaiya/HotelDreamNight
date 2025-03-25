@@ -6,7 +6,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     if ($id > 0) {
-        $delete = "SELECT `image` FROM `team` WHERE `id` = $id";
+        $delete = "SELECT `image` FROM `staff` WHERE `id` = $id";
         $result = mysqli_query($conn, $delete);
 
         if ($result && mysqli_num_rows($result) > 0) {
@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
             unlink(DELETE_SRC . $image);
         }
 
-        $delete = "DELETE FROM `team` WHERE `id` = $id";
+        $delete = "DELETE FROM `staff` WHERE `id` = $id";
         if (mysqli_query($conn, $delete)) {
             setcookie("success", "Deleted Successfull", time() + 3, "/");
 ?>
