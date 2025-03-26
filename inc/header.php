@@ -13,7 +13,7 @@ if (isset($_COOKIE['error'])) {
 ?>
     <div class="alert alert-danger alert-dismissible">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong>Error!</strong> <?php echo $_COOKIE['error']; ?>.
+        <strong>⚠ Error!</strong> <?php echo $_COOKIE['error']; ?>.
     </div>
 <?php
 }

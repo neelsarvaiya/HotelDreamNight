@@ -1,15 +1,5 @@
 <?php
 
-function book()
-{
-    if (!isset($_SESSION['user'])) {
-        setcookie("error", "You must log in to book a room!", time() + 5, "/");
-        header("Location: index.php");
-    } else {
-        $book = "booking.php";
-    }
-}
-
 include_once('inc/header.php');
 ?>
 
@@ -147,10 +137,9 @@ $res = mysqli_query($conn, $insert);
                             <h6 class="text-center mb-3">₹<?= $data['final_price'] ?> per night</h6>
                         </span>
                         <div class="d-flex justify-content-evenly mb-2">
-                            <a href="<?= $book ?>"
-                                onclick="book();"
-                                class="btn btn-sm text-white custom-bg shadow-none"
-                                name="book">
+                            <a href="booking.php?room_id=<?= $data['id'] ?>"
+                                onclick="return checkLogin(event);"
+                                class="btn btn-sm text-white custom-bg shadow-none">
                                 Book now
                             </a>
                             <a href="more_details.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
@@ -158,6 +147,17 @@ $res = mysqli_query($conn, $insert);
                     </div>
                 </div>
             </div>
+            <script>
+                function checkLogin(event) {
+                    <?php if (!isset($_SESSION['user'])) { ?>
+                        event.preventDefault();
+                        alert("⚠ You must log in to book a room!");
+                        window.location.href = "index.php";
+                        return false;
+                    <?php } ?>
+                    return true;
+                }
+            </script>
 
         <?php
         }

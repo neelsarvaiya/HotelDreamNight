@@ -102,7 +102,7 @@ include_once('inc/header.php');
             </nav>
         </div>
 
-        
+
         <div class="col-lg-9 col-md-12 px-4">
             <?php
             $sql = "SELECT * FROM `room_categories` WHERE status='active'";
@@ -124,7 +124,7 @@ include_once('inc/header.php');
                                 $sql = "SELECT rf.name FROM `room_features` rf JOIN `room_features_mapping` rfm ON rfm.room_feature_id = rf.id WHERE rfm.room_id = $room_id AND rf.status = 'active'";
                                 $features = mysqli_query($conn, $sql);
                                 while ($feature = mysqli_fetch_assoc($features)) {
-                                ?> 
+                                ?>
                                     <span class="badge rounded-pill bg-light text-dark text-wrap">
                                         <?= $feature['name'] ?>
                                     </span>
@@ -140,7 +140,7 @@ include_once('inc/header.php');
                                 while ($facility = mysqli_fetch_assoc($facilities)) {
                                 ?>
                                     <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                    <?= $facility['name'] ?> 
+                                        <?= $facility['name'] ?>
                                     </span>
                                 <?php
                                 }
@@ -174,14 +174,26 @@ include_once('inc/header.php');
                             <span class="badge rounded text-dark text-wrap mb-2">
                                 <h6>₹<?= $data['final_price'] ?> per night</h6>
                             </span>
-                            <a href="booking.php"
-                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">
+                            <a href="booking.php?room_id=<?= $data['id'] ?>"
+                                onclick="return checkLogin(event);"
+                                class="btn btn-sm w-100 text-white custom-bg shadow-none mb-3">
                                 Book now
                             </a>
                             <a href="more_details.php?id=<?= $data['id'] ?>" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
                         </div>
                     </div>
                 </div>
+                <script>
+                    function checkLogin(event) {
+                        <?php if (!isset($_SESSION['user'])) { ?>
+                            event.preventDefault();
+                            alert("⚠ You must log in to book a room!");
+                            window.location.href = "rooms.php";
+                            return false;
+                        <?php } ?>
+                        return true;
+                    }
+                </script>
             <?php
             }
             ?>

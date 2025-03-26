@@ -104,7 +104,7 @@ if (isset($_GET['id'])) {
         <div class="row">
             <div class="col-lg-12 mb-4">
                 <h5 class="fw-bold">Description</h5>
-                <p>Step into comfort and sophistication in our spacious Deluxe King Room. Elegantly designed, this room features a plush king-size bed dressed in crisp, premium linens for a restful night’s sleep. Large windows flood the space with natural light, offering stunning views of the city skyline or serene garden landscapes.</p>
+                <p><?= $data['description'] ?></p>
             </div>
 
             <div class="col-lg-12">
