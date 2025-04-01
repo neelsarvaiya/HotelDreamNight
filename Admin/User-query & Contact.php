@@ -1,10 +1,39 @@
+
+<?php
+include_once 'connection.php';
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    if ($id > 0) {
+        $delete = "DELETE FROM `user_query` WHERE `id` = $id";
+
+        if (mysqli_query($conn, $delete)) {
+            setcookie("success", "Deleted Successfull", time() + 3, "/");
+?>
+            <script>
+                window.location.href = 'user-query & contact.php';
+            </script>
+        <?php
+        } else {
+            setcookie("error", "NOt Deleted Successfull", time() + 3, "/");
+        ?>
+            <script>
+                window.location.href = 'user-query & contact.php';
+            </script>
+<?php
+        }
+    }
+}
+?>
+
 <?php
 include_once('inc/admin-header.php');
 ?>
 
+
 <div class="card container mt-5 p-4 border-2 mb-4">
     <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> User-querys
-        <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> all</a>
     </div>
 
     <div class="table-responsive-md table-responsive-sm" style="z-index: 1;">
@@ -24,11 +53,11 @@ include_once('inc/admin-header.php');
                     <?php
                     $select = "SELECT * FROM `user_query`";
                     $res = mysqli_query($conn, $select);
-
+                    $i = 1;
                     while ($data = mysqli_fetch_assoc($res)) {
                     ?>
                         <tr>
-                            <td><?= $data['id'] ?></td>
+                            <td><?= $i ?></td>
                             <td><?= $data['name'] ?></td>
                             <td><?= $data['email'] ?></td>
                             <td><?= $data['subject'] ?></td>
@@ -37,10 +66,11 @@ include_once('inc/admin-header.php');
                                 <button type="button" class="btn btn-success shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
                                     <i class="fa-solid fa-reply-all"></i>
                                 </button>
-                                <button class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></button>
+                                <a href="?id=<?= $data['id'] ?>" onclick="return confirm('Are you sure you want to delete this query?');" class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     <?php
+                    $i++;
                     }
                     ?>
                 </tbody>
@@ -142,31 +172,39 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
                         <div class="row">
                             <div class="col-md-12 p-0 mb-3">
                                 <label for="address" class="form-label">Address : </label>
-                                <textarea class="form-control shadow-none" id="address" name="address"
+                                <textarea class="form-control shadow-none" id="address" data-validation="required" name="address"
                                     rows="1"><?= $data['address'] ?></textarea>
+                                    <div class="error" id="addressError"></div>
                             </div>
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label" for="phone">Phone number-1 : </label>
-                                <input type="number" name="phone1" id="phone1" class="form-control shadow-none" value="<?= $data['phone_1'] ?>">
+                                <input type="number" name="phone1" id="phone1" data-validation="required" class="form-control shadow-none" value="<?= $data['phone_1'] ?>">
+                                <div class="error" id="phone1Error"></div>
                             </div>
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label" for="phone">Phone number-2 : </label>
-                                <input type="number" name="phone2" id="phone2" class="form-control shadow-none" value="<?= $data['phone_2'] ?>">
+                                <input type="number" name="phone2" id="phone2" data-validation="required" class="form-control shadow-none" value="<?= $data['phone_2'] ?>">
+                                <div class="error" id="phone2Error"></div>
                             </div>
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label" for="icon">Social Link :</label>
-                                <input type="text" name="link1" id="link1" class="form-control shadow-none mb-1" value="<?= $data['twitter'] ?>">
-                                <input type="text" name="link2" id="link2" class="form-control shadow-none mb-1" value="<?= $data['fb'] ?>">
-                                <input type="text" name="link3" id="link3" class="form-control shadow-none mb-1" value="<?= $data['insta'] ?>">
+                                <input type="text" name="link1" id="link1" class="form-control shadow-none mb-1" data-validation="required" value="<?= $data['twitter'] ?>">
+                                <div class="error" id="link1Error"></div>
+                                <input type="text" name="link2" id="link2" class="form-control shadow-none mb-1" data-validation="required" value="<?= $data['fb'] ?>">
+                                <div class="error" id="link2Error"></div>
+                                <input type="text" name="link3" id="link3" class="form-control shadow-none mb-1" data-validation="required" value="<?= $data['insta'] ?>">
+                                <div class="error" id="link3Error"></div>
                             </div>
                             <div class="col-md-6 p-0 mb-3">
                                 <label for="email" class="form-label">Email : </label>
-                                <input type="email" id="email" class="form-control shadow-none mb-3" name="email" value="<?= $data['email'] ?>">
+                                <input type="email" id="email" class="form-control shadow-none mb-3" data-validation="required email" name="email" value="<?= $data['email'] ?>">
+                                <div class="error" id="emailError"></div>
                             </div>
                             <div class="col-md-12 p-0 mb-3">
                                 <label for="address" class="form-label">Iframe : </label>
-                                <textarea class="form-control shadow-none" id="iframe" name="iframe"
+                                <textarea class="form-control shadow-none" data-validation="required" id="iframe" name="iframe"
                                     rows="2"><?= $data['iframe'] ?></textarea>
+                                    <div class="error" id="iframeError"></div>
                             </div>
                         </div>
                     </div>
@@ -190,25 +228,24 @@ if (isset($_POST['contact_btn'])) {
     $link2 = $_POST['link2'];
     $link3 = $_POST['link3'];
     $email = $_POST['email'];
-    $map = $_POST['map'];
     $iframe = $_POST['iframe'];
 
     $sql = "UPDATE `contact_details` 
             SET address='$address', phone_1='$phone1', phone_2='$phone2', 
                 twitter='$link1', fb='$link2', insta='$link3', 
-                email='$email', gmap='$map', iframe='$iframe'";
+                email='$email', iframe='$iframe'";
 
-    if(mysqli_query($conn, $sql)){
-        setcookie("success","Detail updated",time() + 5,"/");
-    }else{
-        setcookie("error","Detail updating Failed",time() + 5,"/");
+    if (mysqli_query($conn, $sql)) {
+        setcookie("success", "Detail updated", time() + 5, "/");
+    } else {
+        setcookie("error", "Detail updating Failed", time() + 5, "/");
     }
 
-    ?>
-      <script>
+?>
+    <script>
         window.location.href = "User-query & Contact.php";
-      </script>   
-    <?php
+    </script>
+<?php
 
     exit();
 }

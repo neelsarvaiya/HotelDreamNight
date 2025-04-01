@@ -1,3 +1,24 @@
+<script>
+    $(document).ready(function() {
+        $('#forgot_email').on('blur', function() {
+            var email = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: 'check_duplicate_Email.php',
+                data: {
+                    email1: email
+                },
+                success: function(response) {
+                    if (response == 'false') {
+                        $('#forgot_emailError').text('Email is not registered. Please enter registered email addrerss').show();
+                        $('#forgot_email').addClass('is-invalid');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
 <?php
 
 if (isset($_COOKIE['success'])) {
@@ -153,7 +174,7 @@ if (isset($_POST['login'])) {
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow sticky-top">
         <div class="container-fluid">
-        <?php
+            <?php
             $select = "SELECT * FROM settings";
             $res = mysqli_query($conn, $select);
             $row = mysqli_fetch_assoc($res);
@@ -248,7 +269,7 @@ if (isset($_POST['login'])) {
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="user-profile.php"><i class="bi bi-file-earmark-person"></i> Profile</a></li>
-                            <li><a class="dropdown-item" href="review & rating.php"><img src="img/star.png" style="height: 25px; margin-left: -15px"> Review & Reating</a></li>
+                            <li><a class="dropdown-item" href="history.php"><i class="bi bi-bed"></i>Bookings</a></li>
                             <li><a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-in-left"></i> logout</a></li>
                         </ul>
                     </div>

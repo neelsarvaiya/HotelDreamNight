@@ -78,10 +78,10 @@ if (isset($_GET['id'])) {
                         <div class="guests44 mb-3">
                             <h6>Guests : </h6>
                             <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                <?= $data['adult(max)'] ?> Adults
+                                <?= $data['adult_max'] ?> Adults
                             </span>
                             <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                <?= $data['child(max)'] ?> Children
+                                <?= $data['child_max'] ?> Children
                             </span>
                         </div>
                         <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;line-height:15px;">
@@ -89,9 +89,9 @@ if (isset($_GET['id'])) {
                         </span>
                         <h6 class="mb-2" style="text-decoration: line-through;">₹<?= $data['actual_price'] ?> per night</h6>
                         <span class="badge rounded text-dark text-wrap mb-2">
-                            <h6> ₹<?= $data['final_price'] ?> per night</h6>
+                            <h6> ₹500 per night</h6>
                         </span>
-                        <a href="booking.php"
+                        <a href="booking.php?room_id=<?= $data['id'] ?>" onclick="return checkLogin(event);"
                             class="btn w-100 text-white custom-bg shadow-none mb-2"
                             name="book">
                             Book now
@@ -100,6 +100,18 @@ if (isset($_GET['id'])) {
                 </div>
             </div>
         </div>
+
+        <script>
+                function checkLogin(event) {
+                    <?php if (!isset($_SESSION['user'])) { ?>
+                        event.preventDefault();
+                        alert("⚠ You must log in to book a room!");
+                        window.location.href = "index.php";
+                        return false;
+                    <?php } ?>
+                    return true;
+                }
+            </script>
 
         <div class="row">
             <div class="col-lg-12 mb-4">

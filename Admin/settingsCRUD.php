@@ -49,7 +49,7 @@ if (isset($_POST['add'])) {
 
     if (move_uploaded_file($_FILES['team_management']['tmp_name'], UPLOAD_SRC . $img)) {
 
-        $insert = "INSERT INTO `team`(`image`, `name`) VALUES ('$img','$name')";
+        $insert = "INSERT INTO `staff`(`image`, `name`) VALUES ('$img','$name')";
         $res = mysqli_query($conn, $insert);
 
         if ($res) {

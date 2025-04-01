@@ -37,10 +37,9 @@ include_once('inc/admin-header.php');
 <div class="card container mt-5 p-4 border-2 mb-4">
     <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> Room Discounts
         <div>
-            <button type="button" class="btn btn-dark shadow-none" data-bs-toggle="modal" data-bs-target="#discount">
+            <button type="button" class="btn btn-success shadow-none" data-bs-toggle="modal" data-bs-target="#discount">
                 Add
             </button>
-            <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
         </div>
     </div>
 
@@ -69,11 +68,11 @@ include_once('inc/admin-header.php');
                     ?>
                     <tr class="align-middle">
                         <td><?= $data['id'] ?></td>
-                        <td><?= $data['id'] ?></td>
-                        <td><?= $data['id'] ?></td>
-                        <td><?= $data['id'] ?></td>
-                        <td><?= $data['id'] ?></td>
-                        <td><?= $data['id'] ?></td>
+                        <td>simple Room</td>
+                        <td><?= $data['offer'] ?></td>
+                        <td><?= $data['discount_percentage'] ?></td>
+                        <td>10000</td>
+                        <td>90000</td>
                         <td>
                             <button type="button" class="btn btn-warning shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#discount">
                                 <i class="fa-solid fa-pen-to-square"></i>

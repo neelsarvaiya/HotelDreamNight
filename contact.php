@@ -69,6 +69,9 @@ include_once('inc/header.php');
                 </a> <br>
                 <a href="https://www.instagram.com/" class="d-inline-block text-dark fs-5 me-2 text-decoration-none">
                     <i class="bi bi-instagram me-1"></i> <?= $data['insta']  ?>
+                </a> <br>
+                <a href="https://www.instagram.com/" class="d-inline-block text-dark fs-5 me-2 text-decoration-none">
+                    <i class="bi bi-threads me-1"></i> <?= $data['thread']  ?>
                 </a>
             </div>
         </div>

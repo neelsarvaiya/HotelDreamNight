@@ -7,7 +7,6 @@ include_once('inc/admin-header.php');
             <button type="button" class="btn btn-success shadow-none" data-bs-toggle="modal" data-bs-target="#c-img">
                 <i class="bi bi-plus-lg"></i> Add
             </button>
-            <a href="#" class="btn btn-danger text-light"><i class="bi bi-trash"></i> Delete all</a>
         </div>
     </div>
     <div class="table-responsive-lg table-responsive-lg" style="z-index: 1;">

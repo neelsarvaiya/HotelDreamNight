@@ -25,7 +25,7 @@ include_once('inc/header.php');
     }
 
     .bounce:hover {
-        animation: bounce 2s infinite;
+        animation: bounce 1s;
     }
 
     @keyframes bounce {
@@ -36,7 +36,7 @@ include_once('inc/header.php');
         }
 
         50% {
-            transform: translateY(-50px);
+            transform: translateY(-20px);
         }
     }
 </style>
@@ -113,10 +113,10 @@ $res = mysqli_query($conn, $insert);
                         <div class="guests mb-4">
                             <h6>Guests : </h6>
                             <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                <?= $data['adult(max)'] ?> Adults
+                                <?= $data['adult_max'] ?> Adults
                             </span>
                             <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                <?= $data['child(max)'] ?> Children
+                                <?= $data['child_max'] ?> Children
                             </span>
                         </div>
                         <div class="rating mb-4">
@@ -134,7 +134,7 @@ $res = mysqli_query($conn, $insert);
                         </span>
                         <h6 class="mb-2 text-center" style="text-decoration: line-through;">₹<?= $data['actual_price'] ?> per night</h6>
                         <span class="text-dark text-wrap mb-2">
-                            <h6 class="text-center mb-3">₹<?= $data['final_price'] ?> per night</h6>
+                            <h6 class="text-center mb-3">₹50000 per night</h6>
                         </span>
                         <div class="d-flex justify-content-evenly mb-2">
                             <a href="booking.php?room_id=<?= $data['id'] ?>"
@@ -179,7 +179,7 @@ $res = mysqli_query($conn, $insert);
 
         while ($row = mysqli_fetch_assoc($query)) {
         ?>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3 bounce">
+            <div class="col-lg-3 me-5 col-md-2 text-center bg-white rounded shadow py-4 my-3 bounce">
                 <img class="me-3" src="img/facilities/<?= $row['image'] ?>" width="80ppx">
                 <h5 class="mt-3"><?= $row['name'] ?></h5>
             </div>

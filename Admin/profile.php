@@ -153,9 +153,9 @@ if (isset($_POST['edit_btn'])) {
             move_uploaded_file($profile_picture_tmp_name, "../img/userProfile/" . $profile_picture);
             unlink("../img/userProfile/" . $old_profile_picture);
         }
-        setcookie('success', 'profile updated successfully', time() + 5, "/");
+        echo "<script> alert('profile updated successfully'); </script>";
     } else {
-        setcookie('error', 'error in updating profile', time() + 5, "/");
+        echo "<script> alert('Error in profile updated'); </script>";
     }
 
 ?>

@@ -20,6 +20,15 @@ if (isset($_COOKIE['error'])) {
     </div>
 <?php
 }
+
+if (isset($_COOKIE['warning'])) {
+?>
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>⚠️ warning</strong> <?php echo $_COOKIE['warning']; ?>.
+    </div>
+<?php
+}
 ?>
 
 <?php
@@ -84,9 +93,13 @@ if (isset($_POST['pass_btn'])) {
 
 <body class="bg-light">
 
-
+    <?php
+    $select = "SELECT * FROM settings";
+    $res = mysqli_query($conn, $select);
+    $row = mysqli_fetch_assoc($res);
+    ?>
     <div class="container-fluid bg-dark d-flex align-items-center justify-content-between sticky-top" style="z-index: 1000;">
-        <a class="navbar-brand fw-bold fs-3 h-font text-light " href="dashbord.php" style="text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);"> <img src="../img/logo.png" width="110px">DreamNights</a>
+        <a class="navbar-brand fw-bold fs-3 h-font text-light " href="dashbord.php" style="text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);"><?= $row['site_title'] ?></a>
         <div class="dropdown">
             <button type="button" class="btn dropdown-toggle text-light me-3 p-3" data-bs-toggle="dropdown">
                 <img src="../img/userProfile/<?= $result['Profile_pic'] ?>" class="img-fluid rounded-circle" style="height: 30px; width: 35%" alt=""> NEEL

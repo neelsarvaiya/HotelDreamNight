@@ -33,7 +33,7 @@ if (isset($_POST['register'])) {
 
     try {
 
-        $insert = "INSERT INTO `register`(`Full_Name`, `Email`, `Phone_number`, `Profile_pic`, `Address`, `state`, `created_at`, `DOB`, `Password`,`token`) VALUES ('$name','$email','$phone','$fname ','$address','$state','$date','$dob','$password','$token')";
+        $insert = "INSERT INTO `register`(`Full_Name`, `Email`, `Phone_number`, `Profile_pic`, `Address`, `state`, `DOB`, `Password`,`token`) VALUES ('$name','$email','$phone','$fname ','$address','$state','$dob','$password','$token')";
 
         if (mysqli_query($conn, $insert)) {
             
