@@ -1,23 +1,3 @@
-<script>
-    $(document).ready(function() {
-        $('#forgot_email').on('blur', function() {
-            var email = $(this).val();
-            $.ajax({
-                type: 'GET',
-                url: 'check_duplicate_Email.php',
-                data: {
-                    email1: email
-                },
-                success: function(response) {
-                    if (response == 'false') {
-                        $('#forgot_emailError').text('Email is not registered. Please enter registered email addrerss').show();
-                        $('#forgot_email').addClass('is-invalid');
-                    }
-                }
-            });
-        });
-    });
-</script>
 
 <?php
 

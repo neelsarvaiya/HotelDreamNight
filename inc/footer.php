@@ -47,6 +47,15 @@
 
 <h6 class="text-center bg-dark text-white p-3 m-0 h-font">@Designed and Developed by <?= $row['site_title'] ?></h6>
 
+<script>
+    function checkLoginToBook(status,room_id){
+        if(status){
+            window.location.href =  'booking.php?room_id='+room_id;
+        }else{
+            alert("⚠ You must log in to book a room!");
+        }
+    }
+</script>
 
 </body>
 

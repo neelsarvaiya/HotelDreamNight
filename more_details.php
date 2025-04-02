@@ -50,6 +50,18 @@ if (isset($_GET['id'])) {
                             <h6 class="mb-1">Features : </h6>
                             <?php
                             $room_id = $data['id'];
+
+                            // To check user logged-in or not
+                            $login = 0;
+                            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                                $login = 1;
+                            }
+                    
+                            $book_btn = "<button onclick='checkLoginToBook($login,$room_id)'
+                                            class='btn btn-sm w-100 mb-2 text-white custom-bg shadow-none'>
+                                             Book now
+                                        </button>";
+
                             $sql = "SELECT rf.name FROM `room_features` rf JOIN `room_features_mapping` rfm ON rfm.room_feature_id = rf.id WHERE rfm.room_id = $room_id";
                             $features = mysqli_query($conn, $sql);
                             while ($feature = mysqli_fetch_assoc($features)) {
@@ -91,27 +103,11 @@ if (isset($_GET['id'])) {
                         <span class="badge rounded text-dark text-wrap mb-2">
                             <h6> ₹500 per night</h6>
                         </span>
-                        <a href="booking.php?room_id=<?= $data['id'] ?>" onclick="return checkLogin(event);"
-                            class="btn w-100 text-white custom-bg shadow-none mb-2"
-                            name="book">
-                            Book now
-                        </a>
+                       <?= $book_btn  ?>
                     </div>
                 </div>
             </div>
         </div>
-
-        <script>
-                function checkLogin(event) {
-                    <?php if (!isset($_SESSION['user'])) { ?>
-                        event.preventDefault();
-                        alert("⚠ You must log in to book a room!");
-                        window.location.href = "index.php";
-                        return false;
-                    <?php } ?>
-                    return true;
-                }
-            </script>
 
         <div class="row">
             <div class="col-lg-12 mb-4">
