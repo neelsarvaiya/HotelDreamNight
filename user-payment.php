@@ -26,7 +26,7 @@ if (isset($_POST['pay'])) {
         alert('room not available for this check-in date.');
         window.location.href = 'rooms.php';
     </script>";
-    exit;
+        exit;
     }
 
     $select = "SELECT actual_price FROM room_categories WHERE id = $room_id";
@@ -41,19 +41,18 @@ if (isset($_POST['pay'])) {
     $select1 = "SELECT id FROM `register` WHERE Email = '$email'";
     $res = mysqli_query($conn, $select1);
 
-
     $data = mysqli_fetch_assoc($res);
     $user_id = $data['id'];
 
     $insert = "INSERT INTO `bookings`( `room_id`, `user_id`,`adult`, `child`, `check_in_date`, `check_out_date`, `total_price`) VALUES ('$room_id','$user_id','$adults','$child','$check_in','$check_out','$total_price')";
     mysqli_query($conn, $insert);
+
+    $select = "SELECT total_price FROM `bookings` WHERE user_id = '$user_id' ORDER BY id DESC LIMIT 1";
+    $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
+    $price = $data['total_price'] ?? 0;
 }
 ?>
-<?php
-$select = "SELECT total_price FROM `bookings` WHERE user_id = $user_id";
-$data = mysqli_fetch_assoc(mysqli_query($conn, $select));
-$price = $data['total_price'];
-?>
+
 <div class="row">
     <div class="col-lg-4"></div>
     <div class="col-lg-4 mt-5 bg-white">

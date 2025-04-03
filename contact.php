@@ -1,4 +1,28 @@
 <?php
+include_once('Admin/connection.php');
+if (isset($_POST['send_Query'])) {
+    $name = $_POST['name2'];
+    $email = $_POST['email2'];
+    $subject = $_POST['subject'];
+    $messages = $_POST['messages'];
+
+    $insert = "INSERT INTO user_query(name, email, subject, message) VALUES ('$name','$email','$subject','$messages')";
+    if ($conn->query($insert) == "true") {
+        setcookie('success', 'We have received your query. We will reach out to you very soon. Thank you!', time() + 2, '/');
+?>
+        <script>
+            window.location.href = 'contact.php';
+        </script>
+
+    <?php
+    } else {
+    ?>
+        <script>
+            alert('Error to insert data.');
+        </script>
+<?php
+    }
+}
 include_once('inc/header.php');
 ?>
 
@@ -35,8 +59,8 @@ include_once('inc/header.php');
 </div>
 
 <?php
- $select = "SELECT * FROM `contact_details`";
- $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
+$select = "SELECT * FROM contact_details";
+$data = mysqli_fetch_assoc(mysqli_query($conn, $select));
 ?>
 
 <div class="container">
@@ -58,11 +82,11 @@ include_once('inc/header.php');
                         class="bi bi-telephone-fill"></i> <?= $data['phone_2']  ?></a>
                 <h5 class="mt-4 h-font">Email : </h5>
                 <a href="mailto:" class="d-inline-block text-decoration-none text-dark">
-                    <i class="bi bi-envelope-fill"></i>  <?= $data['email']  ?>
+                    <i class="bi bi-envelope-fill"></i> <?= $data['email']  ?>
                 </a>
                 <h5 class="mt-4 h-font">Follow Us</h5>
                 <a href="https://www.twitter.com/" class="d-inline-block text-dark fs-5 me-2 text-decoration-none">
-                <i class="bi bi-twitter me-1"></i> <?= $data['twitter']  ?>  
+                    <i class="bi bi-twitter me-1"></i> <?= $data['twitter']  ?>
                 </a> <br>
                 <a href="https://www.facebook.com/" class="d-inline-block text-dark fs-5 me-2 text-decoration-none">
                     <i class="bi bi-facebook me-1"></i> <?= $data['fb']  ?>
@@ -75,14 +99,14 @@ include_once('inc/header.php');
                 </a>
             </div>
         </div>
-        
+
         <div class="col-lg-6 col-md-6 px-4">
             <div class="bg-white rounded shadow p-4">
                 <form id="send" method="post" action="contact.php">
                     <h5 class="h-font">Send a messages :</h5>
                     <div class="mt-3">
                         <label for="name2" class="form-label" style="font-weight: 500;">Name : </label>
-                        <input type="text" name="name2" id="name2" class="form-control shadow-none" data-validation="required alpha min" data-min="2"="Enter Your Name :">
+                        <input type="text" name="name2" id="name2" class="form-control shadow-none" data-validation="required alpha min" data-min="2" placeholder="Enter Your Name :">
                         <div class="error" id="name2Error"></div>
                     </div>
                     <div class="mt-3">
@@ -102,32 +126,6 @@ include_once('inc/header.php');
                     </div>
                     <button type="submit" class="btn text-white custom-bg mt-3" name="send_Query">SEND</button>
                 </form>
-
-                <?php
-                if (isset($_POST['send_Query'])) {
-                    $name = $_POST['name2'];
-                    $email = $_POST['email2'];
-                    $subject = $_POST['subject'];
-                    $messages = $_POST['messages'];
-
-                    $insert = "INSERT INTO `user_query`(`name`, `email`, `subject`, `message`) VALUES ('$name','$email','$subject','$messages')";
-                    if ($conn->query($insert) == "true") {
-                ?>
-                        <script>
-                            alert('Data is inserted Successfully.');
-                        </script>
-
-                    <?php
-                    } else {
-                    ?>
-                        <script>
-                            alert('Error to insert data.');
-                        </script>
-                <?php
-                    }
-                }
-                ?>
-
             </div>
         </div>
     </div>

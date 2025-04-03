@@ -32,7 +32,6 @@ include_once('inc/header.php');
 
 <div class="container-fluid">
     <div class="row">
-
         <div class="col-lg-3 mb-lg-0 col-md-12 mb-4 ps-4">
             <nav class="navbar navbar-expand-lg navbar-light bg-white rounded shadow">
                 <div class="container-fluid flex-lg-column align-items-stretch">
@@ -54,42 +53,6 @@ include_once('inc/header.php');
                                 <label for="checkout1" class="form-label">Check-Out: </label>
                                 <input type="date" id="checkout1" name="checkout1" class="form-control shadow-none" data-validation="required">
                                 <div class="error" id="checkout1Error"></div>
-                            </div>
-                            <div class="border bg-light p-3 rounded mb-3">
-                                <h5 class="mb-3 h-font" style="font-size: 18px;">FACILITIES: </h5>
-                                <?php
-                                $select = "SELECT * FROM `room_facilities` WHERE status = 'active'";
-                                $res = mysqli_query($conn, $select);
-
-                                while ($facilities = mysqli_fetch_assoc($res)) {
-                                    ?>
-                                    <div class="mb-2">
-                                    <input type="checkbox" id="f1" name="facilities[]" data-validation="required terms" value="<?= $facilities['id'] ?>" class="form-check-input shadow-none me-1">
-                                    <label for="f1" class="form-check-label"><?= $facilities['name'] ?></label>
-                                </div>
-                                    <?php 
-                                }
-
-                                ?>
-
-                            </div>
-                            <div class="border bg-light p-3 rounded mb-3">
-                                <h5 class="mb-3 h-font" style="font-size: 18px;">FETURE : </h5>
-                                <?php
-                                $select = "SELECT * FROM `room_features` WHERE status = 'active'";
-                                $res = mysqli_query($conn, $select);
-
-                                while ($feature = mysqli_fetch_assoc($res)) {
-                                    ?>
-                                    <div class="mb-2">
-                                    <input type="checkbox" id="f1" name="fature[]" data-validation="required terms" value="<?= $feature['id'] ?>" class="form-check-input shadow-none me-1">
-                                    <label for="f1" class="form-check-label"><?= $feature['name'] ?></label>
-                                </div>
-                                    <?php 
-                                }
-
-                                ?>
-
                             </div>
                             <div class="border bg-light p-3 rounded mb-3">
                                 <h5 class="mb-3 h-font" style="font-size: 18px;">GUESTS: </h5>
@@ -115,37 +78,67 @@ include_once('inc/header.php');
 
         <div class="col-lg-9 col-md-12 px-4" id="room-data">
             <?php
+            if (isset($_POST['filter_btn'])) {
+                $adult = $_POST['adults'];
+                $child = $_POST['children'];
+                $checkin = $_POST['checkin1'];
+                $checkout = $_POST['checkout1'];
 
-            $sql = "SELECT * FROM `room_categories` WHERE status='active'";
-            $res = mysqli_query($conn, $sql);
-
-            while ($data = mysqli_fetch_assoc($res)) {
-
-                $room_id = $data['id'];
-
-                $sql = "SELECT rf.name FROM `room_features` rf 
-                JOIN `room_features_mapping` rfm ON rfm.room_feature_id = rf.id 
-                WHERE rfm.room_id = $room_id AND rf.status = 'active'";
-                $features = mysqli_query($conn, $sql);
-
-                $features_html = "";
-                while ($feature = mysqli_fetch_assoc($features)) {
-                    $features_html .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>{$feature['name']}</span> ";
+                if (!empty($adult && $child)) {
+                    $select = "SELECT * FROM room_categories WHERE status = 'active' AND adult_max >= $adult AND child_max >= $child";
                 }
 
-                $sql = "SELECT rf.name FROM `room_facilities` rf 
-                JOIN `room_facilities_mapping` rfm ON rfm.room_facility_id = rf.id 
-                WHERE rfm.room_id = $room_id AND rf.status = 'active'";
-                $facilities = mysqli_query($conn, $sql);
-
-                $facilities_html = "";
-                while ($facility = mysqli_fetch_assoc($facilities)) {
-                    $facilities_html .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>{$facility['name']}</span> ";
+                if (!empty($checkin && $checkout)) {
+                    $select = $select . " AND id NOT IN (
+                    SELECT room_id FROM bookings 
+                    WHERE ('$checkin' BETWEEN check_in_date AND check_out_date) 
+                    OR ('$checkout' BETWEEN check_in_date AND check_out_date) 
+                    OR (check_in_date BETWEEN '$checkin' AND '$checkout'))";
                 }
+            } else {
+                $select = "SELECT * FROM room_categories WHERE status = 'active'";
+            }
 
-                echo "
-        <div class='card mb-4 border-0 shadow'>
-            <div class='row g-0 p-3 align-items-center'>
+            $res = mysqli_query($conn, $select);
+            if (mysqli_num_rows($res) > 0) {
+
+                while ($data = mysqli_fetch_assoc($res)) {
+                    $room_id = $data['id'];
+
+                    $login = 0;
+                    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                        $login = 1;
+                    }
+
+                    $book = " <button 
+                        onclick='checkLoginToBook($login,$room_id);'
+                        class='btn btn-sm w-100 text-white custom-bg shadow-none mb-3'>
+                        Book now
+                    </button>";
+
+                    $sql = "SELECT rf.name FROM room_features rf 
+                JOIN room_features_mapping rfm ON rfm.room_feature_id = rf.id 
+                WHERE rfm.room_id = $room_id AND rf.status = 'active'";
+                    $features = mysqli_query($conn, $sql);
+
+                    $features_html = "";
+                    while ($feature = mysqli_fetch_assoc($features)) {
+                        $features_html .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>{$feature['name']}</span> ";
+                    }
+
+                    $sql = "SELECT rf.name FROM room_facilities rf 
+                JOIN room_facilities_mapping rfm ON rfm.room_facility_id = rf.id 
+                WHERE rfm.room_id = $room_id AND rf.status = 'active'";
+                    $facilities = mysqli_query($conn, $sql);
+
+                    $facilities_html = "";
+                    while ($facility = mysqli_fetch_assoc($facilities)) {
+                        $facilities_html .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>{$facility['name']}</span> ";
+                    }
+
+                    echo "
+                <div class='card mb-4 border-0 shadow'>
+                <div class='row g-0 p-3 align-items-center'>
                 <div class='col-md-5 mb-lg-0 mb-md-0 mb-3'>
                     <img src='img/rooms/{$data['image']}' class='img-fluid rounded-start' alt='Room Image'>
                 </div>
@@ -192,15 +185,23 @@ include_once('inc/header.php');
                     <span class='badge rounded text-dark text-wrap mb-2'>
                         <h6>₹{$data['actual_price']}</h6>
                     </span>
-                    <a href='booking.php?room_id={$data['id']}'
-                        onclick='return checkLogin(event);'
-                        class='btn btn-sm w-100 text-white custom-bg shadow-none mb-3'>
-                        Book now
-                    </a>
+                    $book
                     <a href='more_details.php?id={$data['id']}' class='btn btn-sm w-100 btn-outline-dark shadow-none'>More Details</a>
                 </div>
             </div>
         </div>";
+                }
+            } else {
+            ?>
+                <div class="text-center mt-5">
+                    <div class="mt-3 alert alert-danger">
+                        <h3>No Rooms Found </h3>
+                        <h2><i class="bi bi-emoji-frown text-danger"></i></h2>
+                        <p class="lead">Please try again.</p>
+                    </div>
+
+                </div>
+            <?php
             }
             ?>
         </div>
@@ -210,21 +211,4 @@ include_once('inc/header.php');
 
 <?php
 include_once('inc/footer.php');
-
-if(isset($_POST['filter_btn'])){
-    $checkin = $_POST['checkin1'];
-    $checkout = $_POST['checkout1'];
-    $facilities = $_POST['facilities'];
-    $feture = $_POST['fature'];
-    $adult = $_POST['adults'];
-    $child = $_POST['children'];
-
-    $facility = implode(',', $facilities);
-    $feture1 = implode(',', $feture);
-
-    
-
-
-}
-
 ?>
