@@ -73,6 +73,32 @@ if (isset($_GET['id'])) {
         window.location.href = "carousel.php";
     </script>
 
-<?php
+    <?php
 
+}
+
+if ($_GET['status_id']) {
+
+    $status_query = "SELECT `status` FROM `carousel` WHERE id = $_GET[status_id]";
+    $result = mysqli_query($conn, $status_query);
+
+    $status = mysqli_fetch_assoc($result);
+
+    if ($status['status'] == "active") {
+        $update_qu = "UPDATE `carousel` SET `status` = 'inactive' WHERE id = $_GET[status_id]";
+    } else {
+        $update_qu = "UPDATE `carousel` SET `status` = 'active' WHERE id = $_GET[status_id]";
+    }
+
+    $sql = mysqli_query($conn, $update_qu);
+
+    if ($sql) {
+        setcookie("success", "status updated Successfull.", time() + 3, "/");
+    ?>
+        <script>
+            window.location.href = "carousel.php";
+        </script>
+<?php
+        exit;
+    }
 }

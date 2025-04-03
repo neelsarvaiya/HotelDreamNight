@@ -1,37 +1,5 @@
 <?php
 include_once('connection.php');
-
-if (isset($_COOKIE['success'])) {
-?>
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong>Success!</strong> <?php echo $_COOKIE['success']; ?>.
-    </div>
-<?php
-}
-?>
-
-<?php
-if (isset($_COOKIE['error'])) {
-?>
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong>Error!</strong> <?php echo $_COOKIE['error']; ?>.
-    </div>
-<?php
-}
-
-if (isset($_COOKIE['warning'])) {
-?>
-    <div class="alert alert-warning alert-dismissible">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong>⚠️ warning</strong> <?php echo $_COOKIE['warning']; ?>.
-    </div>
-<?php
-}
-?>
-
-<?php
 session_start();
 
 if (isset($_SESSION['admin'])) {
@@ -171,3 +139,35 @@ if (isset($_POST['pass_btn'])) {
 </body>
 
 </html>
+
+<?php
+
+if (isset($_COOKIE['success'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible mt-3">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Success!</strong> <?php echo $_COOKIE['success']; ?>.
+        </div>
+    <?php
+    }
+    ?>
+    
+    <?php
+    if (isset($_COOKIE['error'])) {
+    ?>
+        <div class="alert alert-danger alert-dismissible mt-3">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Error!</strong> <?php echo $_COOKIE['error']; ?>.
+        </div>
+    <?php
+    }
+    
+    if (isset($_COOKIE['warning'])) {
+    ?>
+        <div class="alert alert-warning alert-dismissible mt-3">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>⚠️ warning</strong> <?php echo $_COOKIE['warning']; ?>.
+        </div>
+    <?php
+    }
+    ?>

@@ -33,7 +33,7 @@ include_once('inc/admin-header.php');
                         <tr class="align-middle text-center">
                             <td><?= $no ?></td>
                             <td><img src="../img/carousel/<?= $data['image'] ?>" height="150px" width="500px"></td>
-                            <td><button class="btn btn-<?= ($data['status'] == 'active') ? 'success' : 'danger' ?> btn-md mx-1"><?= $data['status'] ?></button></td>
+                            <td><a href="carouselCRUD.php?status_id=<?= $data['id'] ?>" class="btn btn-<?= ($data['status'] == 'active') ? 'success' : 'danger' ?> btn-md mx-1"><?= $data['status'] ?></a></td>
                             <td><button onclick="delete_img(<?= $data['id'] ?>);" class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i></button></td>
                         </tr>
                     <?php

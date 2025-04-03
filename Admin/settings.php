@@ -313,11 +313,11 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
                     $no = 1;
                     while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                        <tr class="text-center">
+                        <tr class="text-center align-middle">
                             <td class="align-middle"><?= $no ?></td>
                             <td><img class="align-middle" src="/HotelDreamNight/img/about/<?= $row['image'] ?>" height="150px" width="150px"></td>
                             <td class="align-middle"><?= $row['name'] ?></td>
-                            <td class="align-middle"><button class="btn btn-<?= ($row['status'] === "active") ? 'success' : 'danger' ?> btn-md mx-1"><?= $row['status'] ?></button></td>
+                            <td><a href="settingsCRUD.php?status_id=<?= $row['id'] ?>" class="btn btn-<?= ($row['status'] == 'active') ? 'success' : 'danger' ?> btn-md mx-1"><?= $row['status'] ?></a></td>
                             <td class="align-middle"><button class="btn btn-danger btn-md mx-1" onclick="stafDelete(<?php echo $row['id'] ?>)"> <i class="bi bi-trash"></i></button></td>
                         </tr>
                     <?php
