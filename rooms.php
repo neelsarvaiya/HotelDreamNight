@@ -55,6 +55,13 @@ include_once('inc/header.php');
                                 <div class="error" id="checkout1Error"></div>
                             </div>
                             <div class="border bg-light p-3 rounded mb-3">
+                                <select class="form-select" name="price_sort">
+                                    <option value="">Sort by Price</option>
+                                    <option value="ASC">Low to High</option>
+                                    <option value="DESC">High to Low</option>
+                                </select>
+                            </div>
+                            <div class="border bg-light p-3 rounded mb-3">
                                 <h5 class="mb-3 h-font" style="font-size: 18px;">GUESTS: </h5>
                                 <div class="d-flex">
                                     <div class="me-3">
@@ -79,10 +86,11 @@ include_once('inc/header.php');
         <div class="col-lg-9 col-md-12 px-4" id="room-data">
             <?php
             if (isset($_POST['filter_btn'])) {
-                $adult = $_POST['adults'];
-                $child = $_POST['children'];
                 $checkin = $_POST['checkin1'];
                 $checkout = $_POST['checkout1'];
+                $price_sort = $_POST['price_sort'];
+                $adult = $_POST['adults'];
+                $child = $_POST['children'];
 
                 if (!empty($adult && $child)) {
                     $select = "SELECT * FROM room_categories WHERE status = 'active' AND adult_max >= $adult AND child_max >= $child";
@@ -95,6 +103,11 @@ include_once('inc/header.php');
                     OR ('$checkout' BETWEEN check_in_date AND check_out_date) 
                     OR (check_in_date BETWEEN '$checkin' AND '$checkout'))";
                 }
+
+                if ($price_sort != '') {
+                    $select .= " ORDER BY actual_price $price_sort";
+                }
+
             } else {
                 $select = "SELECT * FROM room_categories WHERE status = 'active'";
             }
@@ -212,3 +225,37 @@ include_once('inc/header.php');
 <?php
 include_once('inc/footer.php');
 ?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let checkinInput = document.getElementById("checkin1");
+    let checkoutInput = document.getElementById("checkout1");
+
+    // Set the minimum date for check-in (today)
+    let today = new Date().toISOString().split("T")[0];
+    checkinInput.setAttribute("min", today);
+
+    // Prevent selecting past dates for check-in
+    checkinInput.addEventListener("change", function () {
+        let checkinDate = checkinInput.value;
+
+        if (checkinDate) {
+            // Set the check-out min date as the selected check-in date
+            checkoutInput.setAttribute("min", checkinDate);
+        } else {
+            checkoutInput.removeAttribute("min");
+        }
+    });
+
+    // Prevent selecting past dates for check-out
+    checkoutInput.addEventListener("change", function () {
+        let checkinDate = checkinInput.value;
+        let checkoutDate = checkoutInput.value;
+
+        if (checkoutDate < checkinDate) {
+            alert("Check-out date cannot be before check-in date.");
+            checkoutInput.value = "";
+        }
+    });
+});
+</script>
