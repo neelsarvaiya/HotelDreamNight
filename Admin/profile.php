@@ -1,10 +1,5 @@
 <?php
 include_once('inc/admin-header.php');
-
-$email = $_SESSION['admin'];
-
-$select = "select * from `register` where `Email` = '$email'";
-$result = mysqli_fetch_assoc(mysqli_query($conn, $select));
 ?>
 
 <style>
@@ -127,6 +122,8 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, $select));
 
 <?php
 if (isset($_POST['edit_btn'])) {
+    $email = $_SESSION['admin'];
+
     $name = $_POST['name3'];
     $phonenumber = $_POST['phone2'];
     $dob = $_POST['dob1'];

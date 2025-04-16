@@ -17,7 +17,7 @@ if (isset($_POST['facility_edit_btn'])) {
 
     if ($_FILES['edit_facility_img']['name'] != "") {
         $update = "UPDATE `room_facilities` SET `image`='$img', `name` = '$fac_name', `description`='$des' WHERE `id` = $edit_id";
-    }else{
+    } else {
         $update = "UPDATE `room_facilities` SET `name` = '$fac_name', `description`='$des' WHERE `id` = $edit_id";
     }
 
@@ -36,7 +36,6 @@ if (isset($_POST['facility_edit_btn'])) {
         </script>';
         exit;
     }
-
 }
 
 // feature
@@ -135,9 +134,45 @@ if (isset($_POST['f-btn'])) {
     <script>
         window.location.href = 'feature.php';
     </script>
-<?php
+    <?php
     exit;
 }
+
+if (isset($_GET['status_id'])) {
+ 
+    if (isset($_GET['rf'])) {
+        $status_query = "SELECT `status` FROM `room_facilities` WHERE id = $_GET[status_id]";
+        $result = mysqli_query($conn, $status_query);
+        $status = mysqli_fetch_assoc($result);
+        if ($status['status'] == "active") {
+            $update_qu = "UPDATE `room_facilities` SET `status` = 'inactive' WHERE id = $_GET[status_id]";
+        } else {
+            $update_qu = "UPDATE `room_facilities` SET `status` = 'active' WHERE id = $_GET[status_id]";
+        }
+    }else{
+        $status_query = "SELECT `status` FROM `room_features` WHERE id = $_GET[status_id]";
+        $result = mysqli_query($conn, $status_query);
+        $status = mysqli_fetch_assoc($result);
+        if ($status['status'] == "active") {
+            $update_qu = "UPDATE `room_features` SET `status` = 'inactive' WHERE id = $_GET[status_id]";
+        } else {
+            $update_qu = "UPDATE `room_features` SET `status` = 'active' WHERE id = $_GET[status_id]";
+        }  
+    }
+
+    $sql = mysqli_query($conn, $update_qu);
+
+    if ($sql) {
+        setcookie("success", "status updated Successfull.", time() + 3, "/");
+    ?>
+        <script>
+            window.location.href = "feature.php";
+        </script>
+<?php
+        exit;
+    }
+}
+
 include_once('inc/admin-header.php');
 ?>
 
@@ -157,6 +192,7 @@ include_once('inc/admin-header.php');
                     <tr class="text-center">
                         <th scope="col" class="bg-dark text-white">#</th>
                         <th scope="col" class="bg-dark text-white">Name</th>
+                        <th scope="col" class="bg-dark text-white">Status</th>
                         <th scope="col" class="bg-dark text-white">Action</th>
                     </tr>
                 </thead>
@@ -170,6 +206,7 @@ include_once('inc/admin-header.php');
                         <tr class="text-center align-middle">
                             <td><?= $i ?></td>
                             <td><?= $data['name'] ?></td>
+                            <td><a href="?status_id=<?= $data['id'] ?>" class="btn btn-<?= ($data['status'] === "active") ? 'success' : 'danger' ?> btn-md mx-1"><?= $data['status'] ?></a></td>
                             <td><a href="?id=<?= $data['id'] ?>"><button onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i></button></a></td>
                         </tr>
                     <?php
@@ -228,6 +265,7 @@ include_once('inc/admin-header.php');
                         <th scope="col" class="bg-dark text-white">Icons</th>
                         <th scope="col" class="bg-dark text-white">Name</th>
                         <th scope="col" width="50%" class="bg-dark text-white">description</th>
+                        <th scope="col" class="bg-dark text-white">Status</th>
                         <th scope="col" class="bg-dark text-white">Action</th>
                     </tr>
                 </thead>
@@ -243,6 +281,7 @@ include_once('inc/admin-header.php');
                             <td><img src="../img/facilities/<?= $data['image'] ?>" width="50px"></td>
                             <td><?= $data['name'] ?></td>
                             <td><?= $data['description'] ?></td>
+                            <td><a href="?status_id=<?= $data['id'] ?>&rf=room_facilities" class="btn btn-<?= ($data['status'] === "active") ? 'success' : 'danger' ?> btn-md mx-1"><?= $data['status'] ?></a></td>
                             <td>
                                 <a href="?facility_id=<?= $data['id'] ?>" class="btn btn-warning shadow-none mb-md-1 mb-sm-1">
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -341,10 +380,10 @@ include_once('inc/admin-header.php');
 <?php
 if (isset($_GET['facility_id'])) {
 
-$sql = "SELECT * FROM `room_facilities` WHERE id = $_GET[facility_id]";
-$fetch = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    $sql = "SELECT * FROM `room_facilities` WHERE id = $_GET[facility_id]";
+    $fetch = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 
-echo "
+    echo "
 <script>
     var facilities_edit  = new bootstrap.Modal(document.getElementById('facilities_edit'), {
         keyboard: false

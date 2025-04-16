@@ -70,7 +70,7 @@ if (isset($_POST['add'])) {
     }
 }
 
-if ($_GET['status_id']) {
+if (isset($_GET['status_id'])) {
 
     $status_query = "SELECT `status` FROM `staff` WHERE id = $_GET[status_id]";
     $result = mysqli_query($conn, $status_query);

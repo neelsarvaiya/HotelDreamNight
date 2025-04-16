@@ -68,7 +68,7 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
         <div class="col-lg-6 col-md-6 mb-5 px-4">
             <div class="bg-white rounded shadow p-4">
                 <iframe class="w-100 rounded mb-4" height="320px"
-                    src="<?= $data['iframe']  ?>"
+                    src="<?= $data['iframe'] ?>"
                     loading="lazy"></iframe>
                 <h5 class="h-font">Address</h5>
                 <a href="https://maps.app.goo.gl/Pg78hefLGBEVynax8" target="_blank"
@@ -116,12 +116,12 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
                     </div>
                     <div class="mt-3">
                         <label for="subject" class="form-label">Subject : </label>
-                        <input type="text" name="subject" id="subject" class="form-control shadow-none" data-validation="required min max" data-min="10" data-max="50" placeholder="Enter Your Subject :">
+                        <input type="text" name="subject" id="subject" class="form-control shadow-none" data-validation="required" placeholder="Enter Your Subject :">
                         <div class="error" id="subjectError"></div>
                     </div>
                     <div class="mt-3">
                         <label for="messages" class="form-label">Messages : </label>
-                        <textarea class="form-control shadow-none" id="messages" name="messages" rows="7" style="resize: none" data-validation="required min max" data-max="50" data-min="15" placeholder="Enter Your Messages :"></textarea>
+                        <textarea class="form-control shadow-none" id="messages" name="messages" rows="7" style="resize: none" data-validation="required" placeholder="Enter Your Messages :"></textarea>
                         <div class="error" id="messagesError"></div>
                     </div>
                     <button type="submit" class="btn text-white custom-bg mt-3" name="send_Query">SEND</button>

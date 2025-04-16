@@ -98,8 +98,11 @@ if (isset($_POST['pass_btn'])) {
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="dashbord.php"><i class="fa-solid fa-gauge-high text-primary"></i> Dashboard</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="Rooms.php"><i class="bi bi-door-open text-success"></i> Rooms</a>
+                            <li class="nav-item">   
+                                <a class="nav-link text-white" href="Rooms.php"><i class="bi bi-door-open text-success"></i> Room Category</a>
+                            </li>
+                            <li class="nav-item">   
+                                <a class="nav-link text-white mx-4" href="add-room.php"> Rooms</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="discount.php"><i class="fa-solid fa-tag text-warning""></i> Discounts</a>
@@ -143,31 +146,31 @@ if (isset($_POST['pass_btn'])) {
 <?php
 
 if (isset($_COOKIE['success'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible mt-3">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>Success!</strong> <?php echo $_COOKIE['success']; ?>.
-        </div>
-    <?php
-    }
-    ?>
-    
-    <?php
-    if (isset($_COOKIE['error'])) {
-    ?>
-        <div class="alert alert-danger alert-dismissible mt-3">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>Error!</strong> <?php echo $_COOKIE['error']; ?>.
-        </div>
-    <?php
-    }
-    
-    if (isset($_COOKIE['warning'])) {
-    ?>
-        <div class="alert alert-warning alert-dismissible mt-3">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>⚠️ warning</strong> <?php echo $_COOKIE['warning']; ?>.
-        </div>
-    <?php
-    }
-    ?>
+?>
+    <div class="alert alert-success alert-dismissible mt-3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Success!</strong> <?php echo $_COOKIE['success']; ?>.
+    </div>
+<?php
+}
+?>
+
+<?php
+if (isset($_COOKIE['error'])) {
+?>
+    <div class="alert alert-danger alert-dismissible mt-3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Error!</strong> <?php echo $_COOKIE['error']; ?>.
+    </div>
+<?php
+}
+
+if (isset($_COOKIE['warning'])) {
+?>
+    <div class="alert alert-warning alert-dismissible mt-3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>⚠️ warning</strong> <?php echo $_COOKIE['warning']; ?>.
+    </div>
+<?php
+}
+?>

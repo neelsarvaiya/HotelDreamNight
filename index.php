@@ -70,10 +70,13 @@ $res = mysqli_query($conn, $insert);
     <div class="row">
 
         <?php
-        $sql = "SELECT * FROM `room_categories` WHERE (id = 16 OR id = 21 OR id = 22) And status='active'";
+        $sql = "SELECT rc.*, discount.offer FROM room_categories AS rc
+                LEFT JOIN discount ON rc.id = discount.room_id WHERE (rc.id = 16 OR rc.id = 21 OR rc.id = 22) And rc.status='active'";
         $res = mysqli_query($conn, $sql);
         while ($data = mysqli_fetch_assoc($res)) {
             $room_id = $data['id'];
+
+            $offer = $data['offer'];
        
           // To check user logged-in or not
           $login = 0;
@@ -139,10 +142,9 @@ $res = mysqli_query($conn, $insert);
                                 <i class='bi bi-star-fill text-warning'></i>
                             </span>
                         </div>
-                        <span class='badge rounded-pill bg-success text-white text-wrap mb-2' style='font-size: 13px; line-height:15px;'>
-                            25% Off for Early Bookings (30+ days in advance)
+                        <span class='badge rounded-pill text-center bg-success text-white text-wrap mb-2' style='font-size: 13px; line-height:15px;'>
+                            $offer
                         </span>
-                        <h6 class='mb-2 text-center' style='text-decoration: line-through;'>₹$data[actual_price] per night</h6>
                         <span class='text-dark text-wrap mb-2'>
                             <h6 class='text-center mb-3'>₹50000 per night</h6>
                         </span>

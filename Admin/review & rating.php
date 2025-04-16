@@ -10,18 +10,18 @@ if (isset($_GET['id'])) {
 
         if ($result) {
             setcookie("success", "Deleted Successfull", time() + 3, "/");
-            ?>
+?>
             <script>
                 window.location.href = 'review_and_rating.php';
             </script>
         <?php
-        }else{
+        } else {
             setcookie("error", "NOt Deleted Successfull", time() + 3, "/");
-            ?>
-                <script>
-                    window.location.href = 'review_and_rating.php';
-                </script>
-    <?php
+        ?>
+            <script>
+                window.location.href = 'review_and_rating.php';
+            </script>
+<?php
         }
     }
 }
@@ -51,6 +51,7 @@ while ($review = mysqli_fetch_assoc($reviews_result)) {
     $reviews_by_room[$room_id][] = $review;
 }
 
+
 // Fetch all room categories
 $room_sql = "SELECT * FROM `room_categories`";
 $rooms_result = mysqli_query($conn, $room_sql);
@@ -58,14 +59,19 @@ $rooms_result = mysqli_query($conn, $room_sql);
 
 <div class="container mt-5">
     <h2 class="text-center mb-4 h-font">Room Reviews & Ratings</h2>
-
+    
     <?php
     while ($room = mysqli_fetch_assoc($rooms_result)) {
         $room_id = $room['id'];
+        
+        $sql = "SELECT ROUND(AVG(rating), 1) AS rating_avg , COUNT(review_text) AS total_review 
+                   FROM review_and_rating WHERE room_id = $room_id";
+        $rr_avg = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+
     ?>
         <div class="card mb-5">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <span><?= $room['name'] ?> (⭐ 3.5 from 50 reviews)</span>
+                <span><?= $room['name'] ?> ( <?= ($rr_avg['rating_avg']) ? $rr_avg['rating_avg'] : 0 ?>⭐ from <?= $rr_avg['total_review'] ?> reviews)</span>
                 <button class="btn btn-primary btn-sm toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#room_<?= $room_id ?>">
                     <i class="bi bi-chevron-down"></i>
                 </button>
@@ -122,4 +128,3 @@ $rooms_result = mysqli_query($conn, $room_sql);
 </div>
 </div>
 </div>
-

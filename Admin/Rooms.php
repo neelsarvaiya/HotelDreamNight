@@ -6,6 +6,8 @@ if (isset($_POST['add-btn']) || isset($_POST['edit-btn'])) {
     $description = $_POST['description'];
     $price = $_POST['actual_price'];
     $quantity_value = $_POST['quantity_value'];
+    $room_category_id = $_POST['room_category_id'];
+    $room_number = $_POST['room_number'];
     $adults = $_POST['adults'];
     $children = $_POST['children'];
     $features = isset($_POST['features']) ? $_POST['features'] : []; // Array of feature IDs
@@ -17,28 +19,28 @@ if (isset($_POST['add-btn']) || isset($_POST['edit-btn'])) {
             $path = "../img/rooms/";
             $img = uniqid() . basename($_FILES['room_image']['name']);
             $target_file = $path . $img;
-
+            
             if (!move_uploaded_file($_FILES['room_image']['tmp_name'], $target_file)) {
                 echo "File upload error!";
                 exit;
             }
         }
     }
-
+    
     // If Edit Room is triggered
     if (isset($_POST['edit-btn'])) {
         $room_id = $_POST['room_id'];
-
+        
         if ($_FILES['room_image']['name'] != "") {
             $profile_picture = uniqid() . $_FILES['room_image']['name'];
             $profile_picture_tmp_name = $_FILES['room_image']['tmp_name'];
         }
-
+        
         $q1 = "select * from `room_categories` where `id`= $room_id";
         $result = mysqli_fetch_assoc($conn->query($q1));
         $old_profile_picture = $result['image'];
-
-
+        
+        
         // Update Room Data
         $update = "UPDATE `room_categories` SET `name`='$name'";
 
@@ -68,14 +70,20 @@ if (isset($_POST['add-btn']) || isset($_POST['edit-btn'])) {
                 mysqli_query($conn, "INSERT INTO `room_facilities_mapping`(`room_id`, `room_facility_id`) VALUES ('$room_id','$facility_id')");
             }
 
+        $sql = "UPDATE rooms SET room_number = $room_number, room_id = $room_category_id WHERE room_id = $room_id";
+        mysqli_query($conn, $sql);
+
             setcookie("success", "Room updated successfully.", time() + 3, "/");
         } else {
             setcookie("error", "Update failed.", time() + 3, "/");
         }
     } else {
-        // Insert Room Data
         $insert = "INSERT INTO `room_categories` (`name`, `image`, `description`, `actual_price`, `quantity_value`, `adult_max`, `child_max`) 
                    VALUES ('$name', '$img', '$description', '$price', '$quantity_value', '$adults', '$children')";
+
+        $sql = "INSERT INTO rooms (room_id, room_number)
+                VALUES ('$room_category_id', '$room_number')";
+        mysqli_query($conn, $sql);
 
         if (mysqli_query($conn, $insert)) {
             $room_id = mysqli_insert_id($conn); // Get inserted room ID
@@ -100,6 +108,7 @@ if (isset($_POST['add-btn']) || isset($_POST['edit-btn'])) {
     <?php
 }
 
+// delete room
 if (isset($_GET['room_id'])) {
     $room_id = $_GET['room_id'];
 
@@ -128,6 +137,33 @@ if (isset($_GET['room_id'])) {
             window.location.href = "Rooms.php";
         </script>
 
+    <?php
+
+    }
+}
+
+// status toggle
+if (isset($_GET['status_id'])) {
+
+    $status_query = "SELECT `status` FROM `room_categories` WHERE id = $_GET[status_id]";
+    $result = mysqli_query($conn, $status_query);
+
+    $status = mysqli_fetch_assoc($result);
+
+    if ($status['status'] == "active") {
+        $update_qu = "UPDATE `room_categories` SET `status` = 'inactive' WHERE id = $_GET[status_id]";
+    } else {
+        $update_qu = "UPDATE `room_categories` SET `status` = 'active' WHERE id = $_GET[status_id]";
+    }
+
+    $sql = mysqli_query($conn, $update_qu);
+
+    if ($sql) {
+        setcookie("success", "status updated Successfull.", time() + 3, "/");
+    ?>
+        <script>
+            window.location.href = "Rooms.php";
+        </script>
 <?php
 
     }
@@ -157,7 +193,9 @@ while ($data = mysqli_fetch_assoc($res)) {
 
     <div class="card container mt-5 p-4 border-2 mb-4">
         <div class="container mt-1">
-            <h2><?= $data['name'] ?></h2>
+            <div class="col-12 d-flex align-items-center justify-content-between">
+                <h2><?= $data['name'] ?></h2>
+            </div>
             <table class="table table-bordered table-hover align-middle">
                 <thead>
                     <tr>
@@ -214,8 +252,9 @@ while ($data = mysqli_fetch_assoc($res)) {
             </table>
 
             <div class="mt-3">
-                <a href="?edit=<?= $room_id ?>" class="btn btn-warning shadow-none"><i class="bi bi-pencil-square"></i> Edit Room</a>
-                <a href="?room_id=<?= $room_id ?>"><button onclick="return confirm('Are you sure you want to delete this room?');" class="btn btn-danger">Delete Room</button></a>
+                <a href="?edit=<?= $room_id ?>" class="btn btn-warning shadow-none"><i class="bi bi-pencil-square"></i> Edit</a>
+                <a href="?room_id=<?= $room_id ?>"><button onclick="return confirm('Are you sure you want to delete this room?');" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button></a>
+                <a href="?status_id=<?= $data['id'] ?>" class="btn btn-<?= ($data['status'] == 'active') ? 'success' : 'danger' ?> shadow-none"><?= $data['status'] ?></a>
             </div>
         </div>
     </div>
@@ -254,10 +293,12 @@ while ($data = mysqli_fetch_assoc($res)) {
                                 <input type="number" class="form-control" id="actual_price" name="actual_price" required>
                             </div>
 
-                            <!-- Discount Value -->
                             <div class="col-md-6 mb-3">
                                 <label for="discount_value" class="form-label">quantity</label>
                                 <input type="number" class="form-control" id="quantity_value" name="quantity_value" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
                             </div>
 
                             <!-- Adult Capacity -->
@@ -278,7 +319,7 @@ while ($data = mysqli_fetch_assoc($res)) {
                             <label class="form-label">Features</label>
                             <div class="d-flex flex-wrap">
                                 <?php
-                                $sql = "SELECT * FROM `room_features`";
+                                $sql = "SELECT * FROM `room_features` WHERE status = 'active' ";
                                 $res = mysqli_query($conn, $sql);
                                 while ($data = mysqli_fetch_assoc($res)) {
                                 ?>
@@ -297,7 +338,7 @@ while ($data = mysqli_fetch_assoc($res)) {
                             <label class="form-label">Facilities</label>
                             <div class="d-flex flex-wrap">
                                 <?php
-                                $sql = "SELECT * FROM `room_facilities`";
+                                $sql = "SELECT * FROM `room_facilities` WHERE status = 'active' ";
                                 $res = mysqli_query($conn, $sql);
                                 while ($data = mysqli_fetch_assoc($res)) {
                                 ?>
@@ -360,10 +401,26 @@ while ($data = mysqli_fetch_assoc($res)) {
                                 <input type="number" class="form-control" id="price" name="actual_price">
                             </div>
 
-                            <!-- Discount Value -->
                             <div class="col-md-6 mb-3">
                                 <label for="discount_value" class="form-label">quantity</label>
                                 <input type="number" class="form-control" id="quantity" name="quantity_value">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Room Category:</label>
+                                <select class="form-select shadow-none" id="room_category_id" name="room_category_id" required>
+                                    <?php
+                                    $cats = mysqli_query($conn, "SELECT * FROM room_categories");
+                                    while ($cat = mysqli_fetch_assoc($cats)) {
+                                        echo "<option value='{$cat['id']}'>{$cat['name']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Room Number:</label>
+                                <input class="form-control" type="text" id="room_number" name="room_number" required>
                             </div>
 
                             <!-- Adult Capacity -->
@@ -478,7 +535,7 @@ while ($data = mysqli_fetch_assoc($res)) {
 
 if (isset($_GET['edit'])) {
 
-    $sql = "SELECT * FROM `room_categories` WHERE id = $_GET[edit]";
+    $sql = "SELECT rc.*, r.* FROM `room_categories` rc JOIN rooms r  ON rc.id = r.room_id WHERE rc.id = $_GET[edit]";
     $fetch = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 
     echo "
@@ -489,6 +546,8 @@ if (isset($_GET['edit'])) {
         document.querySelector('#r_name').value = `$fetch[name]`;
         document.querySelector('#price').value = `$fetch[actual_price]`;
         document.querySelector('#quantity').value = `$fetch[quantity_value]`;
+        document.querySelector('#room_category_id').value = `$fetch[room_id]`;
+        document.querySelector('#room_number').value = `$fetch[room_number]`;
         document.querySelector('#ad_val').value = `$fetch[adult_max]`;
         document.querySelector('#ch_val').value = `$fetch[child_max]`;
         document.querySelector('#desc').value = `$fetch[description]`;
@@ -497,4 +556,5 @@ if (isset($_GET['edit'])) {
     </script>
 ";
 }
+
 ?>

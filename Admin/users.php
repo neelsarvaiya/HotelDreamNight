@@ -58,7 +58,7 @@ include_once('inc/admin-header.php');
                             <td><?= $row['DOB'] ?></td>
                             <td><?= $row['state'] ?></td>
                             <td><?= $row['role'] ?></td>
-                            <td class="align-middle"><button class="btn btn-<?= ($row['status'] === "active") ? 'success' : 'danger' ?> btn-md mx-1"><?= $row['status'] ?></button></td>
+                            <td class="align-middle"><a href="usersCRUD.php?status_id=<?= $row['id'] ?>" class="btn btn-<?= ($row['status'] === "active") ? 'success' : 'danger' ?> btn-md mx-1"><?= $row['status'] ?></a></td>
                             <td><?= $row['created_at'] ?></td>
                             <td>
                                 <a href="?user_edit=<?= $row['id'] ?>" class="btn btn-warning shadow-none"><i class="bi bi-pencil-square"></i></a>

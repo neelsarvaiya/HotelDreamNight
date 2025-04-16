@@ -1,12 +1,12 @@
-
 <?php
+include_once('../mailer.php');
 include_once 'connection.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     if ($id > 0) {
-        $delete = "DELETE FROM `user_query` WHERE `id` = $id";
+        $delete = "DELETE FROM user_query WHERE id = $id";
 
         if (mysqli_query($conn, $delete)) {
             setcookie("success", "Deleted Successfull", time() + 3, "/");
@@ -33,7 +33,7 @@ include_once('inc/admin-header.php');
 
 
 <div class="card container mt-5 p-4 border-2 mb-4">
-    <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> User-querys
+    <div class="card-header fs-3 fw-bold h-font d-flex align-items-center justify-content-between"> User-Queries
     </div>
 
     <div class="table-responsive-md table-responsive-sm" style="z-index: 1;">
@@ -51,26 +51,35 @@ include_once('inc/admin-header.php');
                 </thead>
                 <tbody>
                     <?php
-                    $select = "SELECT * FROM `user_query`";
+                    $select = "SELECT * FROM user_query";
                     $res = mysqli_query($conn, $select);
                     $i = 1;
                     while ($data = mysqli_fetch_assoc($res)) {
                     ?>
-                        <tr>
+                        <tr class="align-middle">
                             <td><?= $i ?></td>
                             <td><?= $data['name'] ?></td>
                             <td><?= $data['email'] ?></td>
                             <td><?= $data['subject'] ?></td>
                             <td><?= $data['message'] ?></td>
                             <td>
-                                <button type="button" class="btn btn-success shadow-none mt-1" data-bs-toggle="modal" data-bs-target="#response">
-                                    <i class="fa-solid fa-reply-all"></i>
-                                </button>
-                                <a href="?id=<?= $data['id'] ?>" onclick="return confirm('Are you sure you want to delete this query?');" class="btn btn-danger btn-md mx-1 mt-1"><i class="bi bi-trash"></i></a>
+                                 <?php
+                                    if($data['response'] == 0){
+                                        ?>
+                                        <a href="?user_id=<?= $data['id'] ?>" class="btn btn-success shadow-none mt-1 me-1" title="Send Message"><i class="fa-solid fa-reply-all"></i> 
+                                        <?php
+                                    }
+                                    else {
+                                        ?>
+                                        <button class="btn btn-info shadow-none mt-1" title="Resolved"><i class="bi bi-check-circle"></i></button>
+                                        <?php 
+                                    }
+                                 ?>
+                                <a href="?id=<?= $data['id'] ?>" onclick="return confirm('Are you sure you want to delete this query?');" class="btn btn-danger btn-md mx-1 mt-1" title="Delete"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     <?php
-                    $i++;
+                        $i++;
                     }
                     ?>
                 </tbody>
@@ -98,7 +107,7 @@ include_once('inc/admin-header.php');
                         <div class="error" id="msgError"></div>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
-                        <button type="submit" class="btn btn-dark shadow" name="login">Submit</button>
+                        <button type="submit" class="btn btn-dark shadow" name="response_btn"> Send </button>
                     </div>
                 </div>
             </form>
@@ -106,9 +115,106 @@ include_once('inc/admin-header.php');
     </div>
 </div>
 
+<?php
+if (isset($_POST['response_btn'])) {
+    $message = $_POST['msg'];
+    $id = $_GET['user_id'];
+
+    $select = "SELECT * FROM user_query WHERE id = $id";
+    $res = mysqli_query($conn, $select);
+
+    $data = mysqli_fetch_assoc($res);
+    $name = $data['name'];
+    $user_subject = $data['subject'];
+    $query = $data['message'];
+    $email = $data['email'];
+    $subject = "Response from Admin";
+    $body = "<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid #007BFF;
+        }
+        h1 {
+            color: #007BFF;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .message-box {
+            background: #f1f8ff;
+            padding: 15px;
+            border-left: 6px solid #007BFF;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .message-box p {
+            margin: 8px 0;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>Thank You for Contacting Us!</h1>
+        <p>Dear <span class='highlight'>$name</span>,</p>
+        <p>We have received your query and our support team will get back to you as soon as possible.</p>
+
+        <div class='message-box'>
+            <p><strong>📌 Your Subject:</strong> <span class='highlight'>$user_subject</span></p>
+            <p><strong>📩 Your Query:</strong> $query</p>
+            <p><strong>📝 Response:</strong> <span class='highlight'>$message</span></p>
+        </div>
+
+        <p>We appreciate your patience and will respond shortly.</p>
+
+        <div class='footer'>
+            <p><strong>🌟 DreamNight Hotel</strong></p>
+            <p>📞 Contact Us: +1-234-567-890 | 📧 support@dreamnight.com</p>
+        </div>
+    </div>
+</body>
+</html>
+";
+
+    if (sendEmail($email, $subject, $body, "")) {
+        mysqli_query($conn, "UPDATE `user_query` SET `response`= 1 WHERE `email` = '$email'");
+        echo "<script> alert('Response sent successfully'); </script>";
+    }
+}
+
+?>
 
 <?php
-$select = "SELECT * FROM `contact_details`";
+$select = "SELECT * FROM contact_details";
 $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
 ?>
 
@@ -174,7 +280,7 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
                                 <label for="address" class="form-label">Address : </label>
                                 <textarea class="form-control shadow-none" id="address" data-validation="required" name="address"
                                     rows="1"><?= $data['address'] ?></textarea>
-                                    <div class="error" id="addressError"></div>
+                                <div class="error" id="addressError"></div>
                             </div>
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label" for="phone">Phone number-1 : </label>
@@ -204,7 +310,7 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
                                 <label for="address" class="form-label">Iframe : </label>
                                 <textarea class="form-control shadow-none" data-validation="required" id="iframe" name="iframe"
                                     rows="2"><?= $data['iframe'] ?></textarea>
-                                    <div class="error" id="iframeError"></div>
+                                <div class="error" id="iframeError"></div>
                             </div>
                         </div>
                     </div>
@@ -230,7 +336,7 @@ if (isset($_POST['contact_btn'])) {
     $email = $_POST['email'];
     $iframe = $_POST['iframe'];
 
-    $sql = "UPDATE `contact_details` 
+    $sql = "UPDATE contact_details 
             SET address='$address', phone_1='$phone1', phone_2='$phone2', 
                 twitter='$link1', fb='$link2', insta='$link3', 
                 email='$email', iframe='$iframe'";
@@ -248,5 +354,20 @@ if (isset($_POST['contact_btn'])) {
 <?php
 
     exit();
+}
+?>
+
+<?php
+
+if (isset($_GET['user_id'])) {
+
+    echo "
+    <script>
+        var response  = new bootstrap.Modal(document.getElementById('response'), {
+            keyboard: false
+        });
+        response.show();
+    </script>
+";
 }
 ?>

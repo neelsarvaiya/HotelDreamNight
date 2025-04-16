@@ -4,12 +4,13 @@ include 'connection.php';
 if (isset($_POST['add_discount'])) {
     $room_id = $_POST['room_id'];
     $offer_name = $_POST['offer_name'];
+    $coupon_code = $_POST['coupon_code_add'];
     $discount = $_POST['discount'];
     $offer_start = $_POST['start'];
     $offer_end = $_POST['end'];
 
-    $sql = "INSERT INTO `discount`(offer,room_id, discount_percentage, start_date, end_date) 
-                VALUES ('$offer_name', '$room_id', '$discount', '$offer_start', '$offer_end')";
+    $sql = "INSERT INTO `discount`(offer ,coupon_code ,room_id ,discount_percentage, start_date, end_date) 
+                VALUES ('$offer_name','$coupon_code','$room_id', '$discount', '$offer_start', '$offer_end')";
 
     if (mysqli_query($conn, $sql)) {
         setcookie("success", "Add Successfull.", time() + 3, "/");
@@ -40,21 +41,33 @@ if (isset($_GET['delete_id'])) {
     </script>
 <?php
     exit;
-    
-
 }
 ?>
 
 <?php
 if (isset($_POST['edt_discount'])) {
     $room = $_POST['room'];
+    $discount_id = $_POST['discount_id'];
     $offer_name = $_POST['offer_name'];
-    $offer_name = $_POST['discount'];
+    $coupon_code = $_POST['coupon_code'];
+    $discount = $_POST['discount'];
     $offer_start = $_POST['start'];
     $offer_end = $_POST['end'];
 
 
-    $insert = "";
+    $update = "UPDATE `discount` SET `offer`='$offer_name',`coupon_code`='$coupon_code',`room_id`='$room',`discount_percentage`='$discount',`start_date`='$offer_start',`end_date`='$offer_end' WHERE id = $discount_id ";
+
+    if (mysqli_query($conn, $update)) {
+        setcookie("success", "updated Successfull.", time() + 3, "/");
+    } else {
+        setcookie("error", "Not updated successfull.", time() + 3, "/");
+    }
+?>
+    <script>
+        window.location.href = 'discount.php';
+    </script>
+<?php
+    exit;
 }
 ?>
 
@@ -78,7 +91,8 @@ include_once('inc/admin-header.php');
                     <tr>
                         <th scope="col" class="bg-dark text-white">#</th>
                         <th scope="col" class="bg-dark text-white">Room</th>
-                        <th scope="col" class="bg-dark text-white">Offer</th>
+                        <th scope="col" width="10%" class="bg-dark text-white">Offer</th>
+                        <th scope="col" class="bg-dark text-white">coupon code</th>
                         <th scope="col" class="bg-dark text-white">Discount</th>
                         <th scope="col" class="bg-dark text-white">Price</th>
                         <th scope="col" class="bg-dark text-white">Discounted Price</th>
@@ -96,6 +110,7 @@ include_once('inc/admin-header.php');
                 room_categories.name,
                 room_categories.actual_price, 
                 discount.offer, 
+                discount.coupon_code,
                 discount.id,
                 discount.start_date, 
                 discount.end_date,
@@ -113,10 +128,11 @@ include_once('inc/admin-header.php');
                         $final_price = ($room_price - ($room_price * $discount / 100));
 
                     ?>
-                        <tr class="align-middle">
+                        <tr class=" text-center align-middle">
                             <td><?= $i ?></td>
                             <td><?= $data['name'] ?></td>
                             <td><?= $data['offer'] ?></td>
+                            <td><?= $data['coupon_code'] ?></td>
                             <td><?= $data['discount_percentage'] ?></td>
                             <td><?= $data['actual_price'] ?></td>
                             <td><?= $final_price ?></td>
@@ -136,6 +152,7 @@ include_once('inc/admin-header.php');
             </table>
         </div>
     </div>
+
 </div>
 
 <div class="modal fade" id="add_discount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -170,6 +187,11 @@ include_once('inc/admin-header.php');
                         <div class="error" id="offer_nameError"></div>
                     </div>
                     <div class="mb-2">
+                        <label for="offer_name">coupon code : </label>
+                        <input type="text" name="coupon_code_add" id="coupon_code_add" data-validation="required" class="form-control">
+                        <div class="error" id="coupon_code_addError"></div>
+                    </div>
+                    <div class="mb-2">
                         <label for="discount">Discount (in % ) : </label>
                         <input type="number" name="discount" id="discount_add" data-validation="required numeric min max" data-min="1" data-max="3" class="form-control">
                         <div class="error" id="discountError"></div>
@@ -185,7 +207,7 @@ include_once('inc/admin-header.php');
                         <div class="error" id="endError"></div>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
-                        <button type="submit" class="btn btn-dark shadow" name="add_discount">Submit</button>
+                        <button type="submit" class="btn btn-primary shadow" name="add_discount">Submit</button>
                     </div>
                 </div>
             </form>
@@ -209,7 +231,7 @@ include_once('inc/admin-header.php');
                 <div class="modal-body">
                     <div class="mb-2">
                         <label for="room" class="form-label fw-bold">Choose room : </label>
-                        <select name="room_id" id="room" class="form-control">
+                        <select name="room" id="room" class="form-control">
                             <?php
                             $select = "SELECT * FROM `room_categories` WHERE status='active'";
                             $result = mysqli_query($conn, $select);
@@ -227,6 +249,11 @@ include_once('inc/admin-header.php');
                         <div class="error" id="offer_nameError"></div>
                     </div>
                     <div class="mb-2">
+                        <label for="offer_name">coupon code : </label>
+                        <input type="text" name="coupon_code" id="coupon_code" data-validation="required" class="form-control">
+                        <div class="error" id="coupon_codeError"></div>
+                    </div>
+                    <div class="mb-2">
                         <label for="discount">Discount (in % ) : </label>
                         <input type="number" name="discount" id="discount" data-validation="required numeric min max" data-min="1" data-max="3" class="form-control">
                         <div class="error" id="discountError"></div>
@@ -241,8 +268,9 @@ include_once('inc/admin-header.php');
                         <input type="date" name="end" id="end" data-validation="required" class="form-control">
                         <div class="error" id="endError"></div>
                     </div>
-                    <div class="d-flex align-items-end justify-content-between mb-2">
-                        <button type="submit" class="btn btn-dark shadow" name="edt_discount">Submit</button>
+                    <div class="d-flex align-items-end justify-content-between">
+                        <button type="submit" class="btn btn-primary shadow  mt-2" name="edt_discount">Submit</button>
+                        <input type="hidden" name="discount_id" id="discount_id">
                     </div>
                 </div>
             </form>
@@ -270,10 +298,11 @@ if (isset($_GET['edt_id'])) {
         })
          document.querySelector('#room').value = `$fetch[room_id]`;
          document.querySelector('#offer_name').value = `$fetch[offer]`;
+         document.querySelector('#coupon_code').value = `$fetch[coupon_code]`;
          document.querySelector('#discount').value = `$fetch[discount_percentage]`;
          document.querySelector('#start').value = `$fetch[start_date]`;
          document.querySelector('#end').value = `$fetch[end_date]`;
-
+         document.querySelector('#discount_id').value = `$fetch[id]`;
         edt_discount.show();
     </script>
 ";

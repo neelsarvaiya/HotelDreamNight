@@ -28,14 +28,14 @@ if (isset($_POST['save_btn'])) {
     $dob = mysqli_real_escape_string($conn, $_POST['dob']);
     $state = mysqli_real_escape_string($conn, $_POST['state']);
     $role = mysqli_real_escape_string($conn, $_POST['role']);
-    
+
     if (!empty($_FILES['profile']['name'])) {
         $profile_pic = uniqid() . $_FILES['profile']['name'];
         $temp_name = $_FILES['profile']['tmp_name'];
         $profile_path = "../img/userProfile/" . $profile_pic;
-        
+
         move_uploaded_file($temp_name, $profile_path);
-        
+
         $update = "UPDATE `register` SET 
                 Full_Name='$name', 
                 Email='$email', 
@@ -46,8 +46,8 @@ if (isset($_POST['save_btn'])) {
                 role='$role', 
                 Profile_pic='$profile_pic' 
                 WHERE id='$id'";
-        } else {
-            $update = "UPDATE `register` SET 
+    } else {
+        $update = "UPDATE `register` SET 
                 Full_Name='$name', 
                 Email='$email', 
                 Phone_number='$phone', 
@@ -56,18 +56,45 @@ if (isset($_POST['save_btn'])) {
                 state='$state', 
                 role='$role' 
                 WHERE id='$id'";
-        }
-        
-        $result = mysqli_query($conn, $update);
-        
-        if ($result) {
-            setcookie("success", "User Updated Successfull.", time() + 3, "/");
-        } else { 
-            setcookie("error", "Error updating user details!", time() + 3, "/");
-        }
     }
-?>
 
-<script>
-    window.location.href = 'users.php';
-</script>
+    $result = mysqli_query($conn, $update);
+
+    if ($result) {
+        setcookie("success", "User Updated Successfull.", time() + 3, "/");
+    } else {
+        setcookie("error", "Error updating user details!", time() + 3, "/");
+    }
+
+?>
+    <script>
+        window.location.href = 'users.php';
+    </script>
+<?php
+}
+
+if (isset($_GET['status_id'])) {
+
+    $status_query = "SELECT `status` FROM `register` WHERE id = $_GET[status_id]";
+    $result = mysqli_query($conn, $status_query);
+
+    $status = mysqli_fetch_assoc($result);
+
+    if ($status['status'] == "active") {
+        $update_qu = "UPDATE `register` SET `status` = 'inactive' WHERE id = $_GET[status_id]";
+    } else {
+        $update_qu = "UPDATE `register` SET `status` = 'active' WHERE id = $_GET[status_id]";
+    }
+
+    $sql = mysqli_query($conn, $update_qu);
+
+    if ($sql) {
+        setcookie("success", "status updated Successfull.", time() + 3, "/");
+?>
+        <script>
+            window.location.href = "register.php";
+        </script>
+<?php
+        exit;
+    }
+}

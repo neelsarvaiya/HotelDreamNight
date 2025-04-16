@@ -77,7 +77,7 @@ if (isset($_GET['id'])) {
 
 }
 
-if ($_GET['status_id']) {
+if (isset($_GET['status_id'])) {
 
     $status_query = "SELECT `status` FROM `carousel` WHERE id = $_GET[status_id]";
     $result = mysqli_query($conn, $status_query);

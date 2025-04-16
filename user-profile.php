@@ -137,15 +137,15 @@ if (isset($_POST['edit_btn'])) {
         $update = $update . ", `Profile_pic`='$profile_picture'";
     }
     $update = $update . " where Email='$email'";
-
+    
     if ($conn->query($update)) {
         if ($_FILES['edit_pic']['name'] != "") {
             move_uploaded_file($profile_picture_tmp_name, "img/userProfile/" . $profile_picture);
             unlink("img/userProfile/" . $old_profile_picture);
         }
-        setcookie('success', 'profile updated successfully', time() + 5, "/");
+        echo "<script> alert('profile updated successfully'); </script>";
     } else {
-        setcookie('error', 'error in updating profile', time() + 5, "/");
+        echo "<script> alert('error in updating profile'); </script>";
     }
 
 ?>

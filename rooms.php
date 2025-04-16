@@ -93,11 +93,16 @@ include_once('inc/header.php');
                 $child = $_POST['children'];
 
                 if (!empty($adult && $child)) {
-                    $select = "SELECT * FROM room_categories WHERE status = 'active' AND adult_max >= $adult AND child_max >= $child";
+                    $select = "SELECT rc.*, discount.offer
+                        FROM room_categories AS rc
+                        LEFT JOIN discount ON rc.id = discount.room_id
+                        WHERE rc.adult_max >= $adult
+                        AND rc.child_max >= $child
+                        AND rc.status = 'active'";
                 }
 
                 if (!empty($checkin && $checkout)) {
-                    $select = $select . " AND id NOT IN (
+                    $select = $select . " AND rc.id NOT IN (
                     SELECT room_id FROM bookings 
                     WHERE ('$checkin' BETWEEN check_in_date AND check_out_date) 
                     OR ('$checkout' BETWEEN check_in_date AND check_out_date) 
@@ -107,9 +112,11 @@ include_once('inc/header.php');
                 if ($price_sort != '') {
                     $select .= " ORDER BY actual_price $price_sort";
                 }
-
             } else {
-                $select = "SELECT * FROM room_categories WHERE status = 'active'";
+                $select = "SELECT rc.*, discount.offer
+                        FROM room_categories AS rc
+                        LEFT JOIN discount ON rc.id = discount.room_id
+                        WHERE rc.status = 'active'";
             }
 
             $res = mysqli_query($conn, $select);
@@ -117,6 +124,8 @@ include_once('inc/header.php');
 
                 while ($data = mysqli_fetch_assoc($res)) {
                     $room_id = $data['id'];
+
+                    $offer = $data['offer'];
 
                     $login = 0;
                     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
@@ -192,13 +201,12 @@ include_once('inc/header.php');
 
                 <div class='col-md-2 mt-lg-0 mt-md-0 mt-4 text-center mb-2'>
                     <span class='badge rounded-pill bg-success text-white text-wrap mb-2' style='font-size: 13px;'>
-                        15% Off on Weekends
+                     $offer
                     </span>
-                    <h6 class='mb-2' style='text-decoration: line-through;'>₹{$data['actual_price']} per night</h6>
                     <span class='badge rounded text-dark text-wrap mb-2'>
                         <h6>₹{$data['actual_price']}</h6>
                     </span>
-                    $book
+                     $book
                     <a href='more_details.php?id={$data['id']}' class='btn btn-sm w-100 btn-outline-dark shadow-none'>More Details</a>
                 </div>
             </div>
@@ -212,7 +220,6 @@ include_once('inc/header.php');
                         <h2><i class="bi bi-emoji-frown text-danger"></i></h2>
                         <p class="lead">Please try again.</p>
                     </div>
-
                 </div>
             <?php
             }
@@ -227,35 +234,35 @@ include_once('inc/footer.php');
 ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    let checkinInput = document.getElementById("checkin1");
-    let checkoutInput = document.getElementById("checkout1");
+    document.addEventListener("DOMContentLoaded", function() {
+        let checkinInput = document.getElementById("checkin1");
+        let checkoutInput = document.getElementById("checkout1");
 
-    // Set the minimum date for check-in (today)
-    let today = new Date().toISOString().split("T")[0];
-    checkinInput.setAttribute("min", today);
+        // Set the minimum date for check-in (today)
+        let today = new Date().toISOString().split("T")[0];
+        checkinInput.setAttribute("min", today);
 
-    // Prevent selecting past dates for check-in
-    checkinInput.addEventListener("change", function () {
-        let checkinDate = checkinInput.value;
+        // Prevent selecting past dates for check-in
+        checkinInput.addEventListener("change", function() {
+            let checkinDate = checkinInput.value;
 
-        if (checkinDate) {
-            // Set the check-out min date as the selected check-in date
-            checkoutInput.setAttribute("min", checkinDate);
-        } else {
-            checkoutInput.removeAttribute("min");
-        }
+            if (checkinDate) {
+                // Set the check-out min date as the selected check-in date
+                checkoutInput.setAttribute("min", checkinDate);
+            } else {
+                checkoutInput.removeAttribute("min");
+            }
+        });
+
+        // Prevent selecting past dates for check-out
+        checkoutInput.addEventListener("change", function() {
+            let checkinDate = checkinInput.value;
+            let checkoutDate = checkoutInput.value;
+
+            if (checkoutDate < checkinDate) {
+                alert("Check-out date cannot be before check-in date.");
+                checkoutInput.value = "";
+            }
+        });
     });
-
-    // Prevent selecting past dates for check-out
-    checkoutInput.addEventListener("change", function () {
-        let checkinDate = checkinInput.value;
-        let checkoutDate = checkoutInput.value;
-
-        if (checkoutDate < checkinDate) {
-            alert("Check-out date cannot be before check-in date.");
-            checkoutInput.value = "";
-        }
-    });
-});
 </script>
