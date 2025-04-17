@@ -39,6 +39,7 @@ if (isset($_POST['pay_btn'])) {
     } else {
         $original_price = $nights * $room_result['actual_price'];
         $final_price = $original_price;
+        $discount_id = 'NULL';
 
         // 3. Apply coupon if any
         if (!empty($coupon_code)) {
@@ -52,6 +53,7 @@ if (isset($_POST['pay_btn'])) {
             $coupon_result = mysqli_query($conn, $coupon_sql);
             if (mysqli_num_rows($coupon_result) > 0) {
                 $coupon = mysqli_fetch_assoc($coupon_result);
+                $discount_id = $coupon['id'];
                 $discount = $original_price * $coupon['discount_percentage'] / 100;
                 $final_price -= $discount;
                 $discount_msg = "Coupon applied! You saved ₹" . number_format($discount, 2);
@@ -60,12 +62,13 @@ if (isset($_POST['pay_btn'])) {
             }
         }
 
+
         $price = max(0, $final_price);
         $booking_ready = true;
 
         $_SESSION['booking'] = [
             'room_id' => $room_id,
-            'coupon_code' => $coupon_code,
+            'discount_id' => $discount_id,
             'email' => $email,
             'adults' => $adults,
             'children' => $child,
@@ -84,7 +87,7 @@ if (isset($_POST['payment'])) {
         $sql = "SELECT r.id
                 FROM rooms r
                 WHERE r.room_id = '{$data['room_id']}'
-                AND r.status_available = 1
+                AND r.status_available = 'active'
                 AND r.id NOT IN (
                     SELECT b.room_id
                     FROM bookings b
@@ -97,26 +100,22 @@ if (isset($_POST['payment'])) {
                 ";
 
         $result = mysqli_query($conn, $sql);
-        $row = $result->fetch_assoc();
-        $room_number_id = $row['id'];
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $room_number_id = $row['id'];
+        }
 
         $user_sql = "SELECT id FROM register WHERE Email = '{$data['email']}'";
         $user_res = mysqli_query($conn, $user_sql);
         $user = mysqli_fetch_assoc($user_res);
         $user_id = $user['id'] ?? 0;
 
-        if (!empty($data['coupon_code'])) {
-            $discount_id_sql = "SELECT id FROM `discount` WHERE coupon_code = '{$data['coupon_code']}' LIMIT 1";
-            $discount_res = mysqli_query($conn, $discount_id_sql);
-            if ($discount_row = mysqli_fetch_assoc($discount_res)) {
-                $coupon_id = $discount_row['id'];
-            }
-
-            $insert_booking = "INSERT INTO bookings (room_number_id ,room_id, user_id, applied_discount_id, adult, child, check_in_date, check_out_date, total_price)
-                               VALUES ($room_number_id, '{$data['room_id']}', '$user_id', '$coupon_id', '{$data['adults']}', '{$data['children']}', '{$data['checkin']}', '{$data['checkout']}', '{$data['total_price']}')";
+        if ($data['discount_id'] !== 'NULL') {
+            $insert_booking = "INSERT INTO bookings (room_number_id, room_id, user_id, applied_discount_id, adult, child, check_in_date, check_out_date, total_price)
+                               VALUES ($room_number_id, '{$data['room_id']}', '$user_id', '{$data['discount_id']}', '{$data['adults']}', '{$data['children']}', '{$data['checkin']}', '{$data['checkout']}', '{$data['total_price']}')";
         } else {
-            $insert_booking = "INSERT INTO bookings (room_number_id ,room_id, user_id, adult, child, check_in_date, check_out_date, total_price)
-            VALUES ($room_number_id, '{$data['room_id']}', '$user_id', '{$data['adults']}', '{$data['children']}', '{$data['checkin']}', '{$data['checkout']}', '{$data['total_price']}')";
+            $insert_booking = "INSERT INTO bookings (room_number_id, room_id, user_id, adult, child, check_in_date, check_out_date, total_price)
+                               VALUES ($room_number_id, '{$data['room_id']}', '$user_id', '{$data['adults']}', '{$data['children']}', '{$data['checkin']}', '{$data['checkout']}', '{$data['total_price']}')";
         }
 
         mysqli_query($conn, $insert_booking);
@@ -126,8 +125,12 @@ if (isset($_POST['payment'])) {
 
         unset($_SESSION['booking']); // Clear session
 
-        echo "<script>alert('Payment successful! Your booking has been confirmed.'); window.location.href = 'rooms.php';</script>";
-        exit;
+        ?>
+        <script>
+            window.location.href ="pdfsend.php"
+        </script>
+        <?php
+       
     } else {
         echo "<script>alert('Booking session expired. Please book again.'); window.location.href = 'rooms.php';</script>";
         exit;

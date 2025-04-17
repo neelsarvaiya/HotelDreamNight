@@ -122,7 +122,7 @@ if(isset($_POST['review_btn'])) {
         <div class="mb-3">
             <label for="review" class="form-label">Write Your Review</label>
             <textarea class="form-control" id="review" data-validation="required" name="review_text" rows="4" placeholder="Share your experience..."></textarea>
-            <div class="error" id="reviewError"></div>
+            <div class="error" id="review_textError"></div>
         </div>
         <input type="hidden" name="room_id" value="<?= $room_id ?>">
         <button type="submit" class="btn btn-success" name="review_btn">Submit Review</button>
