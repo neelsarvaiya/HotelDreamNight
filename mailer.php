@@ -13,6 +13,8 @@ function sendEmail($to, $subject, $body, $file)
     $mail = new PHPMailer(true); // Enable exceptions
 
     try {
+
+
         $headers = 'X-Mailer: PHP/' . phpversion();
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
@@ -26,6 +28,7 @@ function sendEmail($to, $subject, $body, $file)
                 'allow_self_signed' => true
             )
         );
+
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
         $mail->Host       = 'smtp.gmail.com';      // sets GMAIL as the SMTP server
@@ -36,11 +39,19 @@ function sendEmail($to, $subject, $body, $file)
         $mail->AddReplyTo("neelsarvaiya11@gmail.com", "$to"); //to
         $mail->Subject    = $subject;
         $mail->AltBody    = "To view the message, please use an HTML compatible email viewer!";
-        
+
 
         if ($file) {
-            $mail->AddAttachment($file);
+            // If it's not a real file path but seems like PDF data
+            if (!file_exists($file) && strpos($file, '%PDF') !== false) {
+                // Treat it as raw PDF data
+                $mail->addStringAttachment($file, 'BookingConfirmation.pdf');
+            } else {
+                // Treat it as a normal file path
+                $mail->AddAttachment($file);
+            }
         }
+
         $mail->MsgHTML($body);
 
         $mail->AddAddress($to);

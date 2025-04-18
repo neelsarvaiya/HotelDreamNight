@@ -1,5 +1,7 @@
 <?php
 include_once('inc/header.php');
+$user_email = $_SESSION['user'];
+
 
 $price = 0;
 $room_id = 0;
@@ -10,7 +12,7 @@ $discount_msg = "";
 if (isset($_POST['pay_btn'])) {
 
     $room_id = $_POST['room_id'];
-    $email = $_POST['email1'];
+    $email = $user_email;
     $adults = $_POST['adults'];
     $child = $_POST['children'];
     $check_in = $_POST['checkin1'];
@@ -119,18 +121,20 @@ if (isset($_POST['payment'])) {
         }
 
         mysqli_query($conn, $insert_booking);
+        $booking_id = mysqli_insert_id($conn);
 
         $insert_payment = "INSERT INTO payment (room_id, amount) VALUES ('{$data['room_id']}', '{$data['total_price']}')";
         mysqli_query($conn, $insert_payment);
 
         unset($_SESSION['booking']); // Clear session
 
-        ?>
+?>
         <script>
-            window.location.href ="pdfsend.php"
+            window.location.href = "pdfsend.php?booking_id=<?= $booking_id ?>";
         </script>
-        <?php
-       
+
+<?php
+
     } else {
         echo "<script>alert('Booking session expired. Please book again.'); window.location.href = 'rooms.php';</script>";
         exit;

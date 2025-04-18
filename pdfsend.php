@@ -1,110 +1,188 @@
 <?php
-
+require('Admin/connection.php');
 require('fpdf/fpdf.php');
+require 'mailer.php';
 
-$pdf = new FPDF();
-$pdf->AddPage();
+if (!isset($_GET['booking_id'])) {
+    echo "Invalid request.";
+    exit;
+}
 
-// Layout variables
-$leftLabelWidth = 40;
-$leftValueWidth = 55;
-$rightLabelWidth = 40;
-$rightValueWidth = 55;
+$booking_id = intval($_GET['booking_id']);
 
-// Header
-$pdf->SetFont('Arial', 'B', 14);
-$pdf->Cell(0, 8, 'Reservation Confirmation', 0, 1, 'C');
-$pdf->Cell(0, 3, "", 0, 1);
-$pdf->Cell(0, 8, 'DreamNight', 0, 1, 'C');
-$pdf->SetFont('Arial', '', 14);
-$pdf->Cell(0, 5, 'Hotel', 0, 1, 'C');
+$sql = "SELECT 
+    re.Full_Name, 
+    re.Email, 
+    re.Phone_number, 
+    re.Address,
+    re.DOB, 
+    re.state, 
+    b.adult, 
+    b.child, 
+    b.check_in_date, 
+    b.check_out_date, 
+    b.total_price, 
+    date(b.created_at) as c_date, 
+    rc.image, 
+    rc.name,
+    r.room_number
+FROM 
+    bookings b
+JOIN 
+    register re ON b.user_id = re.id
+JOIN 
+    rooms r ON b.room_number_id = r.id
+JOIN 
+    room_categories rc ON b.room_id = rc.id
+WHERE 
+    b.id = $booking_id";
 
-// // Image
-$pdf->Image('img\rooms\67dd778fad7e05.png', 10, 40, 100, 50);
+$data = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 
-$pdf->SetFillColor(240, 240, 240);
-$pdf->Rect(112, 40, 90, 50, 'F');
+function generateBookingPDF($data)
+{
 
-$pdf->SetFont('Arial', 'B', 14);
-$pdf->SetTextColor(120, 120, 120);
-$pdf->SetXY(120, 50);
-$pdf->Cell(70, 10, 'WE LOOK', 0, 2, 'C');
-$pdf->Cell(70, 10, 'FORWARD TO', 0, 2, 'C');
-$pdf->Cell(70, 10, 'SEEING YOU', 0, 2, 'C');
-$pdf->Ln(20);
+    $pdf = new FPDF();
+    $pdf->AddPage();
 
-// Greeting
-$pdf->SetTextColor(0, 0, 0);
-$pdf->SetFont('Arial', '', 12);
-$pdf->Cell(0, 10, "Dear Mr. Neelkumar Sarvaiya,", 0, 1, 'L');
-$pdf->SetFont('Arial', '', 11);
-$pdf->MultiCell(0, 6, "Thank you for choosing DreamNight Hotel. It is our pleasure to confirm the following reservation. Please advise us if any changes need to be made to this reservation by calling us at 940-818-6776.");
+    $leftLabelWidth = 40;
+    $leftValueWidth = 55;
+    $rightLabelWidth = 40;
+    $rightValueWidth = 55;
 
-$pdf->Ln(5);
+    // Header
+    $pdf->SetFont('Arial', 'B', 14);
+    $pdf->Cell(0, 8, 'Reservation Confirmation', 0, 1, 'C');
+    $pdf->Cell(0, 3, "", 0, 1);
+    $pdf->Cell(0, 8, 'DreamNight', 0, 1, 'C');
+    $pdf->SetFont('Arial', '', 14);
+    $pdf->Cell(0, 5, 'Hotel', 0, 1, 'C');
 
-// Section headers
-$pdf->SetFont('Arial', 'B', 12);
-$pdf->SetFillColor(230, 230, 230);
-$pdf->Cell($leftLabelWidth + $leftValueWidth, 10, 'GUEST INFORMATION', 1, 0, 'L', true);
-$pdf->Cell($rightLabelWidth + $rightValueWidth, 10, 'RESERVATION DETAILS', 1, 1, 'L', true);
-$pdf->SetFont('Arial', '', 11);
+    // Image (dynamic)
+    $imagePath = 'img/rooms/' . $data['image'];
+    if (file_exists($imagePath)) {
+        $pdf->Image($imagePath, 10, 40, 100, 50);
+    }
 
-// Row 1
-$pdf->Cell($leftLabelWidth, 8, "Name", 1);
-$pdf->Cell($leftValueWidth, 8, "NeelKumar Sarvaiya", 1);
-$pdf->Cell($rightLabelWidth, 8, "Room Name", 1);
-$pdf->Cell($rightValueWidth, 8, "Supreme Room", 1);
-$pdf->Ln();
 
-// Row 2
-$pdf->Cell($leftLabelWidth, 8, "Email", 1);
-$pdf->Cell($leftValueWidth, 8, "nsarvaiya631@rku.ac.in", 1);
-$pdf->Cell($rightLabelWidth, 8, "Room Number", 1);
-$pdf->Cell($rightValueWidth, 8, "301", 1);
-$pdf->Ln();
+    $pdf->SetFillColor(240, 240, 240);
+    $pdf->Rect(112, 40, 90, 50, 'F');
 
-// Row 3
-$pdf->Cell($leftLabelWidth, 8, "Phone no.", 1);
-$pdf->Cell($leftValueWidth, 8, "1234567890", 1);
-$pdf->Cell($rightLabelWidth, 8, "Check-in", 1);
-$pdf->Cell($rightValueWidth, 8, "17-04-2024", 1);
-$pdf->Ln();
+    $pdf->SetFont('Arial', 'B', 14);
+    $pdf->SetTextColor(120, 120, 120);
+    $pdf->SetXY(120, 50);
+    $pdf->Cell(70, 10, 'WE LOOK', 0, 2, 'C');
+    $pdf->Cell(70, 10, 'FORWARD TO', 0, 2, 'C');
+    $pdf->Cell(70, 10, 'SEEING YOU', 0, 2, 'C');
+    $pdf->Ln(20);
 
-// Row 4
-$pdf->Cell($leftLabelWidth, 8, "Address", 1);
-$pdf->Cell($leftValueWidth, 8, "Rajkot, Gujrat", 1);
-$pdf->Cell($rightLabelWidth, 8, "Check-out", 1);
-$pdf->Cell($rightValueWidth, 8, "20-04-2024", 1);
-$pdf->Ln();
+    // Greeting
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(0, 10, "Dear Mr. " . $data['Full_Name'] . ",", 0, 1, 'L');
+    $pdf->SetFont('Arial', '', 11);
+    $pdf->MultiCell(0, 6, "Thank you for choosing DreamNight Hotel. It is our pleasure to confirm the following reservation. Please advise us if any changes need to be made to this reservation by calling us at 940-818-6776.");
+    $pdf->Ln(5);
 
-// Row 5
-$pdf->Cell($leftLabelWidth, 8, "Date of Birth", 1);
-$pdf->Cell($leftValueWidth, 8, "22-03-2007", 1);
-$pdf->Cell($rightLabelWidth, 8, "Number of Children", 1);
-$pdf->Cell($rightValueWidth, 8, "4", 1);
-$pdf->Ln();
+    // Section headers
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->SetFillColor(230, 230, 230);
+    $pdf->Cell($leftLabelWidth + $leftValueWidth, 10, 'GUEST INFORMATION', 1, 0, 'L', true);
+    $pdf->Cell($rightLabelWidth + $rightValueWidth, 10, 'RESERVATION DETAILS', 1, 1, 'L', true);
+    $pdf->SetFont('Arial', '', 11);
 
-// Row 6
-$pdf->Cell($leftLabelWidth, 8, "State", 1);
-$pdf->Cell($leftValueWidth, 8, "Gujrat", 1);
-$pdf->Cell($rightLabelWidth, 8, "Number of Adults", 1);
-$pdf->Cell($rightValueWidth, 8, "6", 1);
-$pdf->Ln();
+    // Row 1
+    $pdf->Cell($leftLabelWidth, 8, "Name", 1);
+    $pdf->Cell($leftValueWidth, 8, $data['Full_Name'], 1);
+    $pdf->Cell($rightLabelWidth, 8, "Room Name", 1);
+    $pdf->Cell($rightValueWidth, (string) 8, $data['name'], 1);
+    $pdf->Ln();
 
-// Total Price row
-// $pdf->SetFillColor(100, 149, 237);
-// $pdf->SetFillColor(135, 206, 237);
-$pdf->SetFillColor(176, 196, 222);
-$pdf->Cell($leftLabelWidth + $leftValueWidth + $rightLabelWidth, 8, "Total Price", 1, 0, 'R', true);
-$pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell($rightValueWidth, 8, "Rs. 10,000/-", 1, 1, 'R', true);
-$pdf->Ln(5);
+    // Row 2
+    $pdf->Cell($leftLabelWidth, 8, "Email", 1);
+    $pdf->Cell($leftValueWidth, 8, $data['Email'], 1);
+    $pdf->Cell($rightLabelWidth, 8, "Room Number", 1);
+    $pdf->Cell($rightValueWidth, (string) 8, $data['room_number'], 1);
+    $pdf->Ln();
 
-// Note
-$pdf->SetFont('Arial', '', 10);
-$pdf->MultiCell(0, 8, "We provide our guests with a completely smoke-free environment.");
+    // Row 3
+    $pdf->Cell($leftLabelWidth, 8, "Phone no.", 1);
+    $pdf->Cell($leftValueWidth, 8, $data['Phone_number'], 1);
+    $pdf->Cell($rightLabelWidth, 8, "Check-in", 1);
+    $pdf->Cell($rightValueWidth, 8, (string) date("d-m-Y", strtotime($data['check_in_date'])), 1);
+    $pdf->Ln();
 
-// Output
-$pdf->Output('D','booking-receipt'.'.pdf');
+    // Row 4
+    $pdf->Cell($leftLabelWidth, 8, "Address", 1);
+    $pdf->Cell($leftValueWidth, 8, $data['Address'], 1);
+    $pdf->Cell($rightLabelWidth, 8, "Check-out", 1);
+    $pdf->Cell($rightValueWidth, 8, (string) date("d-m-Y", strtotime($data['check_out_date'])), 1);
+    $pdf->Ln();
 
-echo "<script>alert('Booking session expired. Please book again.'); window.location.href = 'rooms.php';</script>";
+    // Row 5
+    $pdf->Cell($leftLabelWidth, 8, "State", 1);
+    $pdf->Cell($leftValueWidth, 8, $data['state'], 1);
+    $pdf->Cell($rightLabelWidth, 8, "Number of Children", 1);
+    $pdf->Cell($rightValueWidth, 8, (string) $data['child'], 1);
+    $pdf->Ln();
+
+    // Row 6 - Date of Birth
+    $pdf->Cell($leftLabelWidth, 8, "", 1); // Optional extra field
+    $pdf->Cell($leftValueWidth, 8, "", 1);
+    $pdf->Cell($rightLabelWidth, 8, "Number of Adults", 1);
+    $pdf->Cell($rightValueWidth, 8, (string) $data['adult'], 1);
+    $pdf->Ln();
+
+
+    // Row 7
+    $pdf->Cell($leftLabelWidth, 8, "DOB", 1);
+    $pdf->Cell($leftValueWidth, 8, date("d-m-Y", strtotime($data['DOB'])), 1);
+    $pdf->Cell($rightLabelWidth, 8, "Booked At", 1);
+    $pdf->Cell($rightValueWidth, 8, date("d-m-Y h:i A", strtotime($data['c_date'])), 1);
+    $pdf->Ln();
+
+    // Total Price
+    $pdf->SetFillColor(176, 196, 222);
+    $pdf->Cell($leftLabelWidth + $leftValueWidth + $rightLabelWidth, 8, "Total Price", 1, 0, 'R', true);
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell($rightValueWidth, 8, "Rs. " . number_format($data['total_price'], 2) . "/-", 1, 1, 'R', true);
+    $pdf->Ln(5);
+
+    // Note
+    $pdf->SetFont('Arial', '', 10);
+    $pdf->MultiCell(0, 8, "We provide our guests with a completely smoke-free environment.");
+
+    $pdf->Cell(0, 10, 'Thank you for booking with us!', 0, 1, 'C');
+
+    return $pdf->Output('', 'S'); // Return PDF as string
+}
+
+// 4. Send Email
+function sendBookingEmail($toEmail, $userName, $pdfData)
+{
+    $subject = "Booking Confirmation - Hotel Dream Night";
+    $body = "<p>Dear $userName,</p>
+             <p>Your booking is confirmed. Please find the details in the attached PDF.</p>
+             <p>Regards,<br>Hotel Dream Night</p>";
+
+    return sendEmail($toEmail, $subject, $body, $pdfData);
+}
+
+// 5. Use functions
+$pdfData = generateBookingPDF($data);
+$emailStatus = sendBookingEmail($data['Email'], $data['Full_Name'], $pdfData);
+
+// Send email with PDF attached
+if ($emailStatus === true) {
+    echo
+    "<script>
+    alert('Payment successfull and booking confirmation has been sent to your email.'); 
+    window.location.href = 'rooms.php';
+    </script>";
+} else {
+    echo "
+    <script>
+    alert('Booking session expired. Please book again.'); 
+    window.location.href = 'rooms.php';
+    </script>";
+}
