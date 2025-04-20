@@ -48,10 +48,11 @@ if(isset($_GET['delete_id'])){
 //edit
 if(isset($_POST['edit_room'])){
     
+    $id = $_POST['id'];
     $room_number = $_POST['room_number'];
     $room_category_id = $_POST['room_category_id'];
 
-   if(mysqli_query($conn, "UPDATE rooms SET `room_id`='$room_category_id',`room_number`='$room_number' WHERE room_id = $room_category_id")){
+   if(mysqli_query($conn, "UPDATE rooms SET `room_id`='$room_category_id',`room_number`='$room_number' WHERE id = $id")){
     echo "<script>
         alert('Room updated');
         window.location.href = 'add-room.php';
@@ -127,10 +128,10 @@ if (isset($_GET['status_id'])) {
                             <td><?= $row['category'] ?></td>
                             <td><a href="?status_id=<?= $row['room_no_id'] ?>" class="btn btn-<?= ($row['status_available'] == "active") ? 'success' : 'danger' ?> shadow-none"><?= $row['status_available'] ?></a></td>
                             <td>
-                                <a href="?edit_id=<?= $row['id'] ?>" class="btn btn-warning shadow-none">
+                                <a href="?edit_id=<?= $row['room_no_id'] ?>" class="btn btn-warning shadow-none">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="?delete_id=<?= $row['id'] ?>"><button onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i></button></a>
+                                <a href="?delete_id=<?= $row['room_no_id'] ?>"><button onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i></button></a>
                             </td>
                         </tr>
                     <?php
@@ -181,7 +182,7 @@ if (isset($_GET['status_id'])) {
     </div>
 </div>
 
-
+<!-- edit model -->
 <div class="modal fade" id="edit_room" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -211,6 +212,7 @@ if (isset($_GET['status_id'])) {
                         <div class="error" id=""></div>
                     </div>
                     <div class="d-flex align-items-end justify-content-between mb-2">
+                        <input type="hidden" id="id" name="id">
                         <button type="submit" class="btn btn-primary shadow" name="edit_room">submit</button>
                     </div>
                 </div>
@@ -223,7 +225,7 @@ if (isset($_GET['status_id'])) {
 //edit
 if(isset($_GET['edit_id'])){
 
-    $sql = "SELECT * FROM `rooms` WHERE room_id = $_GET[edit_id] AND is_deleted = 0";
+    $sql = "SELECT * FROM `rooms` WHERE id = $_GET[edit_id] AND is_deleted = 0";
     $fetch = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 
     echo "
@@ -232,6 +234,7 @@ if(isset($_GET['edit_id'])){
         keyboard: false
         })
         
+        document.querySelector('#id').value = `$fetch[id]`;
         document.querySelector('#edit_room_category_id').value = `$fetch[room_id]`;
         document.querySelector('#edit_room_number').value = `$fetch[room_number]`;
         edit_room.show();

@@ -158,6 +158,22 @@ include_once('inc/header.php');
                         $facilities_html .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>{$facility['name']}</span> ";
                     }
 
+                    $rating_sql = "SELECT AVG(rating) AS avg_rating FROM review_and_rating WHERE room_id = $room_id";
+                    $rating_result = mysqli_query($conn, $rating_sql);
+                    $rating_row = mysqli_fetch_assoc($rating_result);
+                    $avg_rating = round($rating_row['avg_rating'], 1);
+                    
+                    $stars_html = '';
+                    for ($i = 1; $i <= 5; $i++) {
+                        if ($i <= floor($avg_rating)) {
+                            $stars_html .= '<i class="bi bi-star-fill text-warning"></i>';
+                        } elseif ($i - $avg_rating <= 0.5) {
+                            $stars_html .= '<i class="bi bi-star-half text-warning"></i>';
+                        } else {
+                            $stars_html .= '<i class="bi bi-star text-warning"></i>';
+                        }
+                    }
+
                     echo "
                 <div class='card mb-4 border-0 shadow'>
                 <div class='row g-0 p-3 align-items-center'>
@@ -190,11 +206,7 @@ include_once('inc/header.php');
                     <div class='rating mb-4'>
                         <h6>Rating</h6>
                         <span class='badge rounded-pill bg-light'>
-                            <i class='bi bi-star-fill text-warning'></i>
-                            <i class='bi bi-star-fill text-warning'></i>
-                            <i class='bi bi-star-fill text-warning'></i>
-                            <i class='bi bi-star text-warning'></i>
-                            <i class='bi bi-star text-warning'></i>
+                            $stars_html
                         </span>
                     </div>
                 </div>

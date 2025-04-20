@@ -34,22 +34,29 @@ include_once('inc/admin-header.php');
             </div>
         </div>
 
-        <!-- Active Bookings -->
+        <!-- total payment -->
         <div class="col-md-3">
+            <?php
+            $result =  mysqli_query($conn, "SELECT SUM(amount) AS total_payment FROM payment");
+            $data = mysqli_fetch_assoc($result);
+            ?>
             <div class="card text-white bg-success mb-3 shadow">
                 <div class="card-body text-center">
-                    <h5 class="card-title"><i class="bi bi-bookmark-check-fill"></i> Active Bookings</h5>
-                    <h3>180</h3>
+                    <h5 class="card-title"><i class="fas fa-university"></i> Total Payment </h5>
+                    <h3><?= $data['total_payment'] ?></h3>
                 </div>
             </div>
         </div>
-
-        <!-- Pending Bookings -->
+        
         <div class="col-md-3">
+            <?php
+            $result =  mysqli_query($conn, "SELECT COUNT(*) AS avail_rooms FROM rooms WHERE status_available = 'active'");
+            $data = mysqli_fetch_assoc($result);
+            ?>
             <div class="card text-white bg-warning mb-3 shadow">
                 <div class="card-body text-center">
-                    <h5 class="card-title"><i class="fa-solid fa-clock"></i> Pending Bookings</h5>
-                    <h3>40</h3>
+                    <h5 class="card-title">🏨  Available Rooms</h5>
+                    <h3><?= $data['avail_rooms'] ?></h3>
                 </div>
             </div>
         </div>

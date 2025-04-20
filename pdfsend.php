@@ -22,7 +22,7 @@ $sql = "SELECT
     b.check_in_date, 
     b.check_out_date, 
     b.total_price, 
-    date(b.created_at) as c_date, 
+    b.created_at,
     rc.image, 
     rc.name,
     r.room_number
@@ -138,7 +138,7 @@ function generateBookingPDF($data)
     $pdf->Cell($leftLabelWidth, 8, "DOB", 1);
     $pdf->Cell($leftValueWidth, 8, date("d-m-Y", strtotime($data['DOB'])), 1);
     $pdf->Cell($rightLabelWidth, 8, "Booked At", 1);
-    $pdf->Cell($rightValueWidth, 8, date("d-m-Y h:i A", strtotime($data['c_date'])), 1);
+    $pdf->Cell($rightValueWidth, 8, date("d-m-Y h:i A", strtotime($data['created_at'])), 1);
     $pdf->Ln();
 
     // Total Price
@@ -153,6 +153,11 @@ function generateBookingPDF($data)
     $pdf->MultiCell(0, 8, "We provide our guests with a completely smoke-free environment.");
 
     $pdf->Cell(0, 10, 'Thank you for booking with us!', 0, 1, 'C');
+
+    $pdf->Ln(5);
+    $pdf->SetFont('Arial', 'I', 8);
+    $pdf->Cell(0, 6, 'DreamNight Hotel, 123 Hospitality Lane, Tourism City, TC 12345', 0, 1, 'C');
+    $pdf->Cell(0, 6, 'Phone: 940-818-6776 | Email: info@dreamnighthotel.com | www.dreamnighthotel.com', 0, 1, 'C');
 
     return $pdf->Output('', 'S'); // Return PDF as string
 }

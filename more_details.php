@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
             border: 1px solid var(--teal);
         }
     </style>
-    
+
     <div class="container">
         <div class="row">
             <div class="col-12 my-5 mb-4 px-4">
@@ -38,12 +38,25 @@ if (isset($_GET['id'])) {
                         <h4>₹<?= $data['actual_price'] ?> per night</h4>
                         <div class="rating mb-3">
                             <h6>Rating</h6>
+                            <?php
+                                $rating_sql = "SELECT AVG(rating) AS avg_rating FROM review_and_rating WHERE room_id = $_GET[id]";
+                                $rating_result = mysqli_query($conn, $rating_sql);
+                                $rating_row = mysqli_fetch_assoc($rating_result);
+                                $avg_rating = round($rating_row['avg_rating'], 1);
+                                
+                                $stars_html = '';
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= floor($avg_rating)) {
+                                        $stars_html .= '<i class="bi bi-star-fill text-warning"></i>';
+                                    } elseif ($i - $avg_rating <= 0.5) {
+                                        $stars_html .= '<i class="bi bi-star-half text-warning"></i>';
+                                    } else {
+                                        $stars_html .= '<i class="bi bi-star text-warning"></i>';
+                                    }
+                                }
+                            ?>
                             <span class="badge rounded-pill bg-light">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
+                               <?= $stars_html ?>
                             </span>
                         </div>
                         <div class="features mb-3">
@@ -56,7 +69,7 @@ if (isset($_GET['id'])) {
                             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                                 $login = 1;
                             }
-                    
+
                             $book_btn = "<button onclick='checkLoginToBook($login,$room_id)'
                                             class='btn btn-sm w-100 mb-2 text-white custom-bg shadow-none'>
                                              Book now
@@ -99,11 +112,8 @@ if (isset($_GET['id'])) {
                         <span class="badge rounded-pill bg-success text-white text-wrap mb-2" style="font-size: 13px;line-height:15px;">
                             15% Off on Weekends
                         </span>
-                        <h6 class="mb-2" style="text-decoration: line-through;">₹<?= $data['actual_price'] ?> per night</h6>
-                        <span class="badge rounded text-dark text-wrap mb-2">
-                            <h6> ₹500 per night</h6>
-                        </span>
-                       <?= $book_btn  ?>
+                        <h6 class="mb-2">₹<?= $data['actual_price'] ?> per night</h6>
+                        <?= $book_btn  ?>
                     </div>
                 </div>
             </div>
@@ -118,49 +128,32 @@ if (isset($_GET['id'])) {
             <div class="col-lg-12">
                 <h5 class="fw-bold">Reviews & Ratings</h5>
                 <div class="row">
-                    <div class="profile d-flex align-items-center mb-3 mt-3">
-                        <img src="img/men4.png" width="50px" height="auto" class="rounded-circle">
-                        <h6 class="m-0 ms-2">Amelia Thomas</h6>
-                    </div>
-                    <p>
-                        I recently stayed at DreamNights Hotel , and I couldn’t be more pleased with my experience. The room was spacious, immaculately clean, and tastefully decorated. The bed was incredibly comfortable with soft, high-quality linens that made it hard to get up in the morning.
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                    </div>
+                    <?php
+                    $res = mysqli_query($conn, "SELECT r.Profile_pic,r.Full_Name,rr.review_text,rr.rating FROM review_and_rating rr JOIN register r ON rr.user_id = r.id WHERE rr.room_id = $_GET[id] ORDER BY rr.id DESC");
 
-                    <div class="profile d-flex align-items-center mb-3 mt-3">
-                        <img src="img/about/about.jpg" width="50px" height="auto" class="rounded-circle">
-                        <h6 class="m-0 ms-2">James L.</h6>
-                    </div>
-                    <p>
-                        The amenities were impressive — the high-speed Wi-Fi worked seamlessly, and the large TV with streaming options was a great touch. I particularly appreciated the small details, like the complimentary coffee and tea station and the thoughtfully curated minibar. </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star text-warning"></i>
-                        <i class="bi bi-star text-warning"></i>
-                    </div>
-
-                    <div class="profile d-flex align-items-center mb-3 mt-3">
-                        <img src="img/about/about.jpg" width="50px" height="auto" class="rounded-circle">
-                        <h6 class="m-0 ms-2">Michael R.</h6>
-                    </div>
-                    <p>
-                        The bathroom was spotless and well-equipped, featuring a modern walk-in shower with excellent water pressure and luxury toiletries. I also loved the large mirror and great lighting, which made getting ready a breeze.
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star text-warning"></i>
-                        <i class="bi bi-star text-warning"></i>
-                        <i class="bi bi-star text-warning"></i>
-                        <i class="bi bi-star text-warning"></i>
-                    </div>
+                    while ($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                        <div class="profile d-flex align-items-center mb-3 mt-3">
+                            <img src="img/userProfile/<?= $row['Profile_pic'] ?>" width="40px" height="auto" class="rounded-circle">
+                            <h6 class="m-0 ms-2"><?= $row['Full_Name'] ?></h6>
+                        </div>
+                        <p>
+                            <?= $row['review_text'] ?>
+                        </p>
+                        <div class="rating">
+                            <?php  
+                            for($i = 1; $i <= 5; $i++){
+                                if( $i <= $row['rating']){
+                                  echo '<i class="bi bi-star-fill text-warning"></i>';
+                                }else{
+                                  echo '<i class="bi bi-star text-warning"></i>';  
+                                }
+                            }
+                            ?>                            
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>

@@ -92,7 +92,6 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
                         <th scope="col" class="bg-dark text-white">Sr no.</th>
                         <th scope="col" class="bg-dark text-white">Image</th>
                         <th scope="col" class="bg-dark text-white">Detail</th>
-                        <th scope="col" class="bg-dark text-white">Status</th>
                         <th scope="col" class="bg-dark text-white">Action</th>
                     </tr>
                 </thead>
@@ -107,12 +106,6 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, $select));
                             <td><?= $i ?></td>
                             <td class="p-2"><img src="../img/about/<?= $data['image'] ?>" height="100px" width="100px"></td>
                             <td><?= $data['detail'] ?></td>
-                            <td><button class="btn btn-<?php
-                                                        if ($data['status'] == "active")
-                                                            echo "success";
-                                                        else
-                                                            echo "danger";
-                                                        ?> btn-md mx-1"><?= $data['status'] ?></button></td>
                             <td>
                                 <a href="?edit_id=<?= $data['id'] ?>" class="btn btn-warning shadow-none"><i class="bi bi-pencil-square"></i></a>
                                 <a href="?delete_id=<?= $data['id'] ?>" onclick="return confirm('Are you sure you want to delete this?');" class="btn btn-danger btn-md mx-1"><i class="bi bi-trash"></i></a>

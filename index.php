@@ -77,22 +77,23 @@ $res = mysqli_query($conn, $insert);
             $room_id = $data['id'];
 
             $offer = $data['offer'];
-       
-          // To check user logged-in or not
-          $login = 0;
-          if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true){
-            $login = 1;
-           }
+            $price = $data['actual_price'];
 
-             $book_btn = "<button onclick='checkLoginToBook($login,$room_id)'
+            // To check user logged-in or not
+            $login = 0;
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                $login = 1;
+            }
+
+            $book_btn = "<button onclick='checkLoginToBook($login,$room_id)'
                                 class='btn btn-sm text-white custom-bg shadow-none'>
                                 Book now
                             </button>";
-           
+
 
             $sql = "SELECT rf.name FROM `room_features` rf JOIN `room_features_mapping` rfm ON rfm.room_feature_id = rf.id WHERE rfm.room_id = $room_id AND rf.status = 'active'";
             $features = mysqli_query($conn, $sql);
-       
+
             $features_html = "";
             while ($feature = mysqli_fetch_assoc($features)) {
                 $features_html .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>{$feature['name']}</span> ";
@@ -109,7 +110,23 @@ $res = mysqli_query($conn, $insert);
                 $facilities_html .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>{$facility['name']}</span> ";
             }
 
-         echo " <div class='col-lg-4 col-md-6 my-3'>
+            $rating_sql = "SELECT AVG(rating) AS avg_rating FROM review_and_rating WHERE room_id = $room_id";
+            $rating_result = mysqli_query($conn, $rating_sql);
+            $rating_row = mysqli_fetch_assoc($rating_result);
+            $avg_rating = round($rating_row['avg_rating'], 1);
+            
+            $stars_html = '';
+            for ($i = 1; $i <= 5; $i++) {
+                if ($i <= floor($avg_rating)) {
+                    $stars_html .= '<i class="bi bi-star-fill text-warning"></i>';
+                } elseif ($i - $avg_rating <= 0.5) {
+                    $stars_html .= '<i class="bi bi-star-half text-warning"></i>';
+                } else {
+                    $stars_html .= '<i class="bi bi-star text-warning"></i>';
+                }
+            }
+
+            echo " <div class='col-lg-4 col-md-6 my-3'>
                 <div class='card border-0 shadow' style='max-width: 350px; margin: auto;'>
                     <img src='img/rooms/$data[image]' class='card-img-top rounded'>
                     <div class='card-body'>
@@ -135,18 +152,14 @@ $res = mysqli_query($conn, $insert);
                         <div class='rating mb-4'>
                             <h6>Rating</h6>
                             <span class='badge rounded-pill bg-light'>
-                                <i class='bi bi-star-fill text-warning'></i>
-                                <i class='bi bi-star-fill text-warning'></i>
-                                <i class='bi bi-star-fill text-warning'></i>
-                                <i class='bi bi-star-fill text-warning'></i>
-                                <i class='bi bi-star-fill text-warning'></i>
+                                $stars_html
                             </span>
                         </div>
                         <span class='badge rounded-pill text-center bg-success text-white text-wrap mb-2' style='font-size: 13px; line-height:15px;'>
                             $offer
                         </span>
                         <span class='text-dark text-wrap mb-2'>
-                            <h6 class='text-center mb-3'>₹50000 per night</h6>
+                            <h6 class='text-center mb-3'>₹$price per night</h6>
                         </span>
                         <div class='d-flex justify-content-evenly mb-2'>
                             $book_btn
@@ -156,8 +169,8 @@ $res = mysqli_query($conn, $insert);
                 </div>
             </div>
         ";
-    }
- ?>
+        }
+        ?>
 
         <div class='col-ld-12 text-center mt-5'>
             <a href='rooms.php' class='btn btn-sm btn-outline-dark rounded-0 shadow-none'>More Rooms >>></a>
@@ -182,8 +195,8 @@ $res = mysqli_query($conn, $insert);
         <?php
         }
         ?>
-        </div>
-        </div>
+    </div>
+</div>
 
 <h2 class="mt-5 pt-4 mb-3 text-center fw-bold h-font ">Testimonials</h2>
 <div class="h-line bg-dark"></div>

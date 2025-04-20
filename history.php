@@ -63,7 +63,7 @@ $user_email = $_SESSION['user'];
     b.check_in_date, 
     b.check_out_date, 
     b.total_price, 
-    date(b.created_at) as c_date, 
+    b.created_at, 
     rc.id,
     rc.name, 
     rc.actual_price, 
@@ -115,8 +115,9 @@ ORDER BY b.id DESC
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
+                            <?php  $formatted_date = date('d-m-Y h:i A', strtotime($data['created_at'])); ?>
                             <div class="text-muted small">Booking Date</div>
-                            <div><?= $data['c_date'] ?></div>
+                            <div><?= $formatted_date ?></div>
                         </div>
                         <div class="text-end">
                             <div class="text-muted small">Total Amount</div>
